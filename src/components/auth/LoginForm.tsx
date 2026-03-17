@@ -11,8 +11,8 @@ import ForgotPasswordModal from './ForgotPasswordModal'
 
 export default function LoginForm() {
 	const [formData, setFormData] = useState({
-		email: 'x@x.com',
-		password: '12345678',
+		email: '',
+		password: '',
 		rememberMe: false
 	})
 	const [errors, setErrors] = useState<{ email?: string; password?: string }>({})

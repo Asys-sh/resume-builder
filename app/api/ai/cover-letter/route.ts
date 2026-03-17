@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { canUseAIFeatures, incrementUsage } from '@/lib/subscription'
 import { AI } from '@robojs/ai'
 import { buildResumeContext, buildCoverLetterPrompt } from '@/lib/utils'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: Request) {
     try {
@@ -11,6 +12,10 @@ export async function POST(request: Request) {
         if (!userSession?.id) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
+
+        // 20 AI requests per hour per user
+        const rateLimitResponse = checkRateLimit(`ai-cover-letter:${userSession.id}`, 20, 60 * 60 * 1000)
+        if (rateLimitResponse) return rateLimitResponse
 
         const user = await prisma.user.findUnique({
             where: { id: userSession.id },
@@ -28,8 +33,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 })
         }
 
-        // Cast user to any to bypass strict type check if needed, or ensure types match
-        if (!canUseAIFeatures(user as any)) {
+        if (!canUseAIFeatures(user)) {
             return NextResponse.json({
                 error: 'SubscriptionRequired',
                 message: 'You have reached your AI assist limit.'
@@ -44,7 +48,7 @@ export async function POST(request: Request) {
         }
 
         const resume = await prisma.resume.findUnique({
-            where: { id: resumeId },
+            where: { id: resumeId, userId: user.id },
             include: {
                 experiences: true,
                 skills: true,

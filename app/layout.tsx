@@ -6,6 +6,10 @@ import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 import { JotaiProvider } from '@/components/JotaiProvider'
 import { getUserData } from '@/lib/auth-helper'
+import { validateEnv } from '@/lib/env'
+import { Toaster } from 'sonner'
+
+validateEnv()
 
 const spaceGrotesk = Space_Grotesk({
 	weight: ['400', '500', '700'],
@@ -30,6 +34,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<JotaiProvider initialUser={user}>
 					<main className="min-h-screen">{children}</main>
 				</JotaiProvider>
+				<Toaster
+					position="bottom-right"
+					richColors
+					closeButton
+					toastOptions={{
+						style: { fontFamily: 'var(--font-display)' },
+						duration: 4000
+					}}
+				/>
 			</body>
 		</html>
 	)

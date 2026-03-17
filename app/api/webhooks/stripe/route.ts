@@ -88,6 +88,7 @@ export async function POST(request: NextRequest) {
               usageLimit: 999999, // Set to unlimited or high limit for Pro tier
               billingPeriodStart: new Date(subscription.current_period_start * 1000),
               billingPeriodEnd: new Date(subscription.current_period_end * 1000),
+              stripeCustomerId: session.customer as string,
             },
           });
 

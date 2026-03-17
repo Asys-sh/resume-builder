@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Loader2, Save, ArrowLeft, Download } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function CoverLetterEditor({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params)
@@ -29,7 +30,7 @@ export default function CoverLetterEditor({ params }: { params: Promise<{ id: st
                     const json = await res.json()
                     setData(json.coverLetter)
                 } else {
-                    window.alert('Failed to load cover letter')
+                    toast.error('Failed to load cover letter')
                     router.push('/dashboard/cover-letters')
                 }
             } catch (error) {
@@ -50,12 +51,12 @@ export default function CoverLetterEditor({ params }: { params: Promise<{ id: st
                 body: JSON.stringify(data)
             })
             if (res.ok) {
-                window.alert('Saved successfully')
+                toast.success('Cover letter saved!')
             } else {
                 throw new Error('Failed to save')
             }
         } catch (error) {
-            window.alert('Error saving cover letter')
+            toast.error('Failed to save cover letter')
         } finally {
             setIsSaving(false)
         }

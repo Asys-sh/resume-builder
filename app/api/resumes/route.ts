@@ -35,7 +35,10 @@ export async function DELETE(req: NextRequest) {
 
 
 export async function GET(req: NextRequest) {
-    // get resume with id 
+    const user = await getServerUser()
+    if (!user?.id) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
 
     const reqUrl = req.url
     const url = new URL(reqUrl)
@@ -48,6 +51,7 @@ export async function GET(req: NextRequest) {
     const resume = await prisma.resume.findUnique({
         where: {
             id: resumeId,
+            userId: user.id,
         },
     })
 
@@ -72,6 +76,14 @@ export async function POST(req: NextRequest) {
 
         if (!data) {
             return NextResponse.json({ error: 'Missing resume data' }, { status: 400 })
+        }
+
+        // Basic input length limits to prevent oversized payloads
+        if (title && title.length > 200) {
+            return NextResponse.json({ error: 'Title too long (max 200 characters)' }, { status: 400 })
+        }
+        if (data.summary && data.summary.length > 5000) {
+            return NextResponse.json({ error: 'Summary too long (max 5000 characters)' }, { status: 400 })
         }
 
         const resume = resumeId ?

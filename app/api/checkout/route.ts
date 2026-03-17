@@ -1,33 +1,38 @@
-import { NextRequest, NextResponse } from 'next/server.js'
+import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { prisma } from '@/lib/prisma'
+import { getServerUser } from '@/lib/auth-helper'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
-// Tell Next.js not to parse the body automatically
 export const dynamic = 'force-dynamic'
 
-export default async function (request: NextRequest) {
+export async function POST(request: NextRequest) {
 	try {
-		// Clone the request to read the body
-		const body = await request.json()
-		const { priceId, quantity = 1, userId, mode = 'subscription' } = body
-
-		// Validate required fields
-		if (!userId) {
-			return NextResponse.json({ success: false, error: 'Bad request, missing fields.' }, { status: 400 })
+		// Verify the caller is authenticated
+		const userSession = await getServerUser()
+		if (!userSession?.id) {
+			return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
 		}
+
+		// 10 checkout attempts per hour per user
+		const rateLimitResponse = checkRateLimit(`checkout:${userSession.id}`, 10, 60 * 60 * 1000)
+		if (rateLimitResponse) return rateLimitResponse
+
+		const body = await request.json()
+		const { priceId, quantity = 1, mode = 'subscription' } = body
 
 		if (!priceId) {
 			return NextResponse.json({ success: false, error: 'Price ID is required' }, { status: 400 })
 		}
 
-		// Verify user exists before creating session
-		const user = await prisma.user.findUnique({ where: { userId } })
+		// Use the authenticated session userId — never trust userId from the client body
+		const user = await prisma.user.findUnique({ where: { id: userSession.id } })
 
 		if (!user) {
 			return NextResponse.json(
-				{ success: false, error: 'Could not find user with this id. Please contact support.' },
+				{ success: false, error: 'User not found. Please contact support.' },
 				{ status: 404 }
 			)
 		}
@@ -53,18 +58,17 @@ export default async function (request: NextRequest) {
 			],
 			mode: mode === 'subscription' ? 'subscription' : 'payment',
 			metadata: {
-				userId: userId
+				userId: user.id
 			},
 			subscription_data: mode === 'subscription' ? {
 				metadata: {
-					userId: userId
+					userId: user.id
 				}
 			} : undefined,
 			success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
 			cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`
 		})
 
-		// Return the checkout URL
 		// Subscription status will be updated ONLY after successful payment via webhook
 		return NextResponse.json(
 			{
@@ -76,12 +80,8 @@ export default async function (request: NextRequest) {
 		)
 	} catch (error) {
 		console.error('Checkout error:', error)
-
 		return NextResponse.json(
-			{
-				success: false,
-				error: error instanceof Error ? error.message : 'Failed to create checkout session'
-			},
+			{ success: false, error: 'Failed to create checkout session' },
 			{ status: 500 }
 		)
 	}

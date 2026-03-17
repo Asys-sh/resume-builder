@@ -31,6 +31,17 @@ export async function POST(request: Request) {
         const body = await request.json()
         const { title, content, jobTitle, companyName, jobDescription, resumeId, status } = body
 
+        // Basic input length limits
+        if (title && title.length > 200) {
+            return NextResponse.json({ error: 'Title too long (max 200 characters)' }, { status: 400 })
+        }
+        if (content && content.length > 50000) {
+            return NextResponse.json({ error: 'Content too long (max 50000 characters)' }, { status: 400 })
+        }
+        if (jobDescription && jobDescription.length > 10000) {
+            return NextResponse.json({ error: 'Job description too long (max 10000 characters)' }, { status: 400 })
+        }
+
         const coverLetter = await prisma.coverLetter.create({
             data: {
                 userId: user.id,

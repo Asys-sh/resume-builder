@@ -2,6 +2,7 @@ import { getSession } from '@robojs/auth/client'
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { canUseAIFeatures, incrementUsage } from '@/lib/subscription'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 /**
  * AI Assist API Route (Placeholder)
@@ -19,6 +20,10 @@ export async function POST(request: NextRequest) {
 		if (!session?.user?.email) {
 			return NextResponse.json({ error: 'Unauthorized', message: 'You must be logged in to use AI features' }, { status: 401 })
 		}
+
+		// 1b. Rate limit: 30 AI requests per hour per user email
+		const rateLimitResponse = checkRateLimit(`ai:${session.user.email}`, 30, 60 * 60 * 1000)
+		if (rateLimitResponse) return rateLimitResponse
 
 		// 2. Fetch user data from Prisma including subscription fields
 		const user = await prisma.user.findUnique({
@@ -38,8 +43,7 @@ export async function POST(request: NextRequest) {
 		}
 
 		// 3. Check if user can use AI features
-		// Cast user to any to bypass strict type check for now if types are mismatched
-		if (!canUseAIFeatures(user as any)) {
+		if (!canUseAIFeatures(user)) {
 			return NextResponse.json(
 				{
 					error: 'SubscriptionRequired',
@@ -60,7 +64,7 @@ export async function POST(request: NextRequest) {
 		}
 
 		const resume = await prisma.resume.findUnique({
-			where: { id: resumeId },
+			where: { id: resumeId, userId: user.id },
 			include: {
 				experiences: true,
 				skills: true,

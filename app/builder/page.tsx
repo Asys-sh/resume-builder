@@ -14,6 +14,7 @@ import { ResumePreview } from '@/components/builder'
 import { AuthDialog } from '@/components/AuthDialog'
 import { userAtom } from '@/stores/user'
 import { useDebounce } from '@/hooks/use-debounce'
+import { toast } from 'sonner'
 import { TemplateSelection } from './steps/TemplateSelection'
 import { ContactInfo } from './steps/ContactInfo'
 import { ExperienceSkills } from './steps/ExperienceSkills'
@@ -54,17 +55,26 @@ export default function BuilderPage() {
 	// Fetch resume data when resumeId is set
 	useEffect(() => {
 		if (resumeId && user) {
-			const fetchResume = async () => {
-				const res = await fetch('/api/resumes?resumeId=' + resumeId)
+			const controller = new AbortController()
 
-				console.log(res)
-				if (res.ok) {
-					const data = await res.json()
-					setResumeDataPartial(data)
+			const fetchResume = async () => {
+				try {
+					const res = await fetch('/api/resumes?resumeId=' + resumeId, {
+						signal: controller.signal
+					})
+					if (res.ok) {
+						const data = await res.json()
+						setResumeDataPartial(data)
+					}
+				} catch (err) {
+					if ((err as Error).name !== 'AbortError') {
+						console.error('Failed to fetch resume:', err)
+					}
 				}
 			}
 
 			fetchResume()
+			return () => controller.abort()
 		}
 	}, [resumeId, user])
 
@@ -132,12 +142,12 @@ export default function BuilderPage() {
 				setResumeId(result.resumeId)
 				setLastSaved(new Date())
 				if (!silent) {
-					// Optional: Show success toast here
+					toast.success('Resume saved!')
 				}
 			}
 		} catch (error) {
 			console.error('Save error:', error)
-			if (!silent) window.alert('Failed to save resume')
+			if (!silent) toast.error('Failed to save resume. Please try again.')
 		} finally {
 			setIsSaving(false)
 		}
@@ -147,12 +157,18 @@ export default function BuilderPage() {
 		saveResume(false)
 	}
 
-	//Auto-save effect
-	// useEffect(() => {
-	// 	if (user && ) {
-	// 		saveResume(true)
-	// 	}
-	// }, [debouncedResumeData])
+	// Auto-save effect — fires 2s after the user stops typing
+	useEffect(() => {
+		// Skip the very first render so we don't save stale initial state on mount
+		if (isFirstRender.current) {
+			isFirstRender.current = false
+			return
+		}
+		if (user) {
+			saveResume(true)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [debouncedResumeData])
 
 	const handleDownload = async (format: 'pdf' | 'word' | 'text' = 'pdf') => {
 		if (format === 'pdf') {
@@ -172,7 +188,7 @@ export default function BuilderPage() {
 				URL.revokeObjectURL(url);
 			} catch (error) {
 				console.error('Error generating PDF:', error);
-				window.alert('Failed to generate PDF. Please try again.');
+				toast.error('Failed to generate PDF. Please try again.');
 			}
 		} else if (format === 'word') {
 			try {
@@ -180,11 +196,10 @@ export default function BuilderPage() {
 				await generateDocx(resumeData);
 			} catch (error) {
 				console.error('Error generating Word document:', error);
-				window.alert('Failed to generate Word document. Please try again.');
+				toast.error('Failed to generate Word document. Please try again.');
 			}
 		} else {
-			console.log(`[Resume Download] Format: ${format}, Current resume data:`, resumeData)
-			window.alert(`Download as ${format.toUpperCase()} functionality coming soon! Your resume data is saved locally.`)
+			toast.info("Text export coming soon!")
 		}
 	}
 

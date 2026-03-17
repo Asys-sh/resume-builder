@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'sonner'
 import {
 	Dialog,
 	DialogContent,
@@ -32,7 +33,7 @@ const PLANS = {
 		id: 'pro',
 		name: 'Pro',
 		price: '€2.99',
-		priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || 'price_1SSzMtCxQRIqlS4diid3vbZz', // Fallback to test price
+		priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
 		features: ['Unlimited AI assists', 'Priority AI processing', 'Advanced templates']
 	}
 }
@@ -72,7 +73,7 @@ export function SubscriptionModal({ open, onOpenChange, userId }: SubscriptionMo
 			window.location.href = data.url
 		} catch (error) {
 			console.error('Subscription error:', error)
-			// Future: Add toast notification
+			toast.error('Failed to start checkout. Please try again.')
 		} finally {
 			setIsLoading(false)
 			setSelectedPlanId(null)
@@ -136,7 +137,7 @@ export function SubscriptionModal({ open, onOpenChange, userId }: SubscriptionMo
 							</ul>
 							<Button
 								className="w-full"
-								disabled={!userId || isLoading}
+								disabled={!userId || isLoading || !PLANS.PRO.priceId}
 								onClick={() => handleSubscribe(PLANS.PRO)}
 							>
 								{isLoading && selectedPlanId === 'pro' ? 'Processing...' : 'Upgrade to Pro'}

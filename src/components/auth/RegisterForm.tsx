@@ -6,6 +6,7 @@ import { FormInput } from '@/components/ui/form-input'
 import { Checkbox } from '@/components/ui/checkbox'
 import Link from 'next/link'
 import { getCsrfToken } from '@robojs/auth/client'
+import { Mail } from 'lucide-react'
 
 export default function RegisterForm() {
 	const [formData, setFormData] = useState({
@@ -24,6 +25,7 @@ export default function RegisterForm() {
 		server?: string
 	}>({})
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [registeredEmail, setRegisteredEmail] = useState<string | null>(null)
 
 	const nameRef = useRef<HTMLInputElement>(null)
 	const emailRef = useRef<HTMLInputElement>(null)
@@ -151,6 +153,31 @@ export default function RegisterForm() {
 		} finally {
 			setIsSubmitting(false)
 		}
+	}
+
+	if (registeredEmail) {
+		return (
+			<div className="text-center">
+				<div className="flex justify-center mb-4">
+					<div className="rounded-full bg-primary/10 p-4">
+						<Mail className="h-10 w-10 text-primary" />
+					</div>
+				</div>
+				<h1 className="text-3xl font-black text-slate-800">Check Your Email</h1>
+				<p className="mt-3 text-base text-slate-600">
+					We sent a verification link to <span className="font-semibold text-slate-800">{registeredEmail}</span>.
+				</p>
+				<p className="mt-2 text-sm text-slate-500">
+					Click the link in the email to activate your account. It expires in 24 hours.
+				</p>
+				<p className="mt-6 text-sm text-slate-500">
+					Already verified?{' '}
+					<Link href="/auth?login=true" className="text-primary hover:underline font-medium">
+						Sign in
+					</Link>
+				</p>
+			</div>
+		)
 	}
 
 	return (

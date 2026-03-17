@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Loader2, Plus, FileText, Trash2, Edit } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface CoverLetter {
     id: string
@@ -32,6 +33,7 @@ export default function CoverLettersPage() {
             }
         } catch (error) {
             console.error('Failed to fetch cover letters', error)
+            toast.error('Failed to load cover letters')
         } finally {
             setIsLoading(false)
         }
@@ -46,9 +48,13 @@ export default function CoverLettersPage() {
             })
             if (res.ok) {
                 setCoverLetters(prev => prev.filter(cl => cl.id !== id))
+                toast.success('Cover letter deleted')
+            } else {
+                toast.error('Failed to delete cover letter')
             }
         } catch (error) {
             console.error('Failed to delete cover letter', error)
+            toast.error('Failed to delete cover letter')
         }
     }
 

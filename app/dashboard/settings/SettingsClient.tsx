@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { FormInput } from '@/components/ui/form-input'
 import { Separator } from '@/components/ui/separator'
 import { Download, Trash2, Save, AlertTriangle, User } from 'lucide-react'
+import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useAtom } from 'jotai'
 import { userAtom } from '@/stores/user'
@@ -24,7 +25,6 @@ export default function SettingsClient() {
     const router = useRouter()
     const [user, setUser] = useAtom(userAtom)
     const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -53,10 +53,9 @@ export default function SettingsClient() {
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
-        setMessage(null)
 
         if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
-            setMessage({ type: 'error', text: 'New passwords do not match' })
+            toast.error('New passwords do not match')
             setIsLoading(false)
             return
         }
@@ -84,10 +83,10 @@ export default function SettingsClient() {
                 setUser({ ...user, name: data.user.name, email: data.user.email })
             }
 
-            setMessage({ type: 'success', text: 'Profile updated successfully' })
+            toast.success('Profile updated successfully')
             setFormData((prev) => ({ ...prev, currentPassword: '', newPassword: '', confirmPassword: '' }))
-        } catch (error: any) {
-            setMessage({ type: 'error', text: error.message })
+        } catch (error: unknown) {
+            toast.error(error instanceof Error ? error.message : 'Failed to update profile')
         } finally {
             setIsLoading(false)
         }
@@ -107,9 +106,10 @@ export default function SettingsClient() {
             a.click()
             window.URL.revokeObjectURL(url)
             document.body.removeChild(a)
+            toast.success('Data exported successfully')
         } catch (error) {
             console.error('Export error:', error)
-            setMessage({ type: 'error', text: 'Failed to export data' })
+            toast.error('Failed to export data')
         }
     }
 
@@ -123,7 +123,7 @@ export default function SettingsClient() {
             window.location.href = '/'
         } catch (error) {
             console.error('Delete error:', error)
-            setMessage({ type: 'error', text: 'Failed to delete account' })
+            toast.error('Failed to delete account')
             setIsDeleteDialogOpen(false)
         } finally {
             setIsLoading(false)
@@ -158,17 +158,6 @@ export default function SettingsClient() {
                 <h1 className="text-3xl font-bold text-dark mb-2">Account Settings</h1>
                 <p className="text-dark/70">Manage your profile, security, and data preferences.</p>
             </motion.div>
-
-            {message && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className={`p-4 rounded-lg ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        }`}
-                >
-                    {message.text}
-                </motion.div>
-            )}
 
             {/* Profile Settings */}
             <motion.div

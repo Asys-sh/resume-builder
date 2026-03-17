@@ -10,12 +10,13 @@ import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { UsageDisplay } from '@/components/UsageDisplay'
 import { SubscriptionModal } from '@/components/SubscriptionModal'
-import { LayoutDashboard, FileText, Settings, Menu, Plus, Edit, Trash2, TrendingUp, Award } from 'lucide-react'
+import { LayoutDashboard, FileText, Settings, Menu, Plus, Edit, Trash2, TrendingUp, Award, CreditCard } from 'lucide-react'
 import { User } from '@prisma-generated/client'
 import { Resume } from '@prisma-generated/client'
 import { TemplatePreview } from '@/components/dashboard/TemplatePreview'
 import { useRouter } from 'next/navigation'
 import { deleteResume } from '@/lib/utils'
+import { toast } from 'sonner'
 
 interface DashboardClientProps {
 	user: User
@@ -62,6 +63,12 @@ export default function DashboardClient({ user, resumes }: DashboardClientProps)
 					<Button variant="ghost" className="w-full justify-start gap-2 text-dark hover:bg-yellow/50">
 						<Edit className="h-4 w-4" />
 						Cover Letters
+					</Button>
+				</Link>
+				<Link href="/dashboard/billing" onClick={() => setIsSidebarOpen(false)}>
+					<Button variant="ghost" className="w-full justify-start gap-2 text-dark hover:bg-yellow/50">
+						<CreditCard className="h-4 w-4" />
+						Billing
 					</Button>
 				</Link>
 				<Link href="/dashboard/settings" onClick={() => setIsSidebarOpen(false)}>
@@ -222,9 +229,16 @@ export default function DashboardClient({ user, resumes }: DashboardClientProps)
 															<Edit className="h-4 w-4" />
 														</Button>
 														<Button size="icon" variant="destructive" aria-label="Delete resume" onClick={async () => {
-															const deleted = await deleteResume(resume.id)
-															if (deleted) {
-																router.refresh()
+															try {
+																const deleted = await deleteResume(resume.id)
+																if (deleted) {
+																	toast.success("Resume deleted")
+																	router.refresh()
+																} else {
+																	toast.error("Failed to delete resume")
+																}
+															} catch {
+																toast.error("Failed to delete resume")
 															}
 														}}>
 															<Trash2 className="h-4 w-4" />
