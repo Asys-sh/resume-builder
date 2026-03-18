@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
           data: {
             subscriptionStatus: 'INACTIVE',
             usageCount: 0, // Reset usage count for free tier
-            usageLimit: 100, // Revert to free tier limit
+            usageLimit: 5, // Revert to free tier limit
           },
         });
 

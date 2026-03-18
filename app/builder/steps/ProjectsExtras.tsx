@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useAtom } from 'jotai'
 import { resumeDataAtom, setResumeDataAtom, Project, Certification, Language } from '@/stores/builder'
-import { ProjectCard, CertificationTag, LanguageTag, BuilderFormField, BuilderSelect, NavigationButtons, StepProgress } from '@/components/builder'
+import { ProjectCard, CertificationTag, LanguageTag, BuilderSelect, BuilderFormField, NavigationButtons, StepProgress } from '@/components/builder'
+import { Combobox } from '@/components/ui/combobox'
+import { languages } from '@/lib/arrays'
 
 interface ProjectsExtrasProps {
     onNext: () => void
@@ -70,11 +72,13 @@ export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
 
     // Language handlers
     const handleAddLanguage = () => {
-        if (!languageInput.trim()) return
+        const nameToAdd = languageInput.trim()
+        if (!nameToAdd) return
+        if (resumeData.languages.some((l) => l.name.toLowerCase() === nameToAdd.toLowerCase())) return
 
         const newLanguage: Language = {
             id: crypto.randomUUID(),
-            name: languageInput.trim(),
+            name: nameToAdd,
             proficiency: languageProficiency,
             resumeId: ''
         }
@@ -178,24 +182,20 @@ export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
                         </div>
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <BuilderFormField
-                            id="languageInput"
-                            name="languageInput"
-                            label=""
+                        <Combobox
                             value={languageInput}
-                            onChange={(e) => setLanguageInput(e.target.value)}
-                            placeholder="E.g., Spanish"
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault()
-                                    handleAddLanguage()
-                                }
+                            onSelect={(value) => {
+                                setLanguageInput(value)
                             }}
+                            placeholder="Select or type a language"
+                            searchPlaceholder="Search languages..."
+                            staticOptions={languages}
                         />
                         <div className="flex gap-2">
                             <BuilderSelect
                                 id="languageProficiency"
                                 label=""
+                                className="h-10"
                                 value={languageProficiency}
                                 onValueChange={setLanguageProficiency}
                                 options={[

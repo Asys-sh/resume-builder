@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { useAtom } from 'jotai'
 import { resumeDataAtom, setResumeDataAtom } from '@/stores/builder'
 import { BuilderTextarea, NavigationButtons, StepProgress } from '@/components/builder'
+import { toast } from 'sonner'
 
 interface ProfessionalSummaryProps {
     onNext: () => void
@@ -10,9 +12,36 @@ interface ProfessionalSummaryProps {
 export function ProfessionalSummary({ onNext, onPrevious }: ProfessionalSummaryProps) {
     const [resumeData] = useAtom(resumeDataAtom)
     const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
+    const [isGenerating, setIsGenerating] = useState(false)
 
     const handleSummaryChange = (value: string) => {
         setResumeDataPartial({ summary: value })
+    }
+
+    const handleAISummary = async () => {
+        setIsGenerating(true)
+        try {
+            const res = await fetch('/api/ai/assist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: 'summary',
+                    skills: resumeData.skills.map((s) => s.name),
+                    currentContent: resumeData.summary
+                })
+            })
+            const data = await res.json()
+            if (!res.ok) {
+                toast.error(data.message || 'Failed to generate summary')
+                return
+            }
+            setResumeDataPartial({ summary: data.result })
+            toast.success('Summary generated!')
+        } catch {
+            toast.error('Failed to generate summary')
+        } finally {
+            setIsGenerating(false)
+        }
     }
 
     return (
@@ -35,11 +64,14 @@ export function ProfessionalSummary({ onNext, onPrevious }: ProfessionalSummaryP
                         placeholder="Start with your most recent role and key achievements..."
                         rows={8}
                         showAIButton={true}
-                        onAIClick={() => { }}
+                        onAIClick={handleAISummary}
+                        disabled={isGenerating}
                     />
+                    {isGenerating && (
+                        <p className="text-xs text-text-subtle mt-2 animate-pulse">Generating summary…</p>
+                    )}
                 </div>
 
-                {/* Navigation Buttons */}
                 <NavigationButtons
                     onPrevious={onPrevious}
                     onNext={onNext}

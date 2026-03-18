@@ -51,10 +51,12 @@ export const BuilderSelect = React.forwardRef<
 
 		return (
 			<div className="flex flex-col gap-2">
-				<Label htmlFor={id} className="text-base font-medium text-text-main">
-					{label}
-					{required && <span className="text-red-400 ml-1">*</span>}
-				</Label>
+				{label && (
+					<Label htmlFor={id} className="text-base font-medium text-text-main">
+						{label}
+						{required && <span className="text-red-400 ml-1">*</span>}
+					</Label>
+				)}
 				<div className="relative">
 					<select
 						ref={ref}

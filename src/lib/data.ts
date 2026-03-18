@@ -1,15 +1,30 @@
 import { prisma } from "./prisma"
+import { Prisma } from "@prisma-generated/client"
 
-export async function getUsersResumes(userId: string) {
+export type ResumeWithRelations = Prisma.ResumeGetPayload<{
+    include: {
+        experiences: true
+        skills: true
+        education: true
+        projects: true
+        certifications: true
+        languages: true
+    }
+}>
+
+export async function getUsersResumes(userId: string): Promise<ResumeWithRelations[]> {
     const resumes = await prisma.resume.findMany({
-        where: {
-            userId,
+        where: { userId },
+        include: {
+            experiences: true,
+            skills: true,
+            education: true,
+            projects: true,
+            certifications: true,
+            languages: true,
         },
+        orderBy: { updatedAt: 'desc' },
     })
 
-    if (!resumes) {
-        return []
-    }
-
-    return resumes
+    return resumes ?? []
 }

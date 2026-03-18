@@ -1,140 +1,79 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, CheckCircle, XCircle, Loader2, Mail } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Suspense } from 'react'
+import { ArrowLeft, Mail, XCircle, CheckCircle, Loader2 } from 'lucide-react'
 
 function VerifyEmailContent() {
-	const searchParams = useSearchParams()
-	const token = searchParams.get('token')
-	const email = searchParams.get('email')
-	const router = useRouter()
+	const params = useSearchParams()
+	const error = params.get('error')
+	const verified = params.get('verified') === '1' || params.get('status') === 'ok'
 
-	const [status, setStatus] = useState<'pending' | 'success' | 'error' | 'expired'>('pending')
-	const [errorMessage, setErrorMessage] = useState('')
-	const [isResending, setIsResending] = useState(false)
-	const [resendSuccess, setResendSuccess] = useState(false)
+	if (error) {
+		const message =
+			error === 'InvalidOrExpired'
+				? 'This verification link is invalid or has expired.'
+				: error === 'MissingParams'
+					? 'This verification link is missing required parameters.'
+					: error === 'UserNotFound'
+						? 'No account was found for this email address.'
+						: 'Something went wrong during verification.'
 
-	useEffect(() => {
-		if (!token || !email) {
-			setStatus('error')
-			setErrorMessage('This verification link is invalid or missing required parameters.')
-			return
-		}
-
-		const verify = async () => {
-			try {
-				const res = await fetch('/api/auth/verify-email', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ token, email })
-				})
-
-				const data = await res.json()
-
-				if (!res.ok) {
-					if (data.error?.includes('expired')) {
-						setStatus('expired')
-					} else {
-						setStatus('error')
-					}
-					setErrorMessage(data.error || 'Verification failed')
-					return
-				}
-
-				setStatus('success')
-				setTimeout(() => {
-					router.push('/dashboard')
-				}, 3000)
-			} catch {
-				setStatus('error')
-				setErrorMessage('An unexpected error occurred. Please try again.')
-			}
-		}
-
-		verify()
-	}, [token, email, router])
-
-	const handleResend = async () => {
-		setIsResending(true)
-		try {
-			const res = await fetch('/api/auth/send-verification', { method: 'POST' })
-			if (res.ok) {
-				setResendSuccess(true)
-			} else {
-				const data = await res.json()
-				setErrorMessage(data.error || 'Failed to resend verification email')
-			}
-		} catch {
-			setErrorMessage('Failed to resend verification email')
-		} finally {
-			setIsResending(false)
-		}
-	}
-
-	if (status === 'pending') {
 		return (
 			<div className="text-center bg-white p-10 rounded-2xl shadow-lg max-w-md w-full">
-				<Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
-				<h1 className="text-2xl font-bold text-slate-800">Verifying your email...</h1>
-				<p className="mt-2 text-slate-600">Please wait a moment.</p>
-			</div>
-		)
-	}
-
-	if (status === 'success') {
-		return (
-			<div className="text-center bg-white p-10 rounded-2xl shadow-lg max-w-md w-full">
-				<CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-				<h1 className="text-2xl font-bold text-slate-800">Email Verified!</h1>
-				<p className="mt-2 text-slate-600">Your email has been verified successfully.</p>
-				<p className="mt-4 text-sm text-slate-500">Redirecting to your dashboard...</p>
-				<Link href="/dashboard" className="mt-4 inline-block text-primary hover:underline text-sm">
-					Click here if not redirected
+				<XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+				<h1 className="text-2xl font-bold text-slate-800">Verification Failed</h1>
+				<p className="mt-3 text-slate-600">{message}</p>
+				<p className="mt-2 text-sm text-slate-500">
+					Try signing in — if your email isn't verified yet, you can request a new link.
+				</p>
+				<Link
+					href="/auth?login=true"
+					className="mt-6 inline-block text-primary hover:underline text-sm font-medium"
+				>
+					Go to Sign In
 				</Link>
 			</div>
 		)
 	}
 
-	if (status === 'expired') {
+	if (verified) {
 		return (
 			<div className="text-center bg-white p-10 rounded-2xl shadow-lg max-w-md w-full">
-				<XCircle className="h-12 w-12 text-amber-500 mx-auto mb-4" />
-				<h1 className="text-2xl font-bold text-slate-800">Link Expired</h1>
-				<p className="mt-2 text-slate-600">{errorMessage}</p>
-				{resendSuccess ? (
-					<div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-						<Mail className="h-5 w-5 text-green-600 mx-auto mb-1" />
-						<p className="text-sm text-green-700 font-medium">New verification email sent! Check your inbox.</p>
-					</div>
-				) : (
-					<Button
-						className="mt-6 bg-primary text-white"
-						onClick={handleResend}
-						disabled={isResending}
-					>
-						{isResending ? (
-							<><Loader2 className="h-4 w-4 mr-2 animate-spin" />Sending...</>
-						) : (
-							<><Mail className="h-4 w-4 mr-2" />Resend Verification Email</>
-						)}
-					</Button>
-				)}
+				<CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+				<h1 className="text-2xl font-bold text-slate-800">Email Verified!</h1>
+				<p className="mt-3 text-slate-600">Your email has been verified. You can now sign in.</p>
+				<Link
+					href="/auth?login=true"
+					className="mt-6 inline-block bg-primary text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors"
+				>
+					Sign In
+				</Link>
 			</div>
 		)
 	}
 
-	// error state
 	return (
 		<div className="text-center bg-white p-10 rounded-2xl shadow-lg max-w-md w-full">
-			<XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-			<h1 className="text-2xl font-bold text-slate-800">Verification Failed</h1>
-			<p className="mt-2 text-slate-600">{errorMessage}</p>
-			<Link href="/auth?login=true" className="mt-6 inline-block text-primary hover:underline text-sm">
-				Return to Login
-			</Link>
+			<div className="flex justify-center mb-4">
+				<div className="rounded-full bg-primary/10 p-4">
+					<Mail className="h-10 w-10 text-primary" />
+				</div>
+			</div>
+			<h1 className="text-2xl font-bold text-slate-800">Verify Your Email</h1>
+			<p className="mt-3 text-slate-600">
+				Please check your inbox and click the verification link to activate your account.
+			</p>
+			<p className="mt-2 text-sm text-slate-500">
+				The link will expire in 1 hour.
+			</p>
+			<p className="mt-6 text-sm text-slate-500">
+				Already verified?{' '}
+				<Link href="/auth?login=true" className="text-primary hover:underline font-medium">
+					Sign in
+				</Link>
+			</p>
 		</div>
 	)
 }

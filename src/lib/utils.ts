@@ -64,6 +64,34 @@ ${projects.map((proj, i) => `${i + 1}. ${proj.title}: ${proj.description || 'No 
 }
 
 /**
+ * Builds a resume improvement prompt for AI
+ */
+export function buildResumeImprovementPrompt(params: {
+  userName: string | null
+  jobDescription: string
+  resumeContext: string
+}): string {
+  const { userName, jobDescription, resumeContext } = params
+  return `You are an expert resume coach. Review the candidate's resume against the job description and return specific, actionable improvements.
+
+Candidate: ${userName || 'Unknown'}
+
+Job Description:
+${jobDescription}
+
+Current Resume:
+${resumeContext}
+
+Instructions:
+1. Identify 3-5 specific improvements to better match the job description
+2. For each, give a short heading and a concrete suggestion (what to add, rephrase, or remove)
+3. Keep suggestions practical and direct
+4. Return plain text only — no markdown, no bullet symbols, just numbered points
+
+Return your improvements now:`
+}
+
+/**
  * Builds a cover letter generation prompt for AI
  */
 export function buildCoverLetterPrompt(params: {

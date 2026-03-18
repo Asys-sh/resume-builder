@@ -3,10 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { NavigationButtons } from '@/components/builder';
 import { useAtom } from 'jotai';
 import { resumeDataAtom } from '@/stores/builder';
 import type { CoverLetter } from '@prisma-generated/client';
 import { Loader2, Wand2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface TargetJobProps {
     onNext: () => void;
@@ -16,9 +18,7 @@ interface TargetJobProps {
 export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
     const [resumeData, setResumeData] = useAtom(resumeDataAtom);
     const [isGenerating, setIsGenerating] = useState(false);
-    // const [generatedLetter, setGeneratedLetter] = useState(resumeData.coverLetter?.content || '');
 
-    // Initialize coverLetter object if it doesn't exist
     React.useEffect(() => {
         if (!resumeData.coverLetter) {
             setResumeData((prev) => ({
@@ -37,7 +37,12 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
 
     const handleGenerate = async () => {
         if (!resumeData.coverLetter?.jobDescription) {
-            window.alert('Please enter a job description first');
+            toast.error('Please enter a job description first');
+            return;
+        }
+
+        if (!resumeData.id) {
+            toast.error('Please save your resume first before generating a cover letter');
             return;
         }
 
@@ -47,7 +52,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    resumeId: resumeData.id, // Assuming resume is already saved/has ID
+                    resumeId: resumeData.id,
                     jobDescription: resumeData.coverLetter.jobDescription,
                     jobTitle: resumeData.coverLetter.jobTitle,
                     companyName: resumeData.coverLetter.companyName
@@ -57,10 +62,10 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Failed to generate cover letter');
+                toast.error(data.message || 'Failed to generate cover letter');
+                return;
             }
 
-            // setGeneratedLetter(data.content);
             setResumeData((prev) => ({
                 ...prev,
                 coverLetter: {
@@ -68,9 +73,9 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                     content: data.content
                 }
             }));
-            window.alert('Cover letter generated successfully!');
-        } catch (error: any) {
-            window.alert(error.message);
+            toast.success('Cover letter generated!');
+        } catch {
+            toast.error('Something went wrong. Please try again.');
         } finally {
             setIsGenerating(false);
         }
@@ -91,7 +96,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
             <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight">Target Job & Cover Letter</h2>
                 <p className="text-muted-foreground">
-                    Tailor your application by providing the job details. We'll generate a custom cover letter for you.
+                    Tailor your application by providing the job details. We&apos;ll generate a custom cover letter for you.
                 </p>
             </div>
 
@@ -103,6 +108,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                         <Input
                             id="jobTitle"
                             placeholder="e.g. Senior Frontend Engineer"
+                            className="bg-white"
                             value={resumeData.coverLetter?.jobTitle || ''}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('jobTitle', e.target.value)}
                         />
@@ -112,6 +118,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                         <Input
                             id="companyName"
                             placeholder="e.g. Acme Corp"
+                            className="bg-white"
                             value={resumeData.coverLetter?.companyName || ''}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateField('companyName', e.target.value)}
                         />
@@ -121,7 +128,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                         <Textarea
                             id="jobDescription"
                             placeholder="Paste the full job description here..."
-                            className="min-h-[200px]"
+                            className="min-h-[200px] bg-white"
                             value={resumeData.coverLetter?.jobDescription || ''}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateField('jobDescription', e.target.value)}
                         />
@@ -134,7 +141,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                         {isGenerating ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Generating...
+                                Generating…
                             </>
                         ) : (
                             <>
@@ -152,7 +159,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                         <Textarea
                             id="content"
                             placeholder="Your cover letter will appear here..."
-                            className="min-h-[400px] font-mono text-sm"
+                            className="min-h-[400px] font-mono text-sm bg-white"
                             value={resumeData.coverLetter?.content || ''}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateField('content', e.target.value)}
                         />
@@ -160,14 +167,13 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
                 </div>
             </div>
 
-            <div className="flex justify-between pt-8">
-                <Button variant="outline" onClick={onBack}>
-                    Back
-                </Button>
-                <Button onClick={onNext}>
-                    Next: Review & Export
-                </Button>
-            </div>
+            <NavigationButtons
+                onPrevious={onBack}
+                onNext={onNext}
+                showPrevious={true}
+                showNext={true}
+                nextLabel="Next: Review & Export"
+            />
         </div>
     );
 };

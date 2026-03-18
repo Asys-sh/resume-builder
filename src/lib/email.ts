@@ -2,6 +2,72 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const fromAddress = `RoboResume <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`
+
+const colors = {
+	primary: '#d4a373',
+	primaryDark: '#b8894f',
+	cream: '#fefae0',
+	beige: '#e9edc9',
+	dark: '#3a3226',
+	subtle: '#6f6454',
+	border: '#ccd5ae'
+}
+
+function emailLayout(content: string) {
+	return `<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: ${colors.cream};">
+	<table role="presentation" width="100%" style="border-collapse: collapse;">
+		<tr>
+			<td align="center" style="padding: 40px 16px;">
+				<!-- Logo -->
+				<table role="presentation" width="560" style="border-collapse: collapse; max-width: 560px;">
+					<tr>
+						<td align="center" style="padding-bottom: 24px;">
+							<table role="presentation" style="border-collapse: collapse;">
+								<tr>
+									<td style="background-color: ${colors.primary}; border-radius: 10px; padding: 8px 14px;">
+										<span style="color: #ffffff; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">R</span>
+									</td>
+									<td style="padding-left: 10px;">
+										<span style="color: ${colors.dark}; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">RoboResume</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+
+				<!-- Card -->
+				<table role="presentation" width="560" style="border-collapse: collapse; max-width: 560px; background-color: #ffffff; border-radius: 16px; border: 1px solid ${colors.border}; overflow: hidden;">
+					${content}
+				</table>
+
+				<!-- Footer -->
+				<table role="presentation" width="560" style="border-collapse: collapse; max-width: 560px;">
+					<tr>
+						<td align="center" style="padding: 24px 0 0 0;">
+							<p style="margin: 0; color: ${colors.subtle}; font-size: 12px; line-height: 18px;">
+								&copy; 2025 RoboResume. All rights reserved.
+							</p>
+							<p style="margin: 6px 0 0 0; color: ${colors.subtle}; font-size: 12px; line-height: 18px;">
+								Questions? Contact us at <a href="mailto:alexander@asys.sh" style="color: ${colors.primary}; text-decoration: none;">alexander@asys.sh</a>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>`
+}
+
 interface SendVerificationEmailParams {
 	email: string
 	token: string
@@ -11,94 +77,72 @@ interface SendVerificationEmailParams {
 export async function sendVerificationEmail({ email, token, name }: SendVerificationEmailParams) {
 	const verifyUrl = `${process.env.APP_URL}/verify-email?token=${token}&email=${encodeURIComponent(email)}`
 
-	try {
-		const { data, error } = await resend.emails.send({
-			from: 'RoboResume <robo-resume@resume.dev>',
-			to: [email],
-			subject: 'Verify Your Email - RoboResume',
-			html: `
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Verify Your Email</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
-	<table role="presentation" style="width: 100%; border-collapse: collapse;">
+	const content = `
+		<!-- Accent bar -->
+		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
+
+		<!-- Body -->
 		<tr>
-			<td align="center" style="padding: 40px 0;">
-				<table role="presentation" style="width: 600px; border-collapse: collapse; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-					<!-- Header -->
+			<td style="padding: 40px 40px 0 40px;">
+				<h1 style="margin: 0 0 8px 0; color: ${colors.dark}; font-size: 24px; font-weight: 700;">
+					Verify your email
+				</h1>
+				<p style="margin: 0; color: ${colors.subtle}; font-size: 15px; line-height: 24px;">
+					${name ? `Hey ${name}! ` : ''}Thanks for signing up. Tap the button below to confirm your email and get started.
+				</p>
+			</td>
+		</tr>
+
+		<!-- Button -->
+		<tr>
+			<td align="center" style="padding: 32px 40px;">
+				<table role="presentation" style="border-collapse: collapse;">
 					<tr>
-						<td style="padding: 40px 40px 20px 40px; text-align: center;">
-							<h1 style="margin: 0; color: #1e293b; font-size: 28px; font-weight: bold;">Verify Your Email</h1>
-						</td>
-					</tr>
-
-					<!-- Content -->
-					<tr>
-						<td style="padding: 0 40px 40px 40px;">
-							<p style="margin: 0 0 20px 0; color: #475569; font-size: 16px; line-height: 24px;">
-								${name ? `Hi ${name},` : 'Hi there,'}
-							</p>
-							<p style="margin: 0 0 20px 0; color: #475569; font-size: 16px; line-height: 24px;">
-								Thanks for signing up for RoboResume! Please verify your email address to activate your account.
-							</p>
-
-							<!-- Button -->
-							<table role="presentation" style="margin: 30px 0; border-collapse: collapse; width: 100%;">
-								<tr>
-									<td align="center">
-										<a href="${verifyUrl}" style="display: inline-block; padding: 14px 32px; background-color: #d4a373; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">
-											Verify Email Address
-										</a>
-									</td>
-								</tr>
-							</table>
-
-							<p style="margin: 20px 0 0 0; color: #475569; font-size: 14px; line-height: 20px;">
-								Or copy and paste this URL into your browser:
-							</p>
-							<p style="margin: 8px 0 0 0; color: #d4a373; font-size: 14px; word-break: break-all;">
-								${verifyUrl}
-							</p>
-
-							<!-- Important Info -->
-							<div style="margin-top: 30px; padding: 20px; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
-								<p style="margin: 0; color: #92400e; font-size: 14px; line-height: 20px;">
-									<strong>⚠️ Important:</strong> This link will expire in 24 hours.
-								</p>
-							</div>
-
-							<p style="margin: 30px 0 0 0; color: #64748b; font-size: 14px; line-height: 20px;">
-								If you didn't create an account on RoboResume, you can safely ignore this email.
-							</p>
-						</td>
-					</tr>
-
-					<!-- Footer -->
-					<tr>
-						<td style="padding: 20px 40px; border-top: 1px solid #e2e8f0; text-align: center;">
-							<p style="margin: 0; color: #94a3b8; font-size: 12px; line-height: 18px;">
-								This email was sent by RoboResume. If you have questions, contact us at support@resume.dev
-							</p>
+						<td style="border-radius: 10px; background-color: ${colors.primary};">
+							<a href="${verifyUrl}" style="display: inline-block; padding: 14px 36px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">
+								Verify Email Address
+							</a>
 						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
-	</table>
-</body>
-</html>
-			`
+
+		<!-- Link fallback -->
+		<tr>
+			<td style="padding: 0 40px 32px 40px;">
+				<div style="background-color: ${colors.cream}; border-radius: 8px; padding: 16px;">
+					<p style="margin: 0 0 6px 0; color: ${colors.subtle}; font-size: 12px;">
+						Or copy this link into your browser:
+					</p>
+					<p style="margin: 0; font-size: 13px; word-break: break-all;">
+						<a href="${verifyUrl}" style="color: ${colors.primary}; text-decoration: none;">${verifyUrl}</a>
+					</p>
+				</div>
+			</td>
+		</tr>
+
+		<!-- Expiry notice -->
+		<tr>
+			<td style="padding: 0 40px 40px 40px;">
+				<p style="margin: 0; color: ${colors.subtle}; font-size: 13px; line-height: 20px;">
+					This link expires in <strong style="color: ${colors.dark};">24 hours</strong>. If you didn't create an account on RoboResume, you can safely ignore this email.
+				</p>
+			</td>
+		</tr>`
+
+	try {
+		const { data, error } = await resend.emails.send({
+			from: fromAddress,
+			to: [email],
+			subject: 'Verify Your Email — RoboResume',
+			html: emailLayout(content)
 		})
 
 		if (error) {
 			console.error('Error sending verification email:', error)
 			return { success: false, error }
 		}
-
 		return { success: true, data }
 	} catch (error) {
 		console.error('Error sending verification email:', error)
@@ -115,95 +159,72 @@ interface SendPasswordResetEmailParams {
 export async function sendPasswordResetEmail({ email, token, name }: SendPasswordResetEmailParams) {
 	const resetUrl = `${process.env.APP_URL}/auth/reset-password?token=${token}`
 
-	try {
-		const { data, error } = await resend.emails.send({
-			from: 'RoboResume <robo-resume@resume.dev>',
-			to: [email],
-			subject: 'Reset Your Password - RoboResume',
-			html: `
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Reset Your Password</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
-	<table role="presentation" style="width: 100%; border-collapse: collapse;">
+	const content = `
+		<!-- Accent bar -->
+		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
+
+		<!-- Body -->
 		<tr>
-			<td align="center" style="padding: 40px 0;">
-				<table role="presentation" style="width: 600px; border-collapse: collapse; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-					<!-- Header -->
+			<td style="padding: 40px 40px 0 40px;">
+				<h1 style="margin: 0 0 8px 0; color: ${colors.dark}; font-size: 24px; font-weight: 700;">
+					Reset your password
+				</h1>
+				<p style="margin: 0; color: ${colors.subtle}; font-size: 15px; line-height: 24px;">
+					${name ? `Hey ${name}, we` : 'We'} received a request to reset your password. If this was you, tap the button below to choose a new one.
+				</p>
+			</td>
+		</tr>
+
+		<!-- Button -->
+		<tr>
+			<td align="center" style="padding: 32px 40px;">
+				<table role="presentation" style="border-collapse: collapse;">
 					<tr>
-						<td style="padding: 40px 40px 20px 40px; text-align: center;">
-							<h1 style="margin: 0; color: #1e293b; font-size: 28px; font-weight: bold;">Reset Your Password</h1>
-						</td>
-					</tr>
-
-					<!-- Content -->
-					<tr>
-						<td style="padding: 0 40px 40px 40px;">
-							<p style="margin: 0 0 20px 0; color: #475569; font-size: 16px; line-height: 24px;">
-								${name ? `Hi ${name},` : 'Hi there,'}
-							</p>
-							<p style="margin: 0 0 20px 0; color: #475569; font-size: 16px; line-height: 24px;">
-								We received a request to reset your password for your RoboResume account. Click the button below to create a new password:
-							</p>
-
-							<!-- Button -->
-							<table role="presentation" style="margin: 30px 0; border-collapse: collapse;">
-								<tr>
-									<td align="center">
-										<a href="${resetUrl}" style="display: inline-block; padding: 14px 32px; background-color: #3b82f6; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">
-											Reset Password
-										</a>
-									</td>
-								</tr>
-							</table>
-
-							<p style="margin: 20px 0 0 0; color: #475569; font-size: 14px; line-height: 20px;">
-								Or copy and paste this URL into your browser:
-							</p>
-							<p style="margin: 8px 0 0 0; color: #3b82f6; font-size: 14px; word-break: break-all;">
-								${resetUrl}
-							</p>
-
-							<!-- Important Info -->
-							<div style="margin-top: 30px; padding: 20px; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 4px;">
-								<p style="margin: 0; color: #92400e; font-size: 14px; line-height: 20px;">
-									<strong>⚠️ Important:</strong> This link will expire in 30 minutes for security reasons.
-								</p>
-							</div>
-
-							<p style="margin: 30px 0 0 0; color: #64748b; font-size: 14px; line-height: 20px;">
-								If you didn't request a password reset, you can safely ignore this email. Your password will not be changed.
-							</p>
-						</td>
-					</tr>
-
-					<!-- Footer -->
-					<tr>
-						<td style="padding: 20px 40px; border-top: 1px solid #e2e8f0; text-align: center;">
-							<p style="margin: 0; color: #94a3b8; font-size: 12px; line-height: 18px;">
-								This email was sent by RoboResume. If you have questions, contact us at support@resume.dev
-							</p>
+						<td style="border-radius: 10px; background-color: ${colors.primary};">
+							<a href="${resetUrl}" style="display: inline-block; padding: 14px 36px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">
+								Reset Password
+							</a>
 						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
-	</table>
-</body>
-</html>
-			`
+
+		<!-- Link fallback -->
+		<tr>
+			<td style="padding: 0 40px 32px 40px;">
+				<div style="background-color: ${colors.cream}; border-radius: 8px; padding: 16px;">
+					<p style="margin: 0 0 6px 0; color: ${colors.subtle}; font-size: 12px;">
+						Or copy this link into your browser:
+					</p>
+					<p style="margin: 0; font-size: 13px; word-break: break-all;">
+						<a href="${resetUrl}" style="color: ${colors.primary}; text-decoration: none;">${resetUrl}</a>
+					</p>
+				</div>
+			</td>
+		</tr>
+
+		<!-- Expiry notice -->
+		<tr>
+			<td style="padding: 0 40px 40px 40px;">
+				<p style="margin: 0; color: ${colors.subtle}; font-size: 13px; line-height: 20px;">
+					This link expires in <strong style="color: ${colors.dark};">30 minutes</strong>. If you didn't request a password reset, you can safely ignore this email — your password won't change.
+				</p>
+			</td>
+		</tr>`
+
+	try {
+		const { data, error } = await resend.emails.send({
+			from: fromAddress,
+			to: [email],
+			subject: 'Reset Your Password — RoboResume',
+			html: emailLayout(content)
 		})
 
 		if (error) {
 			console.error('Error sending password reset email:', error)
 			return { success: false, error }
 		}
-
-		console.log('Password reset email sent:', data)
 		return { success: true, data }
 	} catch (error) {
 		console.error('Error sending password reset email:', error)

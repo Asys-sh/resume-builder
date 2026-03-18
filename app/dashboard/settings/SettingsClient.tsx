@@ -182,7 +182,7 @@ export default function SettingsClient() {
                                 value={formData.name}
                                 onChange={handleChange}
                                 placeholder="Your name"
-                                icon="user"
+                                icon="person"
                             />
                             <FormInput
                                 id="email"

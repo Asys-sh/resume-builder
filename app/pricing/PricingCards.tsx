@@ -107,7 +107,7 @@ export default function PricingCards({ isAuthenticated }: PricingCardsProps) {
 								Pro
 							</div>
 							<CardTitle className="flex items-end gap-1.5 text-4xl font-bold text-dark">
-								€2.99
+								€9.99
 								<span className="mb-1 text-base font-normal text-dark/50">/ month</span>
 							</CardTitle>
 							<CardDescription className="mt-1 text-sm text-dark/60">

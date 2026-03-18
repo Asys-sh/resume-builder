@@ -58,6 +58,7 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
     const handleAddSkill = (skillName?: string) => {
         const nameToAdd = skillName || skillInput
         if (!nameToAdd.trim()) return
+        if (resumeData.skills.some((s) => s.name.toLowerCase() === nameToAdd.trim().toLowerCase())) return
 
         const newSkill: Skill = {
             id: crypto.randomUUID(),
@@ -105,9 +106,10 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
                         {/* Add Experience Button */}
                         <button
                             onClick={handleAddExperience}
-                            className="flex items-center justify-center gap-2 p-6 border-2 border-dashed border-border-color bg-border-color/20 hover:bg-border-color/40 rounded-lg transition-colors"
+                            className="flex items-center justify-center gap-2 p-5 border-2 border-dashed border-border-color/50 rounded-xl text-text-subtle hover:border-primary hover:text-primary hover:bg-primary/5 active:scale-[0.99] transition-all"
                         >
-                            <span className="font-medium">Add another experience</span>
+                            <span className="material-symbols-outlined !text-xl">add_circle</span>
+                            <span className="font-semibold text-sm">Add another experience</span>
                         </button>
                     </div>
                 </div>

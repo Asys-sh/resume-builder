@@ -1,26 +1,26 @@
-import { getSession } from '@robojs/auth/client'
+import { decode } from '@auth/core/jwt'
 import { cookies } from 'next/headers'
 import { prisma } from './prisma'
 import { User } from '@prisma-generated/client'
 
-export async function getServerUser() {
+const COOKIE_NAME = 'authjs.session-token'
+
+export async function getServerUser(): Promise<{ id: string } | null> {
     const cookieStore = await cookies()
-    const cookieHeader = cookieStore.toString()
+    const cookieVal = cookieStore.get(COOKIE_NAME)?.value
+    if (!cookieVal) return null
 
-    const session = await getSession({
-        baseUrl: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
-        headers: {
-            cookie: cookieHeader
-        }
-    })
-
-    const isAuthenticated = !!session?.user?.id
-
-    if (isAuthenticated && session?.user?.id) {
-        return session.user;
+    try {
+        const token = await decode({
+            token: cookieVal,
+            secret: process.env.AUTH_SECRET!,
+            salt: COOKIE_NAME
+        })
+        if (!token?.sub) return null
+        return { id: token.sub }
+    } catch {
+        return null
     }
-
-    return null
 }
 
 

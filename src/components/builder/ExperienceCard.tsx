@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { Experience } from '@/stores/builder';
 import { BuilderTextarea, BuilderFormField } from '@/components/builder';
 import { Combobox } from '@/components/ui/combobox';
 import { DatePicker } from '@/components/ui/date-picker';
 import { jobs_title } from '@/lib/arrays';
+import { toast } from 'sonner';
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -14,6 +16,35 @@ interface ExperienceCardProps {
 }
 
 export function ExperienceCard({ experience, onUpdate, onDelete, index }: ExperienceCardProps) {
+  const [isGenerating, setIsGenerating] = useState(false)
+
+  const handleAIDescription = async () => {
+    setIsGenerating(true)
+    try {
+      const res = await fetch('/api/ai/assist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'description',
+          role: experience.role,
+          company: experience.company,
+          currentContent: experience.description
+        })
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.message || 'Failed to generate description')
+        return
+      }
+      onUpdate('description', data.result)
+      toast.success('Description generated!')
+    } catch {
+      toast.error('Failed to generate description')
+    } finally {
+      setIsGenerating(false)
+    }
+  }
+
   return (
     <div className="p-6 bg-white/50 rounded-lg border border-border-color/50">
       {/* Header */}
@@ -24,7 +55,7 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
           className="text-text-subtle hover:text-primary transition-colors"
           aria-label={`Delete experience ${index + 1}`}
         >
-          <span className="material-symbols-rounded">delete</span>
+          <span className="material-symbols-outlined">delete</span>
         </button>
       </div>
 
@@ -92,8 +123,12 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
             placeholder="Describe your responsibilities and achievements..."
             rows={4}
             showAIButton={true}
-            onAIClick={() => { }}
+            onAIClick={handleAIDescription}
+            disabled={isGenerating}
           />
+          {isGenerating && (
+            <p className="text-xs text-text-subtle mt-1 animate-pulse">Generating description…</p>
+          )}
         </div>
       </div>
     </div>

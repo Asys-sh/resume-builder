@@ -17,19 +17,26 @@ export const StepProgress: React.FC<StepProgressProps> = ({
 	stepLabel,
 	className,
 }) => {
-	// Clamp the current step between 0 and totalSteps to prevent out-of-range progress
 	const normalizedStep = Math.max(0, Math.min(currentStep, totalSteps));
 	const progressPercentage = (normalizedStep / totalSteps) * 100;
 
 	return (
-		<div className={cn('flex flex-col gap-3', className)}>
-			<p className="text-base font-medium text-text-main">
-				Step {currentStep} of {totalSteps}: {stepLabel}
-			</p>
+		<div className={cn('flex flex-col gap-2.5', className)}>
+			<div className="flex items-center justify-between">
+				<div className="flex items-center gap-2.5">
+					<span className="inline-flex items-center justify-center bg-primary text-white text-xs font-bold rounded-full w-6 h-6 shrink-0">
+						{currentStep}
+					</span>
+					<p className="text-base font-semibold text-text-main">{stepLabel}</p>
+				</div>
+				<span className="text-xs font-medium text-text-subtle tabular-nums">
+					{currentStep} / {totalSteps}
+				</span>
+			</div>
 			<Progress
 				value={progressPercentage}
-				className="h-2 rounded-full bg-border-color/30"
-				indicatorClassName="bg-primary"
+				className="h-1.5 rounded-full bg-border-color/30"
+				indicatorClassName="bg-primary rounded-full transition-all duration-500"
 			/>
 		</div>
 	);

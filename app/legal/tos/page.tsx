@@ -7,22 +7,22 @@ export default function TOS() {
 			</p>
 
 			<p>
-				Welcome to WavePlay LLC (“<strong>WavePlay</strong>,” “<strong>we</strong>,” “<strong>our</strong>,” or “
+				Welcome to RoboResume (“<strong>RoboResume</strong>,” “<strong>we</strong>,” “<strong>our</strong>,” or “
 				<strong>us</strong>”). These Terms of Service (“<strong>Terms</strong>”) govern your access to and use of
-				WavePlay’s resume-building tools, AI features, templates, and related services (the “<strong>Service</strong>”).
+				RoboResume’s resume-building tools, AI features, templates, and related services (the “<strong>Service</strong>”).
 			</p>
 
 			<p>By using the Service, you agree to these Terms. If you do not agree, you may not use the Service.</p>
 
-			<h2>1. About WavePlay LLC</h2>
+			<h2>1. About RoboResume</h2>
 			<p>
-				WavePlay LLC is a France-based company offering online tools to generate, edit, export, and store résumés,
+				RoboResume is a France-based company offering online tools to generate, edit, export, and store résumés,
 				including AI-powered features.
 			</p>
 
 			<h2>2. Eligibility</h2>
 			<p>
-				You must be at least <strong>16 years old</strong> to use the Service. By accessing WavePlay, you represent that
+				You must be at least <strong>16 years old</strong> to use the Service. By accessing RoboResume, you represent that
 				you meet this requirement and have legal capacity to accept these Terms.
 			</p>
 
@@ -41,22 +41,22 @@ export default function TOS() {
 			<ul>
 				<li>You retain full ownership of your User Content.</li>
 				<li>
-					You grant WavePlay a <strong>non-exclusive, worldwide, revocable license</strong> to store and process your
+					You grant RoboResume a <strong>non-exclusive, worldwide, revocable license</strong> to store and process your
 					content solely to operate and improve the Service.
 				</li>
 			</ul>
 			<p>You confirm your content does not violate laws or third-party rights.</p>
 
 			<h2>5. AI-Generated Output</h2>
-			<p>WavePlay uses artificial intelligence to provide suggestions and generate text.</p>
+			<p>RoboResume uses artificial intelligence to provide suggestions and generate text.</p>
 			<p>
 				You acknowledge that AI-generated results may contain inaccuracies and that you must review all content.
-				WavePlay is not responsible for errors, omissions, or consequences of AI output.
+				RoboResume is not responsible for errors, omissions, or consequences of AI output.
 			</p>
 
 			<h2>6. Subscription and Payments</h2>
 			<p>
-				WavePlay offers optional paid features (AI usage and premium templates) for <strong>€2.99/month</strong>.
+				RoboResume offers optional paid features (AI usage and premium templates) for <strong>€9.99/month</strong>.
 			</p>
 			<ul>
 				<li>Payments are handled by third-party processors.</li>
@@ -74,7 +74,7 @@ export default function TOS() {
 			</p>
 
 			<p>
-				However, by subscribing to WavePlay and activating AI features or accessing premium templates immediately, you
+				However, by subscribing to RoboResume and activating AI features or accessing premium templates immediately, you
 				expressly:
 			</p>
 			<ul>
@@ -87,13 +87,13 @@ export default function TOS() {
 
 			<p>
 				If you do not access premium content or AI features during the first 14 days, you may request a full refund. If
-				you partially used the Service, WavePlay may reduce the refund proportionally based on the level of usage as
+				you partially used the Service, RoboResume may reduce the refund proportionally based on the level of usage as
 				permitted by EU law.
 			</p>
 
 			<p>
 				To request a withdrawal or refund within 14 days, contact us at: Email:{' '}
-				<a href="mailto:[Insert Contact Email]">[Insert Contact Email]</a>
+				<a href="mailto:alexander@asys.sh">alexander@asys.sh</a>
 			</p>
 
 			<h2>7. Prohibited Conduct</h2>
@@ -108,13 +108,13 @@ export default function TOS() {
 
 			<h2>8. Intellectual Property</h2>
 			<p>
-				All templates, designs, logos, and code belong to WavePlay LLC. You receive a limited, personal,
+				All templates, designs, logos, and code belong to RoboResume. You receive a limited, personal,
 				non-transferable license to use the Service. You may not resell or republish templates or platform materials.
 			</p>
 
 			<h2>9. Termination</h2>
 			<p>
-				WavePlay may suspend or terminate accounts that violate these Terms or pose security risks. Upon termination,
+				RoboResume may suspend or terminate accounts that violate these Terms or pose security risks. Upon termination,
 				access ceases immediately and no refunds are provided unless required by law.
 			</p>
 
@@ -126,7 +126,7 @@ export default function TOS() {
 
 			<h2>11. Limitation of Liability</h2>
 			<p>
-				To the fullest extent legally permitted, WavePlay LLC is not liable for indirect damages, loss of data, or
+				To the fullest extent legally permitted, RoboResume is not liable for indirect damages, loss of data, or
 				employment decisions based on resume content. Liability is limited to the total amount paid by you in the
 				previous 12 months.
 			</p>
@@ -144,7 +144,7 @@ export default function TOS() {
 
 			<h2>14. Contact</h2>
 			<p>
-				WavePlay LLC [Insert Address] Email: <a href="mailto:[Insert Contact Email]">[Insert Contact Email]</a>
+				RoboResume France Email: <a href="mailto:alexander@asys.sh">alexander@asys.sh</a>
 			</p>
 		</div>
 	)

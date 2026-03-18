@@ -1,100 +1,99 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
-import { canUseAIFeatures, incrementUsage } from '@/lib/subscription'
-import { AI } from '@robojs/ai'
+import { canUseAIFeatures, incrementUsage, handleTrialExpiry } from '@/lib/subscription'
+import { openai } from '@/lib/openai'
 import { buildResumeContext, buildCoverLetterPrompt } from '@/lib/utils'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: Request) {
-    try {
-        const userSession = await getServerUser()
-        if (!userSession?.id) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-        }
+	try {
+		const userSession = await getServerUser()
+		if (!userSession?.id) {
+			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+		}
 
-        // 20 AI requests per hour per user
-        const rateLimitResponse = checkRateLimit(`ai-cover-letter:${userSession.id}`, 20, 60 * 60 * 1000)
-        if (rateLimitResponse) return rateLimitResponse
+		// 20 AI requests per hour per user
+		const rateLimitResponse = checkRateLimit(`ai-cover-letter:${userSession.id}`, 20, 60 * 60 * 1000)
+		if (rateLimitResponse) return rateLimitResponse
 
-        const user = await prisma.user.findUnique({
-            where: { id: userSession.id },
-            select: {
-                id: true,
-                subscriptionStatus: true,
-                usageCount: true,
-                usageLimit: true,
-                billingPeriodEnd: true,
-                name: true
-            }
-        })
+		const user = await prisma.user.findUnique({
+			where: { id: userSession.id },
+			select: {
+				id: true,
+				email: true,
+				subscriptionStatus: true,
+				usageCount: true,
+				usageLimit: true,
+				billingPeriodEnd: true,
+				name: true
+			}
+		})
 
-        if (!user) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 })
-        }
+		if (!user) {
+			return NextResponse.json({ error: 'User not found' }, { status: 404 })
+		}
 
-        if (!canUseAIFeatures(user)) {
-            return NextResponse.json({
-                error: 'SubscriptionRequired',
-                message: 'You have reached your AI assist limit.'
-            }, { status: 403 })
-        }
+		await handleTrialExpiry(user.id, user)
 
-        const body = await request.json()
-        const { resumeId, jobDescription, jobTitle, companyName } = body
+		if (!canUseAIFeatures(user)) {
+			return NextResponse.json({
+				error: 'SubscriptionRequired',
+				message: 'You have reached your AI assist limit.'
+			}, { status: 403 })
+		}
 
-        if (!resumeId || !jobDescription) {
-            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-        }
+		const body = await request.json()
+		const { resumeId, jobDescription, jobTitle, companyName } = body
 
-        const resume = await prisma.resume.findUnique({
-            where: { id: resumeId, userId: user.id },
-            include: {
-                experiences: true,
-                skills: true,
-                education: true,
-                projects: true
-            }
-        })
+		if (!jobDescription) {
+			return NextResponse.json({ error: 'Missing job description' }, { status: 400 })
+		}
 
-        if (!resume) {
-            return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
-        }
+		if (jobDescription.length > 10000) {
+			return NextResponse.json({ error: 'Job description too long' }, { status: 400 })
+		}
 
-        // Build context from resume data
-        const resumeContext = buildResumeContext({
-            userName: user.name,
-            summary: resume.summary,
-            experiences: resume.experiences,
-            skills: resume.skills,
-            education: resume.education,
-            projects: resume.projects
-        })
+		// If a resumeId is provided, enrich the prompt with the user's resume data
+		let resumeContext = ''
+		if (resumeId) {
+			const resume = await prisma.resume.findUnique({
+				where: { id: resumeId, userId: user.id },
+				include: { experiences: true, skills: true, education: true, projects: true }
+			})
+			if (resume) {
+				resumeContext = buildResumeContext({
+					userName: user.name,
+					summary: resume.summary,
+					experiences: resume.experiences,
+					skills: resume.skills,
+					education: resume.education,
+					projects: resume.projects
+				})
+			}
+		}
 
-        // Generate cover letter using AI
-        const prompt = buildCoverLetterPrompt({
-            jobTitle,
-            companyName,
-            jobDescription,
-            resumeContext
-        })
+		const prompt = buildCoverLetterPrompt({
+			jobTitle,
+			companyName,
+			jobDescription,
+			resumeContext
+		})
 
-        const response = await AI.chatSync([
-            {
-                role: 'user',
-                content: prompt
-            }
-        ], {})
+		const completion = await openai.chat.completions.create({
+			model: 'gpt-4o-mini',
+			messages: [{ role: 'user', content: prompt }],
+			temperature: 0.7,
+			max_tokens: 1000
+		})
 
-        // Extract content from response - ChatReply has a text property
-        const generatedContent = response.text || ''
+		const generatedContent = completion.choices[0]?.message?.content ?? ''
 
-        // Increment usage
-        await incrementUsage(user.id)
+		await incrementUsage(user.id)
 
-        return NextResponse.json({ content: generatedContent })
-    } catch (error) {
-        console.error('Error generating cover letter:', error)
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
-    }
+		return NextResponse.json({ content: generatedContent })
+	} catch (error) {
+		console.error('Error generating cover letter:', error)
+		return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+	}
 }

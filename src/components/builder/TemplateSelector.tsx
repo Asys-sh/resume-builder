@@ -1,6 +1,7 @@
 'use client'
 
 import { TEMPLATES } from '@/lib/templates'
+import { cn } from '@/lib/utils'
 
 interface TemplateSelectorProps {
 	selectedTemplate: string
@@ -13,7 +14,7 @@ export function TemplateSelector({ selectedTemplate, onSelect }: TemplateSelecto
 	}
 
 	return (
-		<div className="grid grid-cols-2 gap-4">
+		<div className="grid grid-cols-2 gap-5">
 			{TEMPLATES.map((template) => {
 				const isSelected = selectedTemplate === template.id
 
@@ -21,24 +22,42 @@ export function TemplateSelector({ selectedTemplate, onSelect }: TemplateSelecto
 					<button
 						key={template.id}
 						onClick={() => onSelect(template.id)}
-						className={`
-              border-2 rounded-lg p-4 transition-all
-              hover:border-primary hover:scale-105
-              ${isSelected ? 'border-primary bg-highlight/30' : 'border-border-color/40'}
-            `}
+						className={cn(
+							'group relative flex flex-col rounded-xl border-2 overflow-hidden transition-all duration-200 text-left',
+							'hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5',
+							isSelected
+								? 'border-primary shadow-md shadow-primary/15'
+								: 'border-border-color/40'
+						)}
 					>
-						{template.previewComponent}
-						<div
-							className={`mt-3 flex flex-col items-center gap-2 font-medium ${
-								isSelected ? 'text-primary' : 'text-text-subtle'
-							}`}
-						>
-							<div className="flex items-center gap-2">
-								{isSelected && <span className="material-symbols-outlined text-base">check_circle</span>}
-								{template.name}
+						{/* Selected badge */}
+						{isSelected && (
+							<div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 bg-primary text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+								<span className="material-symbols-outlined !text-[13px]">check</span>
+								Selected
 							</div>
+						)}
+
+						{/* Preview area */}
+						<div className={cn(
+							'p-4 transition-colors',
+							isSelected ? 'bg-primary/5' : 'bg-gray-50 group-hover:bg-primary/[0.03]'
+						)}>
+							{template.previewComponent}
 						</div>
-						<p className="text-xs text-text-subtle mt-2">{template.description}</p>
+
+						{/* Info footer */}
+						<div className="px-4 py-3 bg-white border-t border-border-color/20 flex flex-col gap-0.5">
+							<p className={cn(
+								'font-bold text-sm',
+								isSelected ? 'text-primary' : 'text-text-main'
+							)}>
+								{template.name}
+							</p>
+							<p className="text-xs text-text-subtle leading-relaxed">
+								{template.description}
+							</p>
+						</div>
 					</button>
 				)
 			})}

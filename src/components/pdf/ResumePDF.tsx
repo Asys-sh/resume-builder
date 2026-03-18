@@ -296,37 +296,7 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                 <EducationSection />
                 <ProjectsSection />
                 <SkillsSection />
-
-                {(certifications.length > 0 || languages.length > 0) && (
-                    <View style={{ flexDirection: 'row', gap: 40 }}>
-                        <View style={{ flex: 1 }}>
-                            {certifications.length > 0 && (
-                                <View style={styles.section}>
-                                    <Text style={styles.sectionTitle}>Certifications</Text>
-                                    {certifications.map((cert) => (
-                                        <View key={cert.id} style={{ marginBottom: 4 }}>
-                                            <Text style={{ fontWeight: 'bold', fontSize: 10 }}>{cert.name}</Text>
-                                            <Text style={{ fontSize: 9, color: colors.subtext }}>{cert.issuer} {cert.date ? `• ${cert.date}` : ''}</Text>
-                                        </View>
-                                    ))}
-                                </View>
-                            )}
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            {languages.length > 0 && (
-                                <View style={styles.section}>
-                                    <Text style={styles.sectionTitle}>Languages</Text>
-                                    {languages.map((lang) => (
-                                        <View key={lang.id} style={{ marginBottom: 4 }}>
-                                            <Text style={{ fontWeight: 'bold', fontSize: 10 }}>{lang.name}</Text>
-                                            <Text style={{ fontSize: 9, color: colors.subtext }}>{lang.proficiency}</Text>
-                                        </View>
-                                    ))}
-                                </View>
-                            )}
-                        </View>
-                    </View>
-                )}
+                <CertsAndLanguages />
             </Page>
         </Document>
     );

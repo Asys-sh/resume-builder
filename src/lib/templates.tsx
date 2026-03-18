@@ -655,69 +655,172 @@ function CreativeTemplate({ resumeData }: { resumeData: ResumeData }) {
 
 /** Preview Components */
 const ModernPreview = (
-	<div className="aspect-[8.5/11] bg-white rounded border p-4 flex flex-col gap-2">
-		<div className="w-2/3 h-3 bg-primary rounded mx-auto" />
-		<div className="w-1/2 h-2 bg-text-subtle/30 rounded mx-auto" />
-		<div className="mt-2 space-y-1">
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
-			<div className="w-3/4 h-1.5 bg-text-subtle/20 rounded" />
+	<div className="aspect-[8.5/11] bg-white rounded border overflow-hidden flex flex-col text-[0px]">
+		{/* Header — centered, primary name */}
+		<div className="px-4 pt-4 pb-2.5 flex flex-col items-center gap-1.5">
+			<div className="w-1/2 h-2.5 bg-primary rounded" />
+			<div className="w-1/3 h-1.5 bg-text-subtle/35 rounded" />
+			<div className="flex gap-2 mt-0.5">
+				<div className="w-10 h-1 bg-text-subtle/20 rounded" />
+				<div className="w-10 h-1 bg-text-subtle/20 rounded" />
+				<div className="w-10 h-1 bg-text-subtle/20 rounded" />
+			</div>
 		</div>
-		<div className="mt-2 space-y-1">
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
+		<div className="h-px bg-primary/25 mx-4" />
+		{/* Summary */}
+		<div className="px-4 pt-2.5 space-y-1">
+			<div className="w-14 h-1.5 bg-primary/55 rounded" />
+			<div className="w-full h-1 bg-text-subtle/15 rounded" />
+			<div className="w-4/5 h-1 bg-text-subtle/15 rounded" />
+		</div>
+		{/* Experience */}
+		<div className="px-4 pt-2.5 space-y-1">
+			<div className="w-20 h-1.5 bg-primary/55 rounded" />
+			<div className="flex justify-between mt-0.5">
+				<div className="w-1/3 h-1.5 bg-text-subtle/30 rounded" />
+				<div className="w-1/5 h-1 bg-text-subtle/20 rounded" />
+			</div>
+			<div className="w-full h-1 bg-text-subtle/15 rounded" />
+			<div className="w-full h-1 bg-text-subtle/15 rounded" />
+			<div className="w-3/4 h-1 bg-text-subtle/15 rounded" />
+		</div>
+		{/* Skills */}
+		<div className="px-4 pt-2.5 space-y-1.5">
+			<div className="w-10 h-1.5 bg-primary/55 rounded" />
+			<div className="flex flex-wrap gap-1">
+				<div className="w-9 h-2 bg-primary/12 rounded-full" />
+				<div className="w-12 h-2 bg-primary/12 rounded-full" />
+				<div className="w-8 h-2 bg-primary/12 rounded-full" />
+				<div className="w-11 h-2 bg-primary/12 rounded-full" />
+				<div className="w-9 h-2 bg-primary/12 rounded-full" />
+			</div>
 		</div>
 	</div>
 )
 
 const ClassicPreview = (
-	<div className="aspect-[8.5/11] bg-white rounded border p-4 flex flex-col gap-2">
-		<div className="w-1/2 h-3 bg-text-main rounded" />
-		<div className="w-1/3 h-2 bg-text-subtle/30 rounded" />
-		<div className="mt-2 space-y-1">
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
-			<div className="w-4/5 h-1.5 bg-text-subtle/20 rounded" />
+	<div className="aspect-[8.5/11] bg-white rounded border overflow-hidden flex flex-col p-4 gap-2 text-[0px]">
+		{/* Header — left aligned, dark name */}
+		<div className="flex flex-col gap-1">
+			<div className="w-2/5 h-2.5 bg-text-main rounded" />
+			<div className="w-1/3 h-1.5 bg-text-subtle/35 rounded" />
+			<div className="flex gap-2 mt-0.5">
+				<div className="w-10 h-1 bg-text-subtle/20 rounded" />
+				<div className="w-10 h-1 bg-text-subtle/20 rounded" />
+			</div>
 		</div>
-		<div className="mt-2 space-y-1">
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
-			<div className="w-full h-1.5 bg-text-subtle/20 rounded" />
+		<div className="h-px bg-text-main/35" />
+		{/* Experience */}
+		<div className="space-y-1">
+			<div className="w-20 h-1.5 bg-text-main/60 rounded" />
+			<div className="flex justify-between">
+				<div className="w-1/3 h-1.5 bg-text-subtle/30 rounded" />
+				<div className="w-1/5 h-1 bg-text-subtle/20 rounded" />
+			</div>
+			<div className="w-full h-1 bg-text-subtle/15 rounded" />
+			<div className="w-full h-1 bg-text-subtle/15 rounded" />
+			<div className="w-4/5 h-1 bg-text-subtle/15 rounded" />
+		</div>
+		<div className="h-px bg-text-main/15" />
+		{/* Education */}
+		<div className="space-y-1">
+			<div className="w-16 h-1.5 bg-text-main/60 rounded" />
+			<div className="w-2/5 h-1.5 bg-text-subtle/25 rounded" />
+			<div className="w-1/3 h-1 bg-text-subtle/15 rounded" />
+		</div>
+		<div className="h-px bg-text-main/15" />
+		{/* Skills */}
+		<div className="space-y-1">
+			<div className="w-10 h-1.5 bg-text-main/60 rounded" />
+			<div className="w-full h-1 bg-text-subtle/15 rounded" />
+			<div className="w-2/3 h-1 bg-text-subtle/15 rounded" />
 		</div>
 	</div>
 )
 
 const MinimalistPreview = (
-	<div className="aspect-[8.5/11] bg-white rounded border p-4 flex flex-col gap-2">
-		<div className="w-1/3 h-2.5 bg-text-main rounded" />
-		<div className="border-t border-text-subtle/20 my-1" />
-		<div className="space-y-1.5">
-			<div className="w-full h-1 bg-text-subtle/20 rounded" />
-			<div className="w-full h-1 bg-text-subtle/20 rounded" />
-			<div className="w-2/3 h-1 bg-text-subtle/20 rounded" />
+	<div className="aspect-[8.5/11] bg-white rounded border overflow-hidden flex flex-col p-5 gap-2.5 text-[0px]">
+		{/* Header — minimal, just name + thin contact line */}
+		<div className="flex flex-col gap-1.5">
+			<div className="w-2/5 h-2 bg-text-main rounded" />
+			<div className="flex gap-2">
+				<div className="w-14 h-0.5 bg-text-subtle/30 rounded" />
+				<div className="w-14 h-0.5 bg-text-subtle/30 rounded" />
+				<div className="w-14 h-0.5 bg-text-subtle/30 rounded" />
+			</div>
 		</div>
-		<div className="border-t border-text-subtle/20 my-1" />
-		<div className="space-y-1.5">
-			<div className="w-full h-1 bg-text-subtle/20 rounded" />
-			<div className="w-3/4 h-1 bg-text-subtle/20 rounded" />
+		<div className="h-px bg-text-subtle/20" />
+		<div className="space-y-1">
+			<div className="w-14 h-1 bg-text-subtle/45 rounded" />
+			<div className="w-full h-0.5 bg-text-subtle/15 rounded" />
+			<div className="w-full h-0.5 bg-text-subtle/15 rounded" />
+			<div className="w-4/5 h-0.5 bg-text-subtle/15 rounded" />
+		</div>
+		<div className="h-px bg-text-subtle/20" />
+		<div className="space-y-1">
+			<div className="w-18 h-1 bg-text-subtle/45 rounded" />
+			<div className="flex justify-between">
+				<div className="w-1/3 h-0.5 bg-text-subtle/25 rounded" />
+				<div className="w-1/5 h-0.5 bg-text-subtle/20 rounded" />
+			</div>
+			<div className="w-full h-0.5 bg-text-subtle/15 rounded" />
+			<div className="w-3/4 h-0.5 bg-text-subtle/15 rounded" />
+		</div>
+		<div className="h-px bg-text-subtle/20" />
+		<div className="space-y-1">
+			<div className="w-10 h-1 bg-text-subtle/45 rounded" />
+			<div className="flex gap-1.5 flex-wrap">
+				<div className="w-9 h-0.5 bg-text-subtle/15 rounded" />
+				<div className="w-12 h-0.5 bg-text-subtle/15 rounded" />
+				<div className="w-8 h-0.5 bg-text-subtle/15 rounded" />
+			</div>
 		</div>
 	</div>
 )
 
 const CreativePreview = (
-	<div className="aspect-[8.5/11] bg-white rounded border p-4 flex gap-2">
-		<div className="w-1/3 bg-primary/20 rounded p-2 space-y-1">
-			<div className="w-full h-2 bg-primary rounded" />
-			<div className="w-2/3 h-1.5 bg-primary/60 rounded" />
-			<div className="mt-2 space-y-1">
-				<div className="w-full h-1 bg-primary/40 rounded" />
-				<div className="w-full h-1 bg-primary/40 rounded" />
+	<div className="aspect-[8.5/11] bg-white rounded border overflow-hidden flex text-[0px]">
+		{/* Sidebar — primary color */}
+		<div className="w-[34%] bg-primary flex flex-col p-2.5 gap-2">
+			<div className="w-full h-2.5 bg-white/80 rounded" />
+			<div className="w-2/3 h-1.5 bg-white/50 rounded" />
+			<div className="mt-1 space-y-1">
+				<div className="w-3/4 h-1 bg-white/35 rounded" />
+				<div className="w-full h-1 bg-white/25 rounded" />
+				<div className="w-2/3 h-1 bg-white/25 rounded" />
+			</div>
+			<div className="mt-1 space-y-1">
+				<div className="w-1/2 h-1 bg-white/55 rounded" />
+				<div className="flex flex-wrap gap-1">
+					<div className="w-8 h-1.5 bg-white/20 rounded" />
+					<div className="w-10 h-1.5 bg-white/20 rounded" />
+					<div className="w-7 h-1.5 bg-white/20 rounded" />
+					<div className="w-9 h-1.5 bg-white/20 rounded" />
+				</div>
 			</div>
 		</div>
-		<div className="flex-1 space-y-1.5">
-			<div className="w-2/3 h-2 bg-text-main rounded" />
-			<div className="w-full h-1 bg-text-subtle/20 rounded" />
-			<div className="w-full h-1 bg-text-subtle/20 rounded" />
-			<div className="w-4/5 h-1 bg-text-subtle/20 rounded" />
+		{/* Main content */}
+		<div className="flex-1 p-2.5 flex flex-col gap-2">
+			<div className="space-y-1">
+				<div className="w-1/2 h-1.5 bg-primary/50 rounded" />
+				<div className="w-full h-1 bg-text-subtle/15 rounded" />
+				<div className="w-4/5 h-1 bg-text-subtle/15 rounded" />
+			</div>
+			<div className="space-y-1">
+				<div className="w-1/3 h-1.5 bg-primary/50 rounded" />
+				<div className="flex justify-between">
+					<div className="w-2/5 h-1 bg-text-subtle/25 rounded" />
+					<div className="w-1/5 h-1 bg-text-subtle/15 rounded" />
+				</div>
+				<div className="w-full h-1 bg-text-subtle/15 rounded" />
+				<div className="w-full h-1 bg-text-subtle/15 rounded" />
+				<div className="w-3/4 h-1 bg-text-subtle/15 rounded" />
+			</div>
+			<div className="space-y-1">
+				<div className="w-1/3 h-1.5 bg-primary/50 rounded" />
+				<div className="w-2/3 h-1 bg-text-subtle/20 rounded" />
+				<div className="w-1/2 h-1 bg-text-subtle/15 rounded" />
+			</div>
 		</div>
 	</div>
 )

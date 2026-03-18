@@ -77,7 +77,7 @@ export function Combobox({
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-full justify-between font-normal text-left"
+                className="w-full justify-between font-normal text-left bg-white"
                 onClick={() => setOpen(!open)}
             >
                 {value || placeholder}

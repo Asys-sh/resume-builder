@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'motion/react'
 import { User } from '@prisma-generated/client'
+import { signOut } from '@robojs/auth/client'
 interface NavbarProps {
 	isAuthenticated?: boolean
 	user?: User
@@ -21,13 +22,12 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
 				className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-yellow bg-cream/80 px-4 py-3 backdrop-blur-sm sm:px-8 md:px-16 lg:px-24"
 			>
 				<div className="flex items-center gap-4 text-dark">
-					<div className="size-6 text-primary">
-						<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+					<div className="size-7 text-primary">
+						<svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
 							<path
-								clipRule="evenodd"
-								d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-								fill="currentColor"
 								fillRule="evenodd"
+								clipRule="evenodd"
+								d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z M16 24A8 8 0 0 1 32 24A8 8 0 0 1 16 24Z"
 							/>
 						</svg>
 					</div>
@@ -56,9 +56,9 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
 					</div>
 				) : (
 					<div className="hidden flex-1 items-center justify-end gap-4 md:flex">
-						<button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-dark text-sm font-bold hover:bg-primary/90">
+						<Link href="/builder" className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-dark text-sm font-bold hover:bg-primary/90">
 							<span className="truncate">Create a Resume</span>
-						</button>
+						</Link>
 						<div className="group relative">
 							<div
 								className="h-10 w-10 cursor-pointer rounded-full bg-cover bg-center bg-no-repeat"
@@ -82,6 +82,12 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
 								>
 									Settings
 								</Link>
+								<button
+									onClick={() => signOut({ callbackUrl: "/" })}
+									className="block w-full rounded px-4 py-2 text-left text-sm text-red-500 hover:bg-red-50"
+								>
+									Sign out
+								</button>
 							</div>
 						</div>
 					</div>
@@ -145,20 +151,26 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
 									Create a Resume
 								</button>
 								<div className="border-t border-yellow pt-2 mt-2">
-									<a
+									<Link
+										href="/dashboard"
 										className="flex w-full items-center rounded px-4 py-3 text-sm text-dark hover:bg-yellow"
-										href="#"
 										onClick={() => setMobileMenuOpen(false)}
 									>
 										Dashboard
-									</a>
-									<a
+									</Link>
+									<Link
+										href="/dashboard/settings"
 										className="flex w-full items-center rounded px-4 py-3 text-sm text-dark hover:bg-yellow"
-										href="#"
 										onClick={() => setMobileMenuOpen(false)}
 									>
 										Settings
-									</a>
+									</Link>
+									<button
+										onClick={() => signOut({ callbackUrl: "/" })}
+										className="flex w-full items-center rounded px-4 py-3 text-sm text-red-500 hover:bg-red-50"
+									>
+										Sign out
+									</button>
 								</div>
 							</div>
 						)}

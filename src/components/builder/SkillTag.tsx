@@ -16,7 +16,7 @@ export function SkillTag({ skill, onRemove }: SkillTagProps) {
         className="text-text-subtle hover:text-text-main transition-colors"
         aria-label={`Remove ${skill.name}`}
       >
-        <span className="material-symbols-rounded !text-base">close</span>
+        <span className="material-symbols-outlined !text-base">close</span>
       </button>
     </div>
   );

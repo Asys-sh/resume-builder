@@ -1,58 +1,61 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getSession } from '@robojs/auth/client'
+import { getToken } from '@auth/core/jwt'
+
+const COOKIE_NAME = 'authjs.session-token'
+
+async function isSessionValid(request: NextRequest): Promise<boolean> {
+	const cookieVal = request.cookies.get(COOKIE_NAME)?.value
+	if (!cookieVal) return false
+
+	try {
+		const token = await getToken({
+			req: request,
+			secret: process.env.AUTH_SECRET!,
+			cookieName: COOKIE_NAME,
+			salt: COOKIE_NAME,
+			secureCookie: false
+		})
+		return !!token
+	} catch {
+		return false
+	}
+}
 
 export async function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl
+	const { pathname } = request.nextUrl
 
-    // Define protected routes
-    const protectedRoutes = ['/dashboard', '/success', '/builder', '/cancel']
-    const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
+	const protectedRoutes = ['/dashboard', '/success', '/builder', '/cancel']
+	const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
+	const isAuthRoute = pathname.startsWith('/auth')
 
-    // Define auth routes
-    const isAuthRoute = pathname.startsWith('/auth')
+	if (!isProtectedRoute && !isAuthRoute) {
+		return NextResponse.next()
+	}
 
-    // Check for session
-    // We pass the cookie header to getSession so it can verify the session
-    const session = await getSession({
-        baseUrl: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
-        headers: {
-            cookie: request.headers.get('cookie') || ''
-        }
-    })
+	const isAuthenticated = await isSessionValid(request)
 
-    const isAuthenticated = !!session?.user?.id
+	if (isProtectedRoute && !isAuthenticated) {
+		const url = request.nextUrl.clone()
+		url.pathname = '/auth'
+		url.searchParams.set('login', 'true')
+		return NextResponse.redirect(url)
+	}
 
-    // Redirect unauthenticated users trying to access protected routes
-    if (isProtectedRoute && !isAuthenticated) {
-        const url = request.nextUrl.clone()
-        url.pathname = '/auth'
-        url.searchParams.set('login', 'true')
-        return NextResponse.redirect(url)
-    }
+	if (pathname === '/success' && !request.nextUrl.searchParams.has('session_id')) {
+		return NextResponse.redirect(new URL('/dashboard', request.url))
+	}
 
-    // Protect /success route - require session_id
-    if (pathname === '/success' && !request.nextUrl.searchParams.has('session_id')) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
+	const isRscRequest = request.headers.get('rsc') === '1' || request.nextUrl.searchParams.has('_rsc')
+	if (isAuthRoute && isAuthenticated && !isRscRequest) {
+		return NextResponse.redirect(new URL('/dashboard', request.url))
+	}
 
-    // Redirect authenticated users trying to access auth routes
-    if (isAuthRoute && isAuthenticated) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
-
-    return NextResponse.next()
+	return NextResponse.next()
 }
 
 export const config = {
-    matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - api (API routes)
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         */
-        '/((?!api|_next/static|_next/image|favicon.ico).*)'
-    ]
+	matcher: [
+		'/((?!api|_next/static|_next/image|favicon.ico).*)'
+	]
 }

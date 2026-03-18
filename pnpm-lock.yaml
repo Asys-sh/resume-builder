@@ -44,12 +44,9 @@ importers:
       '@react-pdf/renderer':
         specifier: ^4.3.1
         version: 4.3.1(react@19.2.0)
-      '@robojs/ai':
-        specifier: ^0.5.8
-        version: 0.5.8(@robojs/server@https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a)(robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3))
       '@robojs/auth':
         specifier: https://pkg.pr.new/Wave-Play/robo.js/@robojs/auth@3ec5b2a
-        version: https://pkg.pr.new/Wave-Play/robo.js/@robojs/auth@3ec5b2a(@auth/prisma-adapter@2.11.1(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3)))(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3))(@robojs/server@https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a)(robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3))
+        version: https://pkg.pr.new/Wave-Play/robo.js/@robojs/auth@3ec5b2a(@auth/prisma-adapter@2.11.1(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3)))(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3))(@robojs/server@https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a)(robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.25.1)(keyv@4.5.4)(typescript@5.9.3))
       '@robojs/server':
         specifier: https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a
         version: https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a
@@ -97,7 +94,10 @@ importers:
         version: 6.5.2
       robo.js:
         specifier: https://pkg.pr.new/Wave-Play/robo.js@ef0c000
-        version: https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3)
+        version: https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.25.1)(keyv@4.5.4)(typescript@5.9.3)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       stripe:
         specifier: 19.1.0
         version: 19.1.0(@types/node@24.10.1)
@@ -203,8 +203,8 @@ packages:
   '@chevrotain/utils@10.5.0':
     resolution: {integrity: sha512-hBzuU5+JjB2cqNZyszkDHZgOSrUUT8V3dhgRl8Q9Gp6dAj/H5+KILGjbhDpc3Iy9qmqlm/akuOI2ut9VUtzJxQ==}
 
-  '@discordjs/builders@1.13.0':
-    resolution: {integrity: sha512-COK0uU6ZaJI+LA67H/rp8IbEkYwlZf3mAoBI5wtPh5G5cbEQGNhVpzINg2f/6+q/YipnNIKy6fJDg6kMUKUw4Q==}
+  '@discordjs/builders@1.13.1':
+    resolution: {integrity: sha512-cOU0UDHc3lp/5nKByDxkmRiNZBpdp0kx55aarbiAfakfKJHlxv/yFW1zmIqCAmwH5CRlrH9iMFKJMpvW4DPB+w==}
     engines: {node: '>=16.11.0'}
 
   '@discordjs/collection@1.5.3':
@@ -215,16 +215,16 @@ packages:
     resolution: {integrity: sha512-LiSusze9Tc7qF03sLCujF5iZp7K+vRNEDBZ86FT9aQAv3vxMLihUvKvpsCWiQ2DJq1tVckopKm1rxomgNUc9hg==}
     engines: {node: '>=18'}
 
-  '@discordjs/formatters@0.6.1':
-    resolution: {integrity: sha512-5cnX+tASiPCqCWtFcFslxBVUaCetB0thvM/JyavhbXInP1HJIEU+Qv/zMrnuwSsX3yWH2lVXNJZeDK3EiP4HHg==}
+  '@discordjs/formatters@0.6.2':
+    resolution: {integrity: sha512-y4UPwWhH6vChKRkGdMB4odasUbHOUwy7KL+OVwF86PvT6QVOwElx+TiI1/6kcmcEe+g5YRXJFiXSXUdabqZOvQ==}
     engines: {node: '>=16.11.0'}
 
   '@discordjs/rest@2.6.0':
     resolution: {integrity: sha512-RDYrhmpB7mTvmCKcpj+pc5k7POKszS4E2O9TYc+U+Y4iaCP+r910QdO43qmpOja8LRr1RJ0b3U+CqVsnPqzf4w==}
     engines: {node: '>=18'}
 
-  '@discordjs/util@1.1.1':
-    resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
+  '@discordjs/util@1.2.0':
+    resolution: {integrity: sha512-3LKP7F2+atl9vJFhaBjn4nOaSWahZ/yWjOvA4e5pnXkt2qyXRCHLxoBQy81GFtLGCq7K9lPm9R517M1U+/90Qg==}
     engines: {node: '>=18'}
 
   '@discordjs/ws@1.2.3':
@@ -344,89 +344,105 @@ packages:
     resolution: {integrity: sha512-excjX8DfsIcJ10x1Kzr4RcWe1edC9PquDRRPx3YVCvQv+U5p7Yin2s32ftzikXojb1PIFc/9Mt28/y+iRklkrw==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-libvips-linux-arm@1.2.4':
     resolution: {integrity: sha512-bFI7xcKFELdiNCVov8e44Ia4u2byA+l3XtsAj+Q8tfCwO6BQ8iDojYdvoPMqsKDkuoOo+X6HZA0s0q11ANMQ8A==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-libvips-linux-ppc64@1.2.4':
     resolution: {integrity: sha512-FMuvGijLDYG6lW+b/UvyilUWu5Ayu+3r2d1S8notiGCIyYU/76eig1UfMmkZ7vwgOrzKzlQbFSuQfgm7GYUPpA==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-libvips-linux-riscv64@1.2.4':
     resolution: {integrity: sha512-oVDbcR4zUC0ce82teubSm+x6ETixtKZBh/qbREIOcI3cULzDyb18Sr/Wcyx7NRQeQzOiHTNbZFF1UwPS2scyGA==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-libvips-linux-s390x@1.2.4':
     resolution: {integrity: sha512-qmp9VrzgPgMoGZyPvrQHqk02uyjA0/QrTO26Tqk6l4ZV0MPWIW6LTkqOIov+J1yEu7MbFQaDpwdwJKhbJvuRxQ==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-libvips-linux-x64@1.2.4':
     resolution: {integrity: sha512-tJxiiLsmHc9Ax1bz3oaOYBURTXGIRDODBqhveVHonrHJ9/+k89qbLl0bcJns+e4t4rvaNBxaEZsFtSfAdquPrw==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-libvips-linuxmusl-arm64@1.2.4':
     resolution: {integrity: sha512-FVQHuwx1IIuNow9QAbYUzJ+En8KcVm9Lk5+uGUQJHaZmMECZmOlix9HnH7n1TRkXMS0pGxIJokIVB9SuqZGGXw==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@img/sharp-libvips-linuxmusl-x64@1.2.4':
     resolution: {integrity: sha512-+LpyBk7L44ZIXwz/VYfglaX/okxezESc6UxDSoyo2Ks6Jxc4Y7sGjpgU9s4PMgqgjj1gZCylTieNamqA1MF7Dg==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@img/sharp-linux-arm64@0.34.5':
     resolution: {integrity: sha512-bKQzaJRY/bkPOXyKx5EVup7qkaojECG6NLYswgktOZjaXecSAeCWiZwwiFf3/Y+O1HrauiE3FVsGxFg8c24rZg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-linux-arm@0.34.5':
     resolution: {integrity: sha512-9dLqsvwtg1uuXBGZKsxem9595+ujv0sJ6Vi8wcTANSFpwV/GONat5eCkzQo/1O6zRIkh0m/8+5BjrRr7jDUSZw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-linux-ppc64@0.34.5':
     resolution: {integrity: sha512-7zznwNaqW6YtsfrGGDA6BRkISKAAE1Jo0QdpNYXNMHu2+0dTrPflTLNkpc8l7MUP5M16ZJcUvysVWWrMefZquA==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-linux-riscv64@0.34.5':
     resolution: {integrity: sha512-51gJuLPTKa7piYPaVs8GmByo7/U7/7TZOq+cnXJIHZKavIRHAP77e3N2HEl3dgiqdD/w0yUfiJnII77PuDDFdw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-linux-s390x@0.34.5':
     resolution: {integrity: sha512-nQtCk0PdKfho3eC5MrbQoigJ2gd1CgddUMkabUj+rBevs8tZ2cULOx46E7oyX+04WGfABgIwmMC0VqieTiR4jg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-linux-x64@0.34.5':
     resolution: {integrity: sha512-MEzd8HPKxVxVenwAa+JRPwEC7QFjoPWuS5NZnBt6B3pu7EG2Ge0id1oLHZpPJdn3OQK+BQDiw9zStiHBTJQQQQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@img/sharp-linuxmusl-arm64@0.34.5':
     resolution: {integrity: sha512-fprJR6GtRsMt6Kyfq44IsChVZeGN97gTD331weR1ex1c1rypDEABN6Tm2xa1wE6lYb5DdEnk03NZPqA7Id21yg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@img/sharp-linuxmusl-x64@0.34.5':
     resolution: {integrity: sha512-Jg8wNT1MUzIvhBFxViqrEhWDGzqymo3sV7z7ZsaWbZNDLXRJZoRGrjulp60YYtV4wfY8VIKcWidjojlLcWrd8Q==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@img/sharp-wasm32@0.34.5':
     resolution: {integrity: sha512-OdWTEiVkY2PHwqkbBI8frFxQQFekHaSSkUIJkwzclWZe64O1X4UlUjqqqLaPbUpMOQk6FBu/HtlGXNblIs0huw==}
@@ -495,24 +511,28 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@next/swc-linux-arm64-musl@15.5.6':
     resolution: {integrity: sha512-FsbGVw3SJz1hZlvnWD+T6GFgV9/NYDeLTNQB2MXoPN5u9VA9OEDy6fJEfePfsUKAhJufFbZLgp0cPxMuV6SV0w==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@next/swc-linux-x64-gnu@15.5.6':
     resolution: {integrity: sha512-3QnHGFWlnvAgyxFxt2Ny8PTpXtQD7kVEeaFat5oPAHHI192WKYB+VIKZijtHLGdBBvc16tiAkPTDmQNOQ0dyrA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@next/swc-linux-x64-musl@15.5.6':
     resolution: {integrity: sha512-OsGX148sL+TqMK9YFaPFPoIaJKbFJJxFzkXZljIgA9hjMjdruKht6xDCEv1HLtlLNfkx3c5w2GLKhj7veBQizQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@next/swc-win32-arm64-msvc@15.5.6':
     resolution: {integrity: sha512-ONOMrqWxdzXDJNh2n60H6gGyKed42Ieu6UTVPZteXpuKbLZTH4G4eBMsr5qWgOBA+s7F+uB4OJbZnrkEDnZ5Fg==}
@@ -567,24 +587,28 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@node-rs/argon2-linux-arm64-musl@2.0.2':
     resolution: {integrity: sha512-p3YqVMNT/4DNR67tIHTYGbedYmXxW9QlFmF39SkXyEbGQwpgSf6pH457/fyXBIYznTU/smnG9EH+C1uzT5j4hA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@node-rs/argon2-linux-x64-gnu@2.0.2':
     resolution: {integrity: sha512-ZM3jrHuJ0dKOhvA80gKJqBpBRmTJTFSo2+xVZR+phQcbAKRlDMSZMFDiKbSTnctkfwNFtjgDdh5g1vaEV04AvA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@node-rs/argon2-linux-x64-musl@2.0.2':
     resolution: {integrity: sha512-of5uPqk7oCRF/44a89YlWTEfjsftPywyTULwuFDKyD8QtVZoonrJR6ZWvfFE/6jBT68S0okAkAzzMEdBVWdxWw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@node-rs/argon2-wasm32-wasi@2.0.2':
     resolution: {integrity: sha512-U3PzLYKSQYzTERstgtHLd4ZTkOF9co57zTXT77r0cVUsleGZOrd6ut7rHzeWwoJSiHOVxxa0OhG1JVQeB7lLoQ==}
@@ -1027,16 +1051,6 @@ packages:
   '@react-pdf/types@2.9.1':
     resolution: {integrity: sha512-5GoCgG0G5NMgpPuHbKG2xcVRQt7+E5pg3IyzVIIozKG3nLcnsXW4zy25vG1ZBQA0jmo39q34au/sOnL/0d1A4w==}
 
-  '@robojs/ai@0.5.8':
-    resolution: {integrity: sha512-AVcxLCyTDIudOvUiOgpNxnyB4NS9NvMAxDTj+MtAzIq0ms7q2wgFl8/CMjWNkVk8AG0OGpkZ0p8G7CXlbsld4g==}
-    version: 0.5.8
-    peerDependencies:
-      '@robojs/server': ^0.6.2
-      robo.js: ^0.10.28
-    peerDependenciesMeta:
-      '@robojs/server':
-        optional: true
-
   '@robojs/auth@https://pkg.pr.new/Wave-Play/robo.js/@robojs/auth@3ec5b2a':
     resolution: {tarball: https://pkg.pr.new/Wave-Play/robo.js/@robojs/auth@3ec5b2a}
     version: 0.0.0
@@ -1107,24 +1121,28 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@swc/core-linux-arm64-musl@1.15.1':
     resolution: {integrity: sha512-fKzP9mRQGbhc5QhJPIsqKNNX/jyWrZgBxmo3Nz1SPaepfCUc7RFmtcJQI5q8xAun3XabXjh90wqcY/OVyg2+Kg==}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@swc/core-linux-x64-gnu@1.15.1':
     resolution: {integrity: sha512-ZLjMi138uTJxb+1wzo4cB8mIbJbAsSLWRNeHc1g1pMvkERPWOGlem+LEYkkzaFzCNv1J8aKcL653Vtw8INHQeg==}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@swc/core-linux-x64-musl@1.15.1':
     resolution: {integrity: sha512-jvSI1IdsIYey5kOITzyajjofXOOySVitmLxb45OPUjoNojql4sDojvlW5zoHXXFePdA6qAX4Y6KbzAOV3T3ctA==}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@swc/core-win32-arm64-msvc@1.15.1':
     resolution: {integrity: sha512-X/FcDtNrDdY9r4FcXHt9QxUqC/2FbQdvZobCKHlHe8vTSKhUHOilWl5EBtkFVfsEs4D5/yAri9e3bJbwyBhhBw==}
@@ -1443,11 +1461,11 @@ packages:
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
 
-  discord-api-types@0.38.33:
-    resolution: {integrity: sha512-oau1V7OzrNX8yNi+DfQpoLZCNCv7cTFmvPKwHfMrA/tewsO6iQKrMTzA7pa3iBSj0fED6NlklJ/1B/cC1kI08Q==}
+  discord-api-types@0.38.42:
+    resolution: {integrity: sha512-qs1kya7S84r5RR8m9kgttywGrmmoHaRifU1askAoi+wkoSefLpZP6aGXusjNw5b0jD3zOg3LTwUa3Tf2iHIceQ==}
 
-  discord.js@14.24.2:
-    resolution: {integrity: sha512-VMEDbmguRdX/EeMaTsf9Mb0IQA90WdYF2cn4QDfslQFXgQ6LFtmlPn0FSotnS0kcFbFp+JBSIxtnF+bnAHG/hQ==}
+  discord.js@14.25.1:
+    resolution: {integrity: sha512-2l0gsPOLPs5t6GFZfQZKnL1OJNYFcuC/ETWsW4VtKVD/tg4ICa9x+jb9bkPffkMdRpRpuUaO/fKkHCBeiCKh8g==}
     engines: {node: '>=18'}
 
   dlv@1.1.3:
@@ -1620,10 +1638,6 @@ packages:
   foreground-child@3.3.1:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
-
-  formdata-node@6.0.3:
-    resolution: {integrity: sha512-8e1++BCiTzUno9v5IZ2J6bv4RU+3UKDmqWUQD0MIMVCd9AdhWkO1gw57oo1mNEX1dMq2EGI+FbWz4B92pscSQg==}
-    engines: {node: '>= 18'}
 
   fraction.js@5.3.4:
     resolution: {integrity: sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==}
@@ -1904,8 +1918,8 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  magic-bytes.js@1.12.1:
-    resolution: {integrity: sha512-ThQLOhN86ZkJ7qemtVRGYM+gRgR8GEXNli9H/PMvpnZsE44Xfh3wx9kGJaldg314v85m+bFW6WBMaVHJc/c3zA==}
+  magic-bytes.js@1.13.0:
+    resolution: {integrity: sha512-afO2mnxW7GDTXMm5/AoN1WuOcdoKhtgXjIvHmobqTD1grNplhGdv3PFOyjCVmrnOZBIT/gD/koDKpYG+0mvHcg==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -2471,6 +2485,12 @@ packages:
   simple-swizzle@0.2.4:
     resolution: {integrity: sha512-nAu1WFPQSMNr2Zn9PGSZK9AGn4t/y97lEm+MXTtUDwfP0ksAIX4nO+6ruD9Jwut4C49SB1Ws+fbXsm/yScWOHw==}
 
+  sonner@2.0.7:
+    resolution: {integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -2777,12 +2797,12 @@ snapshots:
 
   '@chevrotain/utils@10.5.0': {}
 
-  '@discordjs/builders@1.13.0':
+  '@discordjs/builders@1.13.1':
     dependencies:
-      '@discordjs/formatters': 0.6.1
-      '@discordjs/util': 1.1.1
+      '@discordjs/formatters': 0.6.2
+      '@discordjs/util': 1.2.0
       '@sapphire/shapeshift': 4.0.0
-      discord-api-types: 0.38.33
+      discord-api-types: 0.38.42
       fast-deep-equal: 3.1.3
       ts-mixer: 6.0.4
       tslib: 2.8.1
@@ -2791,33 +2811,35 @@ snapshots:
 
   '@discordjs/collection@2.1.1': {}
 
-  '@discordjs/formatters@0.6.1':
+  '@discordjs/formatters@0.6.2':
     dependencies:
-      discord-api-types: 0.38.33
+      discord-api-types: 0.38.42
 
   '@discordjs/rest@2.6.0':
     dependencies:
       '@discordjs/collection': 2.1.1
-      '@discordjs/util': 1.1.1
+      '@discordjs/util': 1.2.0
       '@sapphire/async-queue': 1.5.5
       '@sapphire/snowflake': 3.5.3
       '@vladfrangu/async_event_emitter': 2.4.7
-      discord-api-types: 0.38.33
-      magic-bytes.js: 1.12.1
+      discord-api-types: 0.38.42
+      magic-bytes.js: 1.13.0
       tslib: 2.8.1
       undici: 6.21.3
 
-  '@discordjs/util@1.1.1': {}
+  '@discordjs/util@1.2.0':
+    dependencies:
+      discord-api-types: 0.38.42
 
   '@discordjs/ws@1.2.3':
     dependencies:
       '@discordjs/collection': 2.1.1
       '@discordjs/rest': 2.6.0
-      '@discordjs/util': 1.1.1
+      '@discordjs/util': 1.2.0
       '@sapphire/async-queue': 1.5.5
       '@types/ws': 8.18.1
       '@vladfrangu/async_event_emitter': 2.4.7
-      discord-api-types: 0.38.33
+      discord-api-types: 0.38.42
       tslib: 2.8.1
       ws: 8.18.3
     transitivePeerDependencies:
@@ -3577,20 +3599,13 @@ snapshots:
       '@react-pdf/primitives': 4.1.1
       '@react-pdf/stylesheet': 6.1.1
 
-  '@robojs/ai@0.5.8(@robojs/server@https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a)(robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3))':
-    dependencies:
-      formdata-node: 6.0.3
-      robo.js: https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3)
-    optionalDependencies:
-      '@robojs/server': https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a
-
-  '@robojs/auth@https://pkg.pr.new/Wave-Play/robo.js/@robojs/auth@3ec5b2a(@auth/prisma-adapter@2.11.1(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3)))(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3))(@robojs/server@https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a)(robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3))':
+  '@robojs/auth@https://pkg.pr.new/Wave-Play/robo.js/@robojs/auth@3ec5b2a(@auth/prisma-adapter@2.11.1(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3)))(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3))(@robojs/server@https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a)(robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.25.1)(keyv@4.5.4)(typescript@5.9.3))':
     dependencies:
       '@auth/core': 0.40.0
       '@robojs/server': https://pkg.pr.new/Wave-Play/robo.js/@robojs/server@3ec5b2a
       argon2id: 1.0.1
       nanoid: 5.1.6
-      robo.js: https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3)
+      robo.js: https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.25.1)(keyv@4.5.4)(typescript@5.9.3)
       zod: 3.25.76
     optionalDependencies:
       '@auth/prisma-adapter': 2.11.1(@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3))
@@ -3938,21 +3953,21 @@ snapshots:
 
   didyoumean@1.2.2: {}
 
-  discord-api-types@0.38.33: {}
+  discord-api-types@0.38.42: {}
 
-  discord.js@14.24.2:
+  discord.js@14.25.1:
     dependencies:
-      '@discordjs/builders': 1.13.0
+      '@discordjs/builders': 1.13.1
       '@discordjs/collection': 1.5.3
-      '@discordjs/formatters': 0.6.1
+      '@discordjs/formatters': 0.6.2
       '@discordjs/rest': 2.6.0
-      '@discordjs/util': 1.1.1
+      '@discordjs/util': 1.2.0
       '@discordjs/ws': 1.2.3
       '@sapphire/snowflake': 3.5.3
-      discord-api-types: 0.38.33
+      discord-api-types: 0.38.42
       fast-deep-equal: 3.1.3
       lodash.snakecase: 4.1.1
-      magic-bytes.js: 1.12.1
+      magic-bytes.js: 1.13.0
       tslib: 2.8.1
       undici: 6.21.3
     transitivePeerDependencies:
@@ -4149,8 +4164,6 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
-
-  formdata-node@6.0.3: {}
 
   fraction.js@5.3.4: {}
 
@@ -4388,7 +4401,7 @@ snapshots:
     dependencies:
       react: 19.2.0
 
-  magic-bytes.js@1.12.1: {}
+  magic-bytes.js@1.13.0: {}
 
   math-intrinsics@1.1.0: {}
 
@@ -4805,9 +4818,9 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.24.2)(keyv@4.5.4)(typescript@5.9.3):
+  robo.js@https://pkg.pr.new/Wave-Play/robo.js@ef0c000(@swc/core@1.15.1)(discord.js@14.25.1)(keyv@4.5.4)(typescript@5.9.3):
     dependencies:
-      discord.js: 14.24.2
+      discord.js: 14.25.1
     optionalDependencies:
       '@swc/core': 1.15.1
       keyv: 4.5.4
@@ -4909,6 +4922,11 @@ snapshots:
   simple-swizzle@0.2.4:
     dependencies:
       is-arrayish: 0.3.4
+
+  sonner@2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
 
   source-map-js@1.2.1: {}
 

@@ -17,10 +17,11 @@ interface FormInputProps {
 	className?: string
 	name?: string
 	required?: boolean
+	disabled?: boolean
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-	({ id, label, type = 'text', placeholder, value, onChange, error, icon, rightLabel, className, name, required }, ref) => {
+	({ id, label, type = 'text', placeholder, value, onChange, error, icon, rightLabel, className, name, required, disabled }, ref) => {
 		const [showPassword, setShowPassword] = useState(false)
 		const inputType = type === 'password' ? (showPassword ? 'text' : 'password') : type
 
@@ -50,7 +51,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 						value={value}
 						onChange={onChange}
 						required={required}
-						className={`h-14 ${icon ? 'pl-11' : 'pl-4'} ${type === 'password' ? 'pr-11' : 'pr-4'} border-secondary-accent bg-beige focus:ring-2 focus:ring-primary/50 ${error ? 'border-destructive' : ''
+						disabled={disabled}
+						className={`h-14 ${icon ? 'pl-11' : 'pl-4'} ${type === 'password' ? 'pr-11' : 'pr-4'} border-secondary-accent bg-beige focus:ring-2 focus:ring-primary/50 ${error ? 'border-red-400' : ''
 							} ${className || ''}`}
 						aria-invalid={error ? 'true' : 'false'}
 						aria-describedby={error ? `${id}-error` : undefined}

@@ -32,6 +32,8 @@ export default function BuilderPage() {
 	const [, setCurrentStep] = useAtom(setCurrentStepAtom)
 	const [validationErrors, setValidationErrors] = useState<string[]>([])
 	const [resumeId, setResumeId] = useState<string | null>(null)
+	const resumeIdRef = useRef<string | null>(null)
+	const isSavingRef = useRef(false)
 	const [user] = useAtom(userAtom)
 	const [isSaving, setIsSaving] = useState(false)
 	const [lastSaved, setLastSaved] = useState<Date | null>(null)
@@ -44,6 +46,7 @@ export default function BuilderPage() {
 		const urlSearchParams = new URLSearchParams(window.location.search)
 		const resumeIdParam = urlSearchParams.get('resumeId')
 		if (resumeIdParam && resumeIdParam !== 'new') {
+			resumeIdRef.current = resumeIdParam
 			setResumeId(resumeIdParam)
 		} else {
 			// Reset state for new resume
@@ -111,25 +114,21 @@ export default function BuilderPage() {
 			return
 		}
 
+		// Prevent concurrent saves — if one is already in-flight, skip
+		if (isSavingRef.current) return
+		isSavingRef.current = true
 		setIsSaving(true)
-		try {
-			// Map data to match database schema
-			// Map data to match database schema
-			// Store data already matches Prisma schema for the most part
-			const mappedData = {
-				...resumeData,
-				// Ensure dates are valid Date objects or strings that API can handle
-				// If they are Date objects in store, JSON.stringify will make them strings.
-				// If they are strings in store (legacy), they are strings.
-				// The API endpoint should handle parsing.
-			}
 
+		// Read from ref so we always get the latest ID even across concurrent calls
+		const currentResumeId = resumeIdRef.current
+
+		try {
 			const response = await fetch('/api/resumes/', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					resumeId: resumeId,
-					data: mappedData,
+					resumeId: currentResumeId,
+					data: resumeData,
 					title: resumeData.contactInfo.fullName || 'Untitled Resume',
 					template: resumeData.selectedTemplate
 				})
@@ -139,6 +138,9 @@ export default function BuilderPage() {
 
 			const result = await response.json()
 			if (result.success) {
+				// Update ref immediately (synchronous) so any save triggered right
+				// after this will use the correct ID without waiting for a re-render
+				resumeIdRef.current = result.resumeId
 				setResumeId(result.resumeId)
 				setLastSaved(new Date())
 				if (!silent) {
@@ -149,6 +151,7 @@ export default function BuilderPage() {
 			console.error('Save error:', error)
 			if (!silent) toast.error('Failed to save resume. Please try again.')
 		} finally {
+			isSavingRef.current = false
 			setIsSaving(false)
 		}
 	}
@@ -210,6 +213,7 @@ export default function BuilderPage() {
 				lastSaved={lastSaved}
 				onSave={handleSave}
 				onDownload={handleDownload}
+				userInitials={user?.name?.split(' ').map((w) => w[0].toUpperCase()).join('') ?? '?'}
 			/>
 			<AuthDialog open={showAuthModal} onOpenChange={setShowAuthModal} />
 

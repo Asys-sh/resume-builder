@@ -1,35 +1,26 @@
-import { getSession } from '@robojs/auth/client'
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
-import { canUseAIFeatures, incrementUsage } from '@/lib/subscription'
+import { canUseAIFeatures, incrementUsage, handleTrialExpiry } from '@/lib/subscription'
+import { openai } from '@/lib/openai'
+import { buildResumeContext, buildResumeImprovementPrompt } from '@/lib/utils'
 import { checkRateLimit } from '@/lib/rate-limit'
 
-/**
- * AI Assist API Route (Placeholder)
- *
- * This route serves as a template for future AI feature implementations.
- * It demonstrates the proper flow for checking subscription permissions
- * and tracking usage.
- *
- * TODO: Implement actual AI logic here (e.g., OpenAI API calls, resume improvements, etc.)
- */
 export async function POST(request: NextRequest) {
 	try {
-		// 1. Get the user session
-		const session = await getSession()
-		if (!session?.user?.email) {
-			return NextResponse.json({ error: 'Unauthorized', message: 'You must be logged in to use AI features' }, { status: 401 })
+		const userSession = await getServerUser()
+		if (!userSession?.id) {
+			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 		}
 
-		// 1b. Rate limit: 30 AI requests per hour per user email
-		const rateLimitResponse = checkRateLimit(`ai:${session.user.email}`, 30, 60 * 60 * 1000)
+		// 30 AI requests per hour per user
+		const rateLimitResponse = checkRateLimit(`ai:${userSession.id}`, 30, 60 * 60 * 1000)
 		if (rateLimitResponse) return rateLimitResponse
 
-		// 2. Fetch user data from Prisma including subscription fields
 		const user = await prisma.user.findUnique({
-			where: { email: session.user.email },
+			where: { id: userSession.id },
 			select: {
-				id: true, // Use id instead of userId
+				id: true,
 				subscriptionStatus: true,
 				usageCount: true,
 				usageLimit: true,
@@ -39,28 +30,30 @@ export async function POST(request: NextRequest) {
 		})
 
 		if (!user) {
-			return NextResponse.json({ error: 'UserNotFound', message: 'User not found' }, { status: 404 })
+			return NextResponse.json({ error: 'User not found' }, { status: 404 })
 		}
 
-		// 3. Check if user can use AI features
+		await handleTrialExpiry(user.id, user)
+
 		if (!canUseAIFeatures(user)) {
-			return NextResponse.json(
-				{
-					error: 'SubscriptionRequired',
-					message: 'You have reached your AI assist limit. Please upgrade to Pro for unlimited access.',
-					usageCount: user.usageCount,
-					usageLimit: user.usageLimit,
-					subscriptionStatus: user.subscriptionStatus
-				},
-				{ status: 403 }
-			)
+			return NextResponse.json({
+				error: 'SubscriptionRequired',
+				message: 'You have reached your AI assist limit. Please upgrade to Pro for unlimited access.',
+				usageCount: user.usageCount,
+				usageLimit: user.usageLimit,
+				subscriptionStatus: user.subscriptionStatus
+			}, { status: 403 })
 		}
 
 		const body = await request.json()
-		const { resumeId, jobDescription, jobTitle, companyName } = body
+		const { resumeId, jobDescription } = body
 
 		if (!resumeId || !jobDescription) {
 			return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+		}
+
+		if (jobDescription.length > 10000) {
+			return NextResponse.json({ error: 'Job description too long' }, { status: 400 })
 		}
 
 		const resume = await prisma.resume.findUnique({
@@ -77,30 +70,35 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
 		}
 
-		// TODO: Replace with actual AI call (OpenAI, Anthropic, etc.)
-		// For now, we'll generate a placeholder based on the inputs
-		const generatedContent = `
-Dear Hiring Manager at ${companyName || 'the company'},
+		const resumeContext = buildResumeContext({
+			userName: user.name,
+			summary: resume.summary,
+			experiences: resume.experiences,
+			skills: resume.skills,
+			education: resume.education,
+			projects: resume.projects
+		})
 
-I am writing to express my strong interest in the ${jobTitle || 'position'} role. With my background in ${resume.experiences[0]?.role || 'my field'} and my skills in ${resume.skills.slice(0, 3).map(s => s.name).join(', ')}, I am confident in my ability to contribute effectively to your team.
+		const prompt = buildResumeImprovementPrompt({
+			userName: user.name,
+			jobDescription,
+			resumeContext
+		})
 
-Based on the job description:
-"${jobDescription.substring(0, 100)}..."
+		const completion = await openai.chat.completions.create({
+			model: 'gpt-4o-mini',
+			messages: [{ role: 'user', content: prompt }],
+			temperature: 0.6,
+			max_tokens: 800
+		})
 
-I believe my experience at ${resume.experiences[0]?.company || 'my previous companies'} aligns perfectly with your requirements.
+		const suggestions = completion.choices[0]?.message?.content ?? ''
 
-Thank you for considering my application.
-
-Sincerely,
-${user.name || 'Candidate'}
-		`.trim()
-
-		// Increment usage
 		await incrementUsage(user.id)
 
-		return NextResponse.json({ content: generatedContent })
+		return NextResponse.json({ suggestions })
 	} catch (error) {
 		console.error('AI API error:', error)
-		return NextResponse.json({ error: 'InternalError', message: 'An internal error occurred' }, { status: 500 })
+		return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
 	}
 }

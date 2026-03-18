@@ -32,7 +32,7 @@ const PLANS = {
 	PRO: {
 		id: 'pro',
 		name: 'Pro',
-		price: '€2.99',
+		price: '€9.99',
 		priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
 		features: ['Unlimited AI assists', 'Priority AI processing', 'Advanced templates']
 	}

@@ -2,6 +2,32 @@ import { User } from '@prisma-generated/client'
 import { prisma } from './prisma'
 
 /**
+ * If a user's trial has expired, downgrades them to the free tier (INACTIVE).
+ * Call this before checking canUseAIFeatures on trial users.
+ */
+export async function handleTrialExpiry(userId: string, user: Pick<User, 'subscriptionStatus' | 'billingPeriodEnd'>): Promise<void> {
+	if (
+		user.subscriptionStatus === 'TRIAL' &&
+		user.billingPeriodEnd &&
+		new Date() > user.billingPeriodEnd
+	) {
+		await prisma.user.update({
+			where: { id: userId },
+			data: {
+				subscriptionStatus: 'INACTIVE',
+				usageLimit: 5,
+				usageCount: 0,
+				billingPeriodStart: null,
+				billingPeriodEnd: null
+			}
+		})
+		// Mutate in place so canUseAIFeatures sees the updated values
+		user.subscriptionStatus = 'INACTIVE'
+		user.billingPeriodEnd = null
+	}
+}
+
+/**
  * Subscription Model
  *
  * This system uses a subscription-based model for AI features:
@@ -28,7 +54,13 @@ import { prisma } from './prisma'
  * 2. Usage count must be less than usage limit
  * 3. Billing period must not have ended (if applicable)
  */
-export function canUseAIFeatures(user: Pick<User, 'subscriptionStatus' | 'usageCount' | 'usageLimit' | 'billingPeriodEnd'>): boolean {
+export function canUseAIFeatures(user: Pick<User, 'subscriptionStatus' | 'usageCount' | 'usageLimit' | 'billingPeriodEnd'> & { email?: string | null }): boolean {
+	// Admin bypass — developer is never quota-limited
+	const adminEmail = process.env.ADMIN_EMAIL
+	if (adminEmail && user.email && user.email === adminEmail) {
+		return true
+	}
+
 	// Check if user has exceeded usage limit
 	if (user.usageCount >= user.usageLimit) {
 		return false

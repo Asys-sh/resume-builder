@@ -1,23 +1,6 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-/**
- * AI Assist Button Component (Presentational)
- *
- * This is a presentational component that renders an AI assist button.
- * AI feature gating should be handled by the parent component or API route.
- *
- * Parent components should check subscription status and usage limits before
- * enabling this button (using the `disabled` prop). Reference the
- * `src/lib/subscription.ts` utility for checking permissions.
- *
- * @example
- * ```tsx
- * const user = await getUser()
- * const canUseAI = canUseAIFeatures(user)
- * <AIAssistButton disabled={!canUseAI} onClick={handleAIAssist} />
- * ```
- */
 export interface AIAssistButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	ariaLabel?: string;
@@ -33,17 +16,20 @@ export const AIAssistButton = React.forwardRef<
 			type="button"
 			onClick={onClick}
 			disabled={disabled}
-			aria-label={ariaLabel || 'AI Assist'}
+			aria-label={ariaLabel || 'Generate with AI'}
+			title="Generate with AI"
 			className={cn(
-				'size-10 rounded-md bg-highlight text-text-subtle transition-colors',
-				'hover:bg-primary hover:text-white',
+				'size-9 rounded-lg transition-all duration-200',
+				'bg-primary/10 text-primary border border-primary/20',
+				'hover:bg-primary hover:text-white hover:border-primary hover:shadow-md hover:shadow-primary/25 hover:scale-105',
+				'active:scale-95',
 				'flex items-center justify-center',
-				'disabled:opacity-50 disabled:cursor-not-allowed',
+				'disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:bg-primary/10 disabled:hover:text-primary disabled:hover:shadow-none',
 				className
 			)}
 			{...props}
 		>
-			<span className="material-symbols-outlined !text-xl">auto_awesome</span>
+			<span className="material-symbols-outlined !text-[18px]">auto_awesome</span>
 		</button>
 	);
 });
