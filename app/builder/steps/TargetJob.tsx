@@ -62,7 +62,11 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
             const data = await response.json();
 
             if (!response.ok) {
-                toast.error(data.message || 'Failed to generate cover letter');
+                if (response.status === 429) {
+                    toast.error(data.message || 'AI quota reached. Upgrade to Pro for unlimited access.');
+                } else {
+                    toast.error(data.error || data.message || 'Failed to generate cover letter');
+                }
                 return;
             }
 
@@ -75,7 +79,7 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
             }));
             toast.success('Cover letter generated!');
         } catch {
-            toast.error('Something went wrong. Please try again.');
+            toast.error('Connection error — check your internet and try again.');
         } finally {
             setIsGenerating(false);
         }

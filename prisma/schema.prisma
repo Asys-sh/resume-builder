@@ -186,6 +186,22 @@ enum SubscriptionStatus {
   TRIAL
 }
 
+model ProcessedWebhook {
+  id        String   @id // Stripe event ID
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  details   Json
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
 model Password {
   id        String   @id @default(cuid())
   userId    String   @unique

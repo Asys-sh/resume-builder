@@ -58,7 +58,7 @@ const makeEvent = (type: string, object: Record<string, unknown>): Stripe.Event 
         pending_webhooks: 1,
         request: null,
         data: { object },
-    }) as Stripe.Event
+    }) as unknown as Stripe.Event
 
 const makeCheckoutSession = (overrides: Record<string, unknown> = {}): Record<string, unknown> => ({
     id: 'cs_test_123',

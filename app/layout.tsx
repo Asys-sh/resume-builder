@@ -6,6 +6,7 @@ import { getUserData } from "@/lib/auth-helper";
 import { validateEnv } from "@/lib/env";
 import { Toaster } from "sonner";
 import CookieBanner from "@/components/CookieBanner";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 validateEnv();
 
@@ -60,9 +61,11 @@ export default async function RootLayout({
           Skip to content
         </a>
         <JotaiProvider initialUser={user}>
-          <main id="main-content" className="min-h-screen">
-            {children}
-          </main>
+          <ErrorBoundary>
+            <main id="main-content" className="min-h-screen">
+              {children}
+            </main>
+          </ErrorBoundary>
         </JotaiProvider>
         <CookieBanner />
         <Toaster

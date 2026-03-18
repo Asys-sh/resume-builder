@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
-import { sanitizeText, sanitizeUrl } from '@/lib/sanitize'
+import { sanitizeText } from '@/lib/sanitize'
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {

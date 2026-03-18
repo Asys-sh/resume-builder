@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { tryConsumeAICredit, handleTrialExpiry } from '@/lib/subscription'
 import { openai } from '@/lib/openai'
 import { checkRateLimit } from '@/lib/rate-limit'
+import { sanitizeText } from '@/lib/sanitize'
 
 export async function POST(request: Request) {
 	try {
@@ -42,7 +43,14 @@ export async function POST(request: Request) {
 			}, { status: 403 })
 		}
 
-		const { type, role, company, currentContent, skills } = await request.json()
+		const raw = await request.json()
+		const type = sanitizeText(raw.type)
+		const role = sanitizeText(raw.role)
+		const company = sanitizeText(raw.company)
+		const currentContent = sanitizeText(raw.currentContent)
+		const skills: string[] = Array.isArray(raw.skills)
+			? raw.skills.map((s: unknown) => sanitizeText(String(s))).filter(Boolean)
+			: []
 
 		let prompt = ''
 

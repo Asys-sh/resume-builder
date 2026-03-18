@@ -50,8 +50,24 @@ export async function GET(req: NextRequest) {
         const url = new URL(reqUrl)
         const resumeId = url.searchParams.get('resumeId')
 
+        // No resumeId = paginated list mode
         if (!resumeId) {
-            return NextResponse.json({ error: 'Missing resume ID' }, { status: 400 })
+            const page = Math.max(1, parseInt(url.searchParams.get('page') ?? '1', 10))
+            const limit = 12
+            const skip = (page - 1) * limit
+
+            const [resumes, total] = await Promise.all([
+                prisma.resume.findMany({
+                    where: { userId: user.id },
+                    select: { id: true, title: true, updatedAt: true, template: true, contactInfo: true },
+                    orderBy: { updatedAt: 'desc' },
+                    skip,
+                    take: limit,
+                }),
+                prisma.resume.count({ where: { userId: user.id } }),
+            ])
+
+            return NextResponse.json({ resumes, total, hasMore: skip + resumes.length < total })
         }
 
         const resume = await prisma.resume.findUnique({
@@ -126,13 +142,12 @@ export async function POST(req: NextRequest) {
 
         const newResumeId = resume.id
 
-        // Helper for Smart Sync
+        // Helper for Smart Sync — must run inside a transaction (receives tx client)
         const syncRelated = async (
             model: any,
             items: any[],
             foreignKey: string
         ) => {
-            // 1. Get existing IDs
             const existingItems = await model.findMany({
                 where: { [foreignKey]: newResumeId },
                 select: { id: true },
@@ -140,47 +155,33 @@ export async function POST(req: NextRequest) {
             const existingIds = new Set(existingItems.map((i: any) => i.id))
             const incomingIds = new Set(items.map((i) => i.id).filter((id: string) => id && existingIds.has(id)))
 
-            // 2. Delete missing
             const toDelete = [...existingIds].filter((id) => !incomingIds.has(id))
             if (toDelete.length > 0) {
-                await model.deleteMany({
-                    where: { id: { in: toDelete } },
-                })
+                await model.deleteMany({ where: { id: { in: toDelete } } })
             }
 
-            // 3. Update or Create
             for (const item of items) {
                 const { id, ...rest } = item
-                // If ID exists in DB, update. Otherwise create.
-                // Note: We use the ID from the client if it matches an existing record,
-                // otherwise we let Prisma generate a new CUID (or use the client's UUID if we want, but safer to let DB handle or ensure it's valid).
-                // For simplicity, if it's a new item (not in existingIds), we create it.
-
                 if (id && existingIds.has(id)) {
-                    await model.update({
-                        where: { id },
-                        data: rest,
-                    })
+                    await model.update({ where: { id }, data: rest })
                 } else {
-                    await model.create({
-                        data: {
-                            ...rest,
-                            [foreignKey]: newResumeId,
-                        },
-                    })
+                    await model.create({ data: { ...rest, [foreignKey]: newResumeId } })
                 }
             }
         }
 
-        // Execute Syncs
-        await Promise.all([
-            syncRelated(prisma.experience, data.experiences, 'resumeId'),
-            syncRelated(prisma.education, data.education, 'resumeId'),
-            syncRelated(prisma.skill, data.skills, 'resumeId'),
-            syncRelated(prisma.project, data.projects, 'resumeId'),
-            syncRelated(prisma.certification, data.certifications, 'resumeId'),
-            syncRelated(prisma.language, data.languages, 'resumeId'),
-        ])
+        // Execute all syncs in a single transaction — if any step fails the
+        // entire operation rolls back, preventing partial/corrupt resume state.
+        await prisma.$transaction(async (tx) => {
+            await Promise.all([
+                syncRelated(tx.experience, data.experiences, 'resumeId'),
+                syncRelated(tx.education, data.education, 'resumeId'),
+                syncRelated(tx.skill, data.skills, 'resumeId'),
+                syncRelated(tx.project, data.projects, 'resumeId'),
+                syncRelated(tx.certification, data.certifications, 'resumeId'),
+                syncRelated(tx.language, data.languages, 'resumeId'),
+            ])
+        })
 
         return NextResponse.json({ success: true, resumeId: newResumeId })
     } catch (error) {

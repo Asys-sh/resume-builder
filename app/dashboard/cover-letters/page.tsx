@@ -20,24 +20,27 @@ const emptyForm = { jobTitle: '', companyName: '', jobDescription: '', content: 
 export default function CoverLettersView() {
 	const [coverLetters, setCoverLetters] = useState<CoverLetter[]>([])
 	const [isLoading, setIsLoading] = useState(true)
+	const [fetchError, setFetchError] = useState(false)
 	const [showCreator, setShowCreator] = useState(false)
 	const [form, setForm] = useState(emptyForm)
 	const [isGenerating, setIsGenerating] = useState(false)
 	const [isSaving, setIsSaving] = useState(false)
+	const [deletingId, setDeletingId] = useState<string | null>(null)
 
 	useEffect(() => {
 		fetchCoverLetters()
 	}, [])
 
 	const fetchCoverLetters = async () => {
+		setIsLoading(true)
+		setFetchError(false)
 		try {
 			const res = await fetch('/api/cover-letters')
-			if (res.ok) {
-				const data = await res.json()
-				setCoverLetters(data.coverLetters)
-			}
+			if (!res.ok) throw new Error('Failed to load')
+			const data = await res.json()
+			setCoverLetters(data.coverLetters)
 		} catch {
-			toast.error('Failed to load cover letters')
+			setFetchError(true)
 		} finally {
 			setIsLoading(false)
 		}
@@ -114,6 +117,7 @@ export default function CoverLettersView() {
 
 	const handleDelete = async (id: string) => {
 		if (!confirm('Are you sure you want to delete this cover letter?')) return
+		setDeletingId(id)
 		try {
 			const res = await fetch(`/api/cover-letters/${id}`, { method: 'DELETE' })
 			if (res.ok) {
@@ -125,6 +129,8 @@ export default function CoverLettersView() {
 			}
 		} catch {
 			toast.error('Failed to delete cover letter')
+		} finally {
+			setDeletingId(null)
 		}
 	}
 
@@ -220,6 +226,7 @@ export default function CoverLettersView() {
 							variant="outline"
 							onClick={() => { setShowCreator(false); setForm(emptyForm) }}
 							className="border-yellow"
+							disabled={isSaving || isGenerating}
 						>
 							Cancel
 						</Button>
@@ -242,6 +249,13 @@ export default function CoverLettersView() {
 			{!showCreator && (isLoading ? (
 				<div className="flex justify-center py-12">
 					<Loader2 className="h-8 w-8 animate-spin text-dark/40" />
+				</div>
+			) : fetchError ? (
+				<div className="flex flex-col items-center gap-3 py-12 text-center">
+					<p className="text-sm text-dark/60">Failed to load cover letters.</p>
+					<Button variant="outline" size="sm" onClick={fetchCoverLetters} className="border-yellow">
+						Retry
+					</Button>
 				</div>
 			) : coverLetters.length === 0 && !showCreator ? (
 				<Card className="py-12 border-none shadow-none bg-none">
@@ -280,9 +294,12 @@ export default function CoverLettersView() {
 									variant="ghost"
 									size="sm"
 									onClick={() => handleDelete(cl.id)}
+									disabled={deletingId === cl.id}
 									className="text-red-500 hover:text-red-600 hover:bg-red-50"
 								>
-									<Trash2 className="h-4 w-4 mr-2" />
+									{deletingId === cl.id
+										? <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+										: <Trash2 className="h-4 w-4 mr-2" />}
 									Delete
 								</Button>
 							</CardFooter>

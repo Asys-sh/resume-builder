@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { FormInput } from '@/components/ui/form-input'
 import { Separator } from '@/components/ui/separator'
-import { Download, Trash2, Save, AlertTriangle, User } from 'lucide-react'
+import { Download, Trash2, Save, AlertTriangle, User, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useAtom } from 'jotai'
@@ -25,6 +25,7 @@ export default function SettingsClient() {
     const router = useRouter()
     const [user, setUser] = useAtom(userAtom)
     const [isLoading, setIsLoading] = useState(false)
+    const [isExporting, setIsExporting] = useState(false)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -93,6 +94,7 @@ export default function SettingsClient() {
     }
 
     const handleExportData = async () => {
+        setIsExporting(true)
         try {
             const res = await fetch('/api/user/export')
             if (!res.ok) throw new Error('Failed to export data')
@@ -110,6 +112,8 @@ export default function SettingsClient() {
         } catch (error) {
             console.error('Export error:', error)
             toast.error('Failed to export data')
+        } finally {
+            setIsExporting(false)
         }
     }
 
@@ -183,6 +187,7 @@ export default function SettingsClient() {
                                 onChange={handleChange}
                                 placeholder="Your name"
                                 icon="person"
+                                disabled={isLoading}
                             />
                             <FormInput
                                 id="email"
@@ -193,6 +198,7 @@ export default function SettingsClient() {
                                 onChange={handleChange}
                                 placeholder="your@email.com"
                                 icon="mail"
+                                disabled={isLoading}
                             />
 
                             <Separator className="my-4 bg-yellow/50" />
@@ -208,6 +214,7 @@ export default function SettingsClient() {
                                     onChange={handleChange}
                                     placeholder="Required to set new password"
                                     icon="lock"
+                                    disabled={isLoading}
                                 />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <FormInput
@@ -219,6 +226,7 @@ export default function SettingsClient() {
                                         onChange={handleChange}
                                         placeholder="Min. 8 characters"
                                         icon="lock"
+                                        disabled={isLoading}
                                     />
                                     <FormInput
                                         id="confirmPassword"
@@ -229,6 +237,7 @@ export default function SettingsClient() {
                                         onChange={handleChange}
                                         placeholder="Confirm new password"
                                         icon="lock"
+                                        disabled={isLoading}
                                     />
                                 </div>
                             </div>
@@ -262,9 +271,10 @@ export default function SettingsClient() {
                                 <h3 className="font-medium text-dark">Export Your Data</h3>
                                 <p className="text-sm text-dark/70">Download a copy of your personal data, including resumes and history.</p>
                             </div>
-                            <Button variant="outline" onClick={handleExportData} className="border-primary text-primary hover:bg-primary hover:text-white">
-                                <Download className="mr-2 h-4 w-4" />
-                                Export Data
+                            <Button variant="outline" onClick={handleExportData} disabled={isExporting} className="border-primary text-primary hover:bg-primary hover:text-white">
+                                {isExporting
+                                    ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Exporting…</>
+                                    : <><Download className="mr-2 h-4 w-4" />Export Data</>}
                             </Button>
                         </div>
 

@@ -72,6 +72,7 @@ export default function BuilderPage() {
 				} catch (err) {
 					if ((err as Error).name !== 'AbortError') {
 						console.error('Failed to fetch resume:', err)
+						toast.error('Failed to load resume. Please refresh the page.')
 					}
 				}
 			}

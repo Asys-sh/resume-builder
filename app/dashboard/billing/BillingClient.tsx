@@ -55,19 +55,25 @@ export default function BillingClient({ user }: BillingClientProps) {
     const [isUpgradeLoading, setIsUpgradeLoading] = useState(false)
     const [invoices, setInvoices] = useState<Invoice[]>([])
     const [invoicesLoading, setInvoicesLoading] = useState(false)
+    const [invoicesError, setInvoicesError] = useState(false)
+
+    const fetchInvoices = async () => {
+        setInvoicesLoading(true)
+        setInvoicesError(false)
+        try {
+            const r = await fetch('/api/stripe/invoices')
+            const data = await r.json()
+            if (!r.ok) throw new Error(data.error || 'Failed to load invoices')
+            setInvoices(data.invoices ?? [])
+        } catch {
+            setInvoicesError(true)
+        } finally {
+            setInvoicesLoading(false)
+        }
+    }
 
     useEffect(() => {
-        if (user.stripeCustomerId) {
-            setInvoicesLoading(true)
-            fetch('/api/stripe/invoices')
-                .then(async (r) => {
-                    const data = await r.json()
-                    if (!r.ok) throw new Error(data.error || 'Failed to load invoices')
-                    setInvoices(data.invoices ?? [])
-                })
-                .catch((err) => toast.error(err.message || 'Failed to load invoices'))
-                .finally(() => setInvoicesLoading(false))
-        }
+        if (user.stripeCustomerId) fetchInvoices()
     }, [user.stripeCustomerId])
 
     const isPro = user.subscriptionStatus === 'ACTIVE'
@@ -370,9 +376,23 @@ export default function BillingClient({ user }: BillingClientProps) {
                         </CardHeader>
                         <CardContent>
                             {invoicesLoading ? (
-                                <div className="flex items-center gap-2 text-dark/50 text-sm py-4">
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                    Loading invoices...
+                                <div className="space-y-3 py-2">
+                                    {[0, 1, 2].map((i) => (
+                                        <div key={i} className="flex justify-between items-center py-2">
+                                            <div className="space-y-1.5">
+                                                <div className="h-4 w-32 rounded bg-black/8 animate-pulse" />
+                                                <div className="h-3 w-24 rounded bg-black/5 animate-pulse" />
+                                            </div>
+                                            <div className="h-4 w-16 rounded bg-black/8 animate-pulse" />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : invoicesError ? (
+                                <div className="flex items-center justify-between py-4">
+                                    <p className="text-sm text-dark/50">Failed to load invoices.</p>
+                                    <Button variant="outline" size="sm" onClick={fetchInvoices} className="border-yellow">
+                                        Retry
+                                    </Button>
                                 </div>
                             ) : invoices.length === 0 ? (
                                 <p className="text-sm text-dark/50 py-4">No invoices yet.</p>

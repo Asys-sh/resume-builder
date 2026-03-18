@@ -41,9 +41,9 @@ export function BuilderHeader({ isSaving, lastSaved, onSave, onDownload, userIni
                 </Link>
 
                 {/* Save status */}
-                {lastSaved && (
+                {(isSaving || lastSaved) && (
                     <span className="text-xs text-text-subtle hidden md:block">
-                        {isSaving ? 'Saving…' : `Saved ${lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
+                        {isSaving ? 'Saving…' : `Saved ${lastSaved!.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
                     </span>
                 )}
 

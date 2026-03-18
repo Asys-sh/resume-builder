@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import Link from 'next/link'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { UsageDisplay } from '@/components/UsageDisplay'
 import { SubscriptionModal } from '@/components/SubscriptionModal'
-import { LayoutDashboard, FileText, Settings, Menu, Plus, TrendingUp, Award, CreditCard, Edit, LogOut } from 'lucide-react'
+import { LayoutDashboard, FileText, Settings, Menu, Plus, TrendingUp, Award, CreditCard, Edit, LogOut, Loader2 } from 'lucide-react'
 import { User } from '@prisma-generated/client'
 import { ResumeCard } from '@/components/dashboard/ResumeCard'
 import { ResumeWithRelations } from '@/lib/data'
@@ -26,14 +26,35 @@ type DashboardView = 'home' | 'cover-letters' | 'billing' | 'settings'
 interface DashboardClientProps {
 	user: User
 	resumes: ResumeWithRelations[]
+	total: number
+	hasMore: boolean
 }
 
-export default function DashboardClient({ user, resumes }: DashboardClientProps) {
+export default function DashboardClient({ user, resumes: initialResumes, total, hasMore: initialHasMore }: DashboardClientProps) {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 	const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false)
-	const router = useRouter()
+	const [resumeList, setResumeList] = useState(initialResumes)
+	const [hasMore, setHasMore] = useState(initialHasMore)
+	const [nextPage, setNextPage] = useState(2)
+	const [isLoadingMore, setIsLoadingMore] = useState(false)
 	const searchParams = useSearchParams()
 	const view = (searchParams.get('view') as DashboardView) ?? 'home'
+
+	const handleLoadMore = async () => {
+		setIsLoadingMore(true)
+		try {
+			const res = await fetch(`/api/resumes?page=${nextPage}`)
+			if (!res.ok) { toast.error('Failed to load more resumes'); return }
+			const data = await res.json()
+			setResumeList((prev) => [...prev, ...data.resumes])
+			setHasMore(data.hasMore)
+			setNextPage((p) => p + 1)
+		} catch {
+			toast.error('Failed to load more resumes')
+		} finally {
+			setIsLoadingMore(false)
+		}
+	}
 
 	const userInitials = user?.name?.split(' ').map((w) => w[0].toUpperCase()).join('') ?? '?'
 	const firstName = user?.name?.split(' ')[0] ?? 'there'
@@ -176,7 +197,7 @@ export default function DashboardClient({ user, resumes }: DashboardClientProps)
 														<CardTitle className="text-sm font-medium text-dark/70">Total Resumes</CardTitle>
 														<div className="flex items-center gap-2">
 															<FileText className="h-4 w-4 text-secondary-accent" />
-															<p className="text-3xl font-bold text-dark">{resumes.length}</p>
+															<p className="text-3xl font-bold text-dark">{total}</p>
 														</div>
 													</CardHeader>
 												</Card>
@@ -217,13 +238,34 @@ export default function DashboardClient({ user, resumes }: DashboardClientProps)
 
 											{/* Resumes */}
 											<div className="space-y-6">
-												<h2 className="text-2xl font-bold text-dark">Your Resumes</h2>
-												{resumes.length > 0 ? (
-													<div className="flex flex-wrap gap-5">
-														{resumes.map((resume) => (
-															<ResumeCard key={resume.id} resume={resume} />
-														))}
-													</div>
+												<div className="flex items-center justify-between">
+													<h2 className="text-2xl font-bold text-dark">Your Resumes</h2>
+													{total > 0 && <span className="text-sm text-dark/50">{total} total</span>}
+												</div>
+												{resumeList.length > 0 ? (
+													<>
+														<div className="flex flex-wrap gap-5">
+															{resumeList.map((resume) => (
+																<ResumeCard key={resume.id} resume={resume} />
+															))}
+														</div>
+														{hasMore && (
+															<div className="flex justify-center pt-2">
+																<Button
+																	variant="outline"
+																	onClick={handleLoadMore}
+																	disabled={isLoadingMore}
+																	className="border-yellow"
+																>
+																	{isLoadingMore ? (
+																		<><Loader2 className="mr-2 h-4 w-4 animate-spin" />Loading…</>
+																	) : (
+																		'Load more resumes'
+																	)}
+																</Button>
+															</div>
+														)}
+													</>
 												) : (
 													<Card className="py-12 bg-none border-none shadow-none">
 														<CardContent className="flex flex-col items-center justify-center text-center space-y-4">

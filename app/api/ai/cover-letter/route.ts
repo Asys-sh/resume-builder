@@ -5,6 +5,7 @@ import { tryConsumeAICredit, handleTrialExpiry } from '@/lib/subscription'
 import { openai } from '@/lib/openai'
 import { buildResumeContext, buildCoverLetterPrompt } from '@/lib/utils'
 import { checkRateLimit } from '@/lib/rate-limit'
+import { sanitizeText } from '@/lib/sanitize'
 
 export async function POST(request: Request) {
 	try {
@@ -45,7 +46,10 @@ export async function POST(request: Request) {
 		}
 
 		const body = await request.json()
-		const { resumeId, jobDescription, jobTitle, companyName } = body
+		const resumeId = sanitizeText(body.resumeId)
+		const jobDescription = sanitizeText(body.jobDescription)
+		const jobTitle = sanitizeText(body.jobTitle)
+		const companyName = sanitizeText(body.companyName)
 
 		if (!jobDescription) {
 			return NextResponse.json({ error: 'Missing job description' }, { status: 400 })

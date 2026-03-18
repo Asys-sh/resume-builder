@@ -35,6 +35,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // Idempotency — skip events we've already processed (Stripe delivers at-least-once)
+  try {
+    await prisma.processedWebhook.create({ data: { id: event.id } })
+  } catch {
+    // Unique constraint violation means this event was already handled
+    return NextResponse.json({ received: true }, { status: 200 })
+  }
+
   // Handle different event types
   try {
     switch (event.type) {
@@ -84,11 +92,19 @@ export async function POST(request: NextRequest) {
             where: { id: userId },
             data: {
               subscriptionStatus: 'ACTIVE',
-              usageCount: 0, // Reset usage on new subscription
-              usageLimit: 999999, // Set to unlimited or high limit for Pro tier
+              usageCount: 0,
+              usageLimit: 999999,
               billingPeriodStart: new Date(subscription.current_period_start * 1000),
               billingPeriodEnd: new Date(subscription.current_period_end * 1000),
               stripeCustomerId: session.customer as string,
+            },
+          });
+
+          await prisma.auditLog.create({
+            data: {
+              userId,
+              action: 'subscription.activated',
+              details: { sessionId: session.id, subscriptionId: subscription.id },
             },
           });
 
@@ -115,14 +131,24 @@ export async function POST(request: NextRequest) {
           break;
         }
 
+        const newStatus = subscription.status === 'active' ? 'ACTIVE' : 'INACTIVE';
+
         // Update billing period on subscription renewal
         await prisma.user.update({
           where: { id: userId },
           data: {
-            subscriptionStatus: subscription.status === 'active' ? 'ACTIVE' : 'INACTIVE',
+            subscriptionStatus: newStatus,
             usageCount: 0,
             billingPeriodStart: new Date(subscription.current_period_start * 1000),
             billingPeriodEnd: new Date(subscription.current_period_end * 1000),
+          },
+        });
+
+        await prisma.auditLog.create({
+          data: {
+            userId,
+            action: 'subscription.updated',
+            details: { subscriptionId: subscription.id, status: newStatus },
           },
         });
 
@@ -154,8 +180,16 @@ export async function POST(request: NextRequest) {
           where: { id: userId },
           data: {
             subscriptionStatus: 'INACTIVE',
-            usageCount: 0, // Reset usage count for free tier
-            usageLimit: 5, // Revert to free tier limit
+            usageCount: 0,
+            usageLimit: 5,
+          },
+        });
+
+        await prisma.auditLog.create({
+          data: {
+            userId,
+            action: 'subscription.cancelled',
+            details: { subscriptionId: subscription.id },
           },
         });
 

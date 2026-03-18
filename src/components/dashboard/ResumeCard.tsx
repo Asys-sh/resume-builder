@@ -1,7 +1,8 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Edit, Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import { Edit, Trash2, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { TEMPLATES } from '@/lib/templates'
@@ -64,6 +65,7 @@ interface ResumeCardProps {
 
 export function ResumeCard({ resume }: ResumeCardProps) {
     const router = useRouter()
+    const [isDeleting, setIsDeleting] = useState(false)
     const template = TEMPLATES.find((t) => t.id === (resume.template ?? 'modern')) ?? TEMPLATES[0]
     const TemplateComponent = template.component
     const resumeData = mapToResumeData(resume)
@@ -71,6 +73,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
     const contactName = (resume.contactInfo as ResumeData['contactInfo'])?.fullName
 
     const handleDelete = async () => {
+        setIsDeleting(true)
         try {
             const deleted = await deleteResume(resume.id)
             if (deleted) {
@@ -78,9 +81,11 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                 router.refresh()
             } else {
                 toast.error('Failed to delete resume')
+                setIsDeleting(false)
             }
         } catch {
             toast.error('Failed to delete resume')
+            setIsDeleting(false)
         }
     }
 
@@ -138,8 +143,11 @@ export function ResumeCard({ resume }: ResumeCardProps) {
                         className="h-7 w-7 text-text-subtle hover:text-red-500 hover:bg-red-50"
                         aria-label="Delete resume"
                         onClick={handleDelete}
+                        disabled={isDeleting}
                     >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        {isDeleting
+                            ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            : <Trash2 className="h-3.5 w-3.5" />}
                     </Button>
                 </div>
             </div>

@@ -32,13 +32,17 @@ export function ProfessionalSummary({ onNext, onPrevious }: ProfessionalSummaryP
             })
             const data = await res.json()
             if (!res.ok) {
-                toast.error(data.message || 'Failed to generate summary')
+                if (res.status === 429) {
+                    toast.error(data.message || 'AI quota reached. Upgrade to Pro for unlimited access.')
+                } else {
+                    toast.error(data.error || data.message || 'Failed to generate summary')
+                }
                 return
             }
             setResumeDataPartial({ summary: data.result })
             toast.success('Summary generated!')
         } catch {
-            toast.error('Failed to generate summary')
+            toast.error('Connection error — check your internet and try again.')
         } finally {
             setIsGenerating(false)
         }
