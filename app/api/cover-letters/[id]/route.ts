@@ -42,6 +42,16 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         const body = await request.json()
         const { title, content, jobTitle, companyName, jobDescription, status } = body
 
+        if (title && title.length > 200) {
+            return NextResponse.json({ error: 'Title too long (max 200 characters)' }, { status: 400 })
+        }
+        if (content && content.length > 50000) {
+            return NextResponse.json({ error: 'Content too long (max 50000 characters)' }, { status: 400 })
+        }
+        if (jobDescription && jobDescription.length > 10000) {
+            return NextResponse.json({ error: 'Job description too long (max 10000 characters)' }, { status: 400 })
+        }
+
         // Verify ownership
         const existing = await prisma.coverLetter.findUnique({
             where: { id },

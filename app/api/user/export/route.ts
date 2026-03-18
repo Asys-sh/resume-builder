@@ -18,10 +18,12 @@ export async function GET() {
                         experiences: true,
                         skills: true,
                         education: true,
-                        projects: true
+                        projects: true,
+                        certifications: true,
+                        languages: true
                     }
                 },
-                archivedTransactions: true
+                coverLetters: true
             }
         })
 

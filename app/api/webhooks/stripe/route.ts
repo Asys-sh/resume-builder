@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
           where: { id: userId },
           data: {
             subscriptionStatus: subscription.status === 'active' ? 'ACTIVE' : 'INACTIVE',
-            usageCount: 0, // Reset usage on period renewal
+            usageCount: 0,
             billingPeriodStart: new Date(subscription.current_period_start * 1000),
             billingPeriodEnd: new Date(subscription.current_period_end * 1000),
           },

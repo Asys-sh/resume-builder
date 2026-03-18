@@ -32,6 +32,10 @@ export async function POST(request: Request) {
 
         if (name) userUpdateData.name = name
         if (email && email !== user.email) {
+            const taken = await prisma.user.findUnique({ where: { email }, select: { id: true } })
+            if (taken) {
+                return NextResponse.json({ error: 'Email already in use' }, { status: 409 })
+            }
             userUpdateData.email = email
             userUpdateData.emailVerified = null
         }

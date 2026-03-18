@@ -5,62 +5,70 @@ import { ResumeData } from '@/stores/builder'
 
 
 export async function DELETE(req: NextRequest) {
-    // DELETE
-    const reqUrl = req.url
-    const url = new URL(reqUrl)
-    const resumeId = url.searchParams.get('resumeId')
-    const user = await getServerUser()
+    try {
+        const reqUrl = req.url
+        const url = new URL(reqUrl)
+        const resumeId = url.searchParams.get('resumeId')
+        const user = await getServerUser()
 
-    if (!user?.id) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        if (!user?.id) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        if (!resumeId) {
+            return NextResponse.json({ error: 'Missing resume ID' }, { status: 400 })
+        }
+
+        const existing = await prisma.resume.findUnique({
+            where: { id: resumeId, userId: user.id },
+            select: { id: true }
+        })
+
+        if (!existing) {
+            return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
+        }
+
+        await prisma.resume.delete({ where: { id: resumeId } })
+
+        return NextResponse.json({ success: true })
+    } catch (error) {
+        console.error('Error deleting resume:', error)
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
     }
-
-    if (!resumeId) {
-        return NextResponse.json({ error: 'Missing resume ID' }, { status: 400 })
-    }
-
-    const resume = await prisma.resume.delete({
-        where: {
-            id: resumeId,
-            userId: user.id
-        },
-    })
-
-    if (!resume) {
-        return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
-    }
-
-    return NextResponse.json(resume)
 }
 
 
 export async function GET(req: NextRequest) {
-    const user = await getServerUser()
-    if (!user?.id) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    try {
+        const user = await getServerUser()
+        if (!user?.id) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        const reqUrl = req.url
+        const url = new URL(reqUrl)
+        const resumeId = url.searchParams.get('resumeId')
+
+        if (!resumeId) {
+            return NextResponse.json({ error: 'Missing resume ID' }, { status: 400 })
+        }
+
+        const resume = await prisma.resume.findUnique({
+            where: {
+                id: resumeId,
+                userId: user.id,
+            },
+        })
+
+        if (!resume) {
+            return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
+        }
+
+        return NextResponse.json(resume)
+    } catch (error) {
+        console.error('Error fetching resume:', error)
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
     }
-
-    const reqUrl = req.url
-    const url = new URL(reqUrl)
-    const resumeId = url.searchParams.get('resumeId')
-
-    if (!resumeId) {
-        return NextResponse.json({ error: 'Missing resume ID' }, { status: 400 })
-    }
-
-    const resume = await prisma.resume.findUnique({
-        where: {
-            id: resumeId,
-            userId: user.id,
-        },
-    })
-
-    if (!resume) {
-        return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
-    }
-
-    return NextResponse.json(resume)
-
 }
 
 

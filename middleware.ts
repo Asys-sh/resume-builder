@@ -14,7 +14,7 @@ async function isSessionValid(request: NextRequest): Promise<boolean> {
 			secret: process.env.AUTH_SECRET!,
 			cookieName: COOKIE_NAME,
 			salt: COOKIE_NAME,
-			secureCookie: false
+			secureCookie: process.env.NODE_ENV === 'production'
 		})
 		return !!token
 	} catch {
