@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
         // Handle subscription checkout completion
         if (session.mode === 'subscription' && session.subscription) {
           const user = await prisma.user.findUnique({
-            where: { userId },
+            where: { id: userId },
           });
 
           if (!user) {
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
 
           // Update user subscription status
           await prisma.user.update({
-            where: { userId },
+            where: { id: userId },
             data: {
               subscriptionStatus: 'ACTIVE',
               usageCount: 0, // Reset usage on new subscription
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
 
         // Update billing period on subscription renewal
         await prisma.user.update({
-          where: { userId },
+          where: { id: userId },
           data: {
             subscriptionStatus: subscription.status === 'active' ? 'ACTIVE' : 'INACTIVE',
             usageCount: 0, // Reset usage on period renewal
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
        * This webhook event is triggered when a subscription is cancelled or deleted.
        * It deactivates the subscription by:
        * - Setting subscriptionStatus to INACTIVE
-       * - Reverting usageLimit to free tier limit (100 AI assists)
+       * - Reverting usageLimit to free tier limit (5 AI assists)
        * - Resetting usageCount to 0 for the new free tier period
        * - User retains access to free tier features
        */
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
 
         // Deactivate subscription
         await prisma.user.update({
-          where: { userId },
+          where: { id: userId },
           data: {
             subscriptionStatus: 'INACTIVE',
             usageCount: 0, // Reset usage count for free tier

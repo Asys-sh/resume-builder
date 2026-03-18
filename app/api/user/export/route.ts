@@ -11,7 +11,7 @@ export async function GET() {
         }
 
         const user = await prisma.user.findUnique({
-            where: { userId: userSession.id },
+            where: { id: userSession.id },
             include: {
                 resumes: {
                     include: {

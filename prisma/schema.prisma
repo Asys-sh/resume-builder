@@ -24,11 +24,13 @@ model User {
   coverLetters       CoverLetter[]
   subscriptionStatus SubscriptionStatus @default(INACTIVE)
   usageCount         Int                @default(0)
-  usageLimit         Int                @default(100)
+  usageLimit         Int                @default(5)
   billingPeriodStart DateTime?
   billingPeriodEnd   DateTime?
   stripeCustomerId   String?
   password           Password?
+
+  @@index([stripeCustomerId])
 }
 
 model Account {
@@ -92,6 +94,8 @@ model Education {
   gpa          String?
   resume       Resume    @relation(fields: [resumeId], references: [id], onDelete: Cascade)
   resumeId     String
+
+  @@index([resumeId])
 }
 
 model Project {
@@ -104,6 +108,8 @@ model Project {
   endDate      DateTime?
   resume       Resume    @relation(fields: [resumeId], references: [id], onDelete: Cascade)
   resumeId     String
+
+  @@index([resumeId])
 }
 
 model Resume {
@@ -123,6 +129,8 @@ model Resume {
   coverLetters   CoverLetter[]
   user           User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String?
+
+  @@index([userId])
 }
 
 model Experience {
@@ -137,6 +145,8 @@ model Experience {
   location    String?
   resume      Resume    @relation(fields: [resumeId], references: [id], onDelete: Cascade)
   resumeId    String
+
+  @@index([resumeId])
 }
 
 model Skill {
@@ -145,6 +155,8 @@ model Skill {
   level    String?
   resume   Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
   resumeId String
+
+  @@index([resumeId])
 }
 
 model Certification {
@@ -154,6 +166,8 @@ model Certification {
   date     String?
   resume   Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
   resumeId String
+
+  @@index([resumeId])
 }
 
 model Language {
@@ -162,6 +176,8 @@ model Language {
   proficiency String
   resume      Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
   resumeId    String
+
+  @@index([resumeId])
 }
 
 enum SubscriptionStatus {
@@ -198,4 +214,7 @@ model CoverLetter {
   userId   String
   resume   Resume? @relation(fields: [resumeId], references: [id])
   resumeId String?
+
+  @@index([userId])
+  @@index([resumeId])
 }

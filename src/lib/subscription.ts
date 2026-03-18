@@ -94,8 +94,47 @@ export async function incrementUsage(userId: string): Promise<User | null> {
 	})
 
 	if (!update) {
-		console.error('Couldnt not update usage...')
+		console.error('Couldn\'t update usage...')
 		return null
 	}
 	return update
+}
+
+/**
+ * Atomically checks quota and increments usage in a single DB transaction.
+ * Prevents the race condition where two concurrent AI requests both pass the
+ * canUseAIFeatures check before either one has incremented the counter.
+ *
+ * @param userId - The user's ID
+ * @returns true if the credit was consumed and the caller may proceed, false if quota exceeded
+ */
+export async function tryConsumeAICredit(userId: string): Promise<boolean> {
+	return await prisma.$transaction(async (tx) => {
+		const user = await tx.user.findUnique({
+			where: { id: userId },
+			select: {
+				subscriptionStatus: true,
+				usageCount: true,
+				usageLimit: true,
+				billingPeriodEnd: true,
+				email: true
+			}
+		})
+
+		if (!user) return false
+
+		// Admin bypass — no credit consumed
+		const adminEmail = process.env.ADMIN_EMAIL
+		if (adminEmail && user.email && user.email === adminEmail) return true
+
+		if (user.usageCount >= user.usageLimit) return false
+		if (user.billingPeriodEnd && new Date() > user.billingPeriodEnd) return false
+
+		await tx.user.update({
+			where: { id: userId },
+			data: { usageCount: { increment: 1 } }
+		})
+
+		return true
+	})
 }

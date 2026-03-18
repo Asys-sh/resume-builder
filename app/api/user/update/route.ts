@@ -20,19 +20,20 @@ export async function POST(request: Request) {
         const { name, email, currentPassword, newPassword } = body
 
         const user = await prisma.user.findUnique({
-            where: { userId: userSession.id }
+            where: { id: userSession.id },
+            include: { password: true }
         })
 
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 })
         }
 
-        const updateData: { name?: string; email?: string; hash?: string; emailVerified?: null } = {}
+        const userUpdateData: { name?: string; email?: string; emailVerified?: null } = {}
 
-        if (name) updateData.name = name
+        if (name) userUpdateData.name = name
         if (email && email !== user.email) {
-            updateData.email = email
-            updateData.emailVerified = null
+            userUpdateData.email = email
+            userUpdateData.emailVerified = null
         }
 
         if (newPassword) {
@@ -40,22 +41,28 @@ export async function POST(request: Request) {
                 return NextResponse.json({ error: 'Current password is required to set a new password' }, { status: 400 })
             }
 
-            const isValid = await verify(user.hash, currentPassword)
+            if (!user.password) {
+                return NextResponse.json({ error: 'No password set for this account' }, { status: 400 })
+            }
+
+            const isValid = await verify(user.password.hash, currentPassword)
 
             if (!isValid) {
                 return NextResponse.json({ error: 'Invalid current password' }, { status: 400 })
             }
 
             const newHash = await hash(newPassword)
-            updateData.hash = newHash
+            await prisma.password.update({
+                where: { userId: userSession.id },
+                data: { hash: newHash }
+            })
         }
 
         const updatedUser = await prisma.user.update({
-            where: { userId: userSession.id },
-            data: updateData,
+            where: { id: userSession.id },
+            data: userUpdateData,
             select: {
                 id: true,
-                userId: true,
                 name: true,
                 email: true
             }

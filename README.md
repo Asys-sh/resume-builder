@@ -1,181 +1,209 @@
-<p align="center">✨ <strong>Generated with <a href="https://robojs.dev/create-robo">create-robo</a> magic!</strong> ✨</p>
+# RoboResume — AI-Powered Resume Builder
+
+A full-stack SaaS resume builder with AI-assisted writing, multiple export formats, Stripe subscriptions, and a multi-step guided builder. Built with Next.js 15, Prisma, PostgreSQL, and OpenAI.
 
 ---
 
-# Web App - Next (TS)
+## Features
 
-Meet the **Next.js edition** of our web-app template! If you’ve used the
-[`react-ts`](https://robojs.dev/templates/web-apps/react-ts) starter before, this
-is the same experience—but powered entirely by **Next.js** instead of Vite. You
-still get Robo’s batteries-included DX (file-based structure, Flashcore,
-TypeScript, rich plugin ecosystem), now paired with Next’s routing, React Server
-Components, and production tooling.
+- **AI Writing Assistance** — GPT-4o-mini generates professional summaries, job description bullet points, and full cover letters tailored to specific job postings
+- **Multi-Step Builder** — 8-step guided wizard with real-time live preview, form validation at each step, and debounced auto-save
+- **4 Professional Templates** — Modern, Classic, Minimalist, and Creative (sidebar layout), each rendered as both an HTML preview and a styled PDF
+- **Multiple Export Formats** — Download as PDF (`@react-pdf/renderer`), Word DOCX (`docx`), with the original resume data preserved for future edits
+- **Cover Letter Generator** — Standalone tool in the dashboard to generate and save cover letters without needing a resume
+- **Stripe Billing** — Full subscription lifecycle: free trial (5 AI assists), Pro plan (unlimited), webhook-driven activation/cancellation, invoice history, and Stripe billing portal
+- **Auth System** — Email/password authentication with JWT sessions, email verification, and password reset via Resend
+- **Dashboard** — Manage all resumes and cover letters with live thumbnail previews, usage tracking, and billing management
+- **Autocomplete** — Trie-based autocomplete for skills and languages with a curated dataset of 200+ skills and 90+ languages
 
-_Ready to embark on this adventure?_
+---
 
-## ✨ What's Included
+## Tech Stack
 
-- Tailwind CSS with a dark-brand theme (`tailwind.config.ts`, `app/globals.css`).
-- Prisma client helper with a safe singleton wrapper (`src/lib/prisma.ts`) and a `/api/prisma-health` endpoint you can hit to confirm database connectivity.
-- Template system with support for React and HTML templates (`src/stores/templates.ts`, `src/lib/templateImporter.ts`).
+| Layer | Technology |
+|---|---|
+| **Framework** | Next.js 15 (App Router, React Server Components) |
+| **Language** | TypeScript 5 (strict mode) |
+| **Database** | PostgreSQL via Prisma ORM 7 |
+| **Auth** | @robojs/auth + @auth/prisma-adapter (JWT strategy) |
+| **AI** | OpenAI API (GPT-4o-mini) |
+| **Payments** | Stripe (subscriptions, webhooks, billing portal) |
+| **Email** | Resend (transactional emails with HTML templates) |
+| **PDF Export** | @react-pdf/renderer |
+| **Word Export** | docx |
+| **State** | Jotai (atomic client state) |
+| **UI** | Tailwind CSS, Radix UI, Motion (animations) |
+| **Fonts** | Roboto Flex (variable font via next/font/google) |
+| **Icons** | Lucide React, Material Symbols |
+| **Runtime** | Robo.js + @robojs/server |
 
-## Table of Contents
+---
 
-- [🔗 Quick Links](#🔗-quick-links)
-- [✨ Getting Started](#✨-getting-started)
-- [📄 Template System](#📄-template-system)
-- [🛠️ App Development](#️🛠️-app-development)
-- [🔒 Authentication](#🔒-authentication)
-- [🛠️ Backend Development](#️🛠️-backend-development)
-- [📁 Folder Structure](#📁-folder-structure)
-- [🔌 Ecosystem](#ecosystem)
-- [🚀 Building & Hosting](#building--hosting)
+## Architecture Overview
 
-## 🔗 Quick Links
-
-- [📚 **Documentation:** Getting started with Robo.js](https://robojs.dev/discord-activities)
-- [✨ **Discord:** Robo - Imagine Magic](https://robojs.dev/discord)
-- [🔗 **Templates:** Kickstart your project with a template.](https://robojs.dev/plugins/create)
-- [📖 **Tutorials:** Learn how to create epic experiences.](https://dev.to/waveplay)
-
-## ✨ Getting Started
-
-Create a project with this template, replacing `<project-name>` with your desired name:
-
-```bash
-npx create-robo --template web-apps/next-ts --name <project-name>
+```
+resume-builder/
+├── app/                        # Next.js App Router
+│   ├── api/                    # API routes
+│   │   ├── ai/                 # AI endpoints (assist, cover-letter, suggestions)
+│   │   ├── resumes/            # Resume CRUD with smart sync
+│   │   ├── cover-letters/      # Cover letter CRUD
+│   │   ├── checkout/           # Stripe checkout session
+│   │   ├── stripe/             # Billing portal + invoices
+│   │   ├── user/               # Account management (update, delete, export)
+│   │   └── webhooks/stripe/    # Stripe webhook handler
+│   ├── auth/                   # Login / register page
+│   ├── builder/                # Resume builder (8-step wizard)
+│   │   └── steps/              # TemplateSelection, ContactInfo, ExperienceSkills,
+│   │                           # ProfessionalSummary, Education, ProjectsExtras,
+│   │                           # TargetJob, ReviewExport
+│   ├── dashboard/              # User dashboard
+│   │   ├── billing/            # Subscription management
+│   │   ├── cover-letters/      # Cover letter manager
+│   │   └── settings/           # Account settings
+│   └── layout.tsx              # Root layout (Jotai, Toaster, Cookie banner)
+├── src/
+│   ├── components/
+│   │   ├── builder/            # Form field components, template selector, nav buttons
+│   │   ├── dashboard/          # ResumeCard (live thumbnail), UsageDisplay
+│   │   ├── pdf/                # ResumePDF (@react-pdf/renderer)
+│   │   └── ui/                 # Radix UI wrappers (Button, Card, Dialog, etc.)
+│   ├── lib/
+│   │   ├── trie.ts             # Autocomplete data structure
+│   │   ├── docx-generator.ts   # Word export
+│   │   ├── subscription.ts     # Quota checking + trial expiry logic
+│   │   ├── rate-limit.ts       # Sliding-window in-memory rate limiter
+│   │   └── pdf-templates.ts    # Per-template color/font config for PDF
+│   ├── stores/
+│   │   ├── builder.ts          # Resume data atom + step validation functions
+│   │   └── user.ts             # Authenticated user atom
+│   └── lib/templates.tsx       # 4 HTML resume templates (shared BaseResumeLayout)
+└── prisma/schema.prisma        # Full data model
 ```
 
-Then navigate into your project directory:
+---
+
+## Data Model
+
+The core entities and their relationships:
+
+- **User** → has many Resumes, CoverLetters; has subscription fields (status, usageCount, usageLimit, billingPeriod)
+- **Resume** → has many Experiences, Skills, Education, Projects, Certifications, Languages; stores template ID and contactInfo as JSON
+- **CoverLetter** → belongs to User; optionally linked to a Resume; has title, content, status, job metadata
+- **Stripe** → webhook-driven lifecycle: `checkout.session.completed` → ACTIVE; `subscription.deleted` → INACTIVE; usage resets on each billing period renewal
+
+---
+
+## Subscription Model
+
+| Tier | Status | AI Assists | Templates |
+|------|--------|-----------|-----------|
+| Free trial (7 days) | `TRIAL` | 5 | All 4 |
+| Free | `INACTIVE` | 5/month | All 4 |
+| Pro | `ACTIVE` | Unlimited | All 4 |
+
+Usage is tracked per billing period via `usageCount` / `usageLimit` on the User model. The `canUseAIFeatures()` utility handles quota checks with an admin bypass for development.
+
+---
+
+## AI Features
+
+All AI routes authenticate the user, check quota via `canUseAIFeatures()`, call GPT-4o-mini, then increment usage with `incrementUsage()`.
+
+| Endpoint | Purpose | Rate Limit |
+|----------|---------|------------|
+| `POST /api/ai/assist` | Generate summary or job description bullets | 20/hr |
+| `POST /api/ai/cover-letter` | Generate a cover letter (resume optional) | 20/hr |
+| `POST /api/ai` | Resume improvement suggestions for a target job | 30/hr |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- PostgreSQL database
+- OpenAI API key
+- Stripe account (test keys work fine)
+- Resend account for email
+
+### Installation
 
 ```bash
-cd <project-name>
+git clone https://github.com/your-username/resume-builder.git
+cd resume-builder
+npm install
 ```
 
-Run development mode:
+### Environment Variables
+
+Copy `.env.example` to `.env` and fill in the values:
+
+```env
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/resume_builder"
+
+# Auth — generate with: openssl rand -base64 32
+AUTH_SECRET="your-secret-here"
+
+# Email (Resend)
+RESEND_API_KEY="re_..."
+
+# Payments (Stripe)
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_WEBHOOK_SECRET="whsec_..."
+NEXT_PUBLIC_STRIPE_PRO_PRICE_ID="price_..."
+
+# OpenAI
+OPENAI_API_KEY="sk-..."
+
+# App
+APP_URL="http://localhost:3000"
+NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+
+# Optional: bypass AI quota for development
+ADMIN_EMAIL="your@email.com"
+```
+
+### Database Setup
+
+```bash
+npx prisma migrate dev
+```
+
+### Development
 
 ```bash
 npm run dev
 ```
 
-> **Notes:** A free Cloudflare tunnel is included for easy testing.
+The app runs on `http://localhost:3000`.
 
-- [📚 **Documentation:** Exploring Different Run Modes](https://robojs.dev/robojs/mode#default-modes)
-- [🚀 **Hosting:** Deploy your web app for others to use.](https://robojs.dev/hosting/overview)
-
-## 📄 Template System
-
-The resume builder supports multiple templates with automatic registration:
-
-- **React Templates**: Four built-in templates (Modern, Classic, Minimalist, Creative) defined in TypeScript
-- **HTML Templates**: Import custom templates from the `resume_templates/` directory
-- **Template Registry**: Centralized system for managing and switching between templates
-
-### Adding HTML Templates
-
-To add a new HTML template:
-
-1. Place your `.html` file in the `resume_templates/` directory (at project root)
-2. Ensure it includes a Tailwind config in a `<script>` tag for proper styling
-3. Restart the dev server to auto-register the template
-
-Your HTML template will be automatically parsed, validated, and added to the template selector.
-
-### Documentation
-
-For detailed information about creating templates, understanding the template system architecture, and troubleshooting, see [docs/TEMPLATE_SYSTEM.md](docs/TEMPLATE_SYSTEM.md).
-
-## App Development 🛠️
-
-You can find your client-side code in the `/src/app` folder. This is where you can build your web app using React, Vue, or any other front-end framework.
-
-The front end runs on **Next.js**, so you get fast refresh, file-based routing,
-and React Server Components out of the box. Next-specific code lives under
-`/app`, while everything Robo (APIs, commands, plugins, etc.) stays under
-`/src`. Create a new route at `/app/example/page.tsx` and visit `/example`
-while `npm run dev` is running.
-
-Need the classic client-side-only flow? You can still use Next’s `app` router
-to serve fully client-driven pages, plus hybrid routes that share code with
-your Robo APIs.
-
-#### Authenticating
-
-The React template makes it easy to authenticate your activity with Discord. The `<DiscordProvider>` components in `App.tsx` accepts `authenticate` and `scope` props.
-
-```tsx
-<DiscordContextProvider authenticate scope={['identify', 'guilds']}>
-	<Activity />
-</DiscordContextProvider>
-```
-
-You can then get the SDK and other goodies from the `useDiscordSdk` hook!
-
-- [🔒 **Authentication:** Customize your user experience.](https://robojs.dev/discord-activities/authentication)
-
-## Backend Development 🛠️
-
-Your server-side code is located in the `/src/api` folder. This is where you can build your API, webhooks, and other fancy server-side features.
-
-This backend is powered by [**@robojs/server**](https://robojs.dev/plugins/server)
-—the same engine that ships with other Robo templates. Because we route
-unmatched requests into Next.js, your React app and APIs share a single server
-process.
-
-Everything Robo is file-based, so you can create new routes by making new files in the `/src/api` directory. The file's name becomes the route's path. For example, let's try making a new route at `/health` by creating a new file named `health.js`:
-
-```js
-export default () => {
-	return { status: 'ok' }
-}
-```
-
-- [🔌 **@robojs/server:** Create and manage web pages, APIs, and more.](https://robojs.dev/plugins/server)
-
-## Folder Structure 📁
-
-While the `api` and `app` folders are reserved for your server and client-side code, you are free to create anything else in the `/src` directory!
-
-Folders only become reserved when you install a plugin that uses them. For example, bot functionality uses the `commands` and `events` folders.
-
-## Robo Ecosystem
-
-By building with **Robo.js**, you gain access to a growing ecosystem of **[plugins](https://robojs.dev/plugins/directory)**, **[templates](https://robojs.dev/templates/overview)**, and **[tools](https://robojs.dev/cli/overview)**. **[Robo Plugins](https://robojs.dev/plugins/overview)** are special. They can add features with one command.
+### Stripe Webhooks (local)
 
 ```bash
-npx robo add @robojs/ai @robojs/sync
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ```
-
-Plugins integrate seamlessly thanks to the **[Robo File Structure](https://robojs.dev/discord-bots/file-structure)**. What's more, anyone can **[create a plugin](https://robojs.dev/plugins/create)**.
-
-- [🔌 **Robo Plugins:** Add features to your Robo seamlessly.](https://robojs.dev/plugins/install)
-- [🔌 **Creating Plugins:** Make your own plugins for Robo.js.](https://robojs.dev/plugins/create)
-- [🗃️ **Plugin Directory:** Browse plugins for your Robo.](https://robojs.dev/plugins/create)
-- [🔗 **Templates:** Kickstart your project with a template.](https://robojs.dev/plugins/create)
-
-## Building & Hosting
-
-When you’re ready for production you’ll want both halves of the project
-compiled:
-
-```bash
-npx next build
-npx robo build
-```
-
-`next build` generates the optimized React output while `robo build` packages
-your Robo server, commands, and plugins. Run both before deploying to your
-preferred platform.
 
 ---
 
-**Hosting** your project keeps it running 24/7. No need to keep your computer on at all times, or worry about your Internet connection.
+## Key Implementation Details
 
-You can host on any platform that supports **Node.js**, or run [`robo deploy`](https://robojs.dev/cli/robo#distributing) to host on **[RoboPlay](https://roboplay.dev)** - a hosting platform optimized for **Robo.js**.
+### Auto-Save Race Condition Prevention
+The builder uses a `resumeIdRef` (React ref) alongside the Jotai atom to prevent a race condition where concurrent auto-save and manual-save calls could each create a new resume instead of updating. The ref is updated synchronously on the first save response and read by all subsequent saves.
 
-```bash
-npm run deploy
-```
+### Live Resume Thumbnails
+Dashboard resume cards render the actual template component at 33% scale using CSS `transform: scale(0.33)` with `transformOrigin: top left` inside an `overflow: hidden` container — no separate render pipeline or image generation needed.
 
-- [🚀 **RoboPlay:** Deploy with as little as one command.](https://robojs.dev/hosting/roboplay)
-- [🛠️ **Self-Hosting:** Learn how to host and maintain it yourself.](https://robojs.dev/hosting/overview)
+### Smart Sync
+The resume CRUD endpoint uses a "smart sync" pattern: on every save, it diffs the incoming array of items against what's in the database and issues targeted creates, updates, and deletes in a single `Promise.all` — avoiding full deletes and re-inserts.
+
+### Trie Autocomplete
+Skill and language inputs use a `TrieManager` class with depth-first search to return suggestions as you type. The dataset is loaded once and the Trie is built in-memory for fast lookups.
+
+---
+
+## License
+
+MIT

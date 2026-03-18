@@ -11,7 +11,8 @@ export async function GET() {
 
         const coverLetters = await prisma.coverLetter.findMany({
             where: { userId: user.id },
-            orderBy: { updatedAt: 'desc' }
+            orderBy: { updatedAt: 'desc' },
+            take: 50
         })
 
         return NextResponse.json({ coverLetters })

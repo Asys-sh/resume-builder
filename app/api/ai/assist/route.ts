@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
-import { canUseAIFeatures, incrementUsage, handleTrialExpiry } from '@/lib/subscription'
+import { tryConsumeAICredit, handleTrialExpiry } from '@/lib/subscription'
 import { openai } from '@/lib/openai'
 import { checkRateLimit } from '@/lib/rate-limit'
 
@@ -34,7 +34,8 @@ export async function POST(request: Request) {
 
 		await handleTrialExpiry(user.id, user)
 
-		if (!canUseAIFeatures(user)) {
+		const allowed = await tryConsumeAICredit(user.id)
+		if (!allowed) {
 			return NextResponse.json({
 				error: 'SubscriptionRequired',
 				message: 'You have reached your AI assist limit. Please upgrade to Pro for unlimited access.'
@@ -69,7 +70,6 @@ export async function POST(request: Request) {
 		})
 
 		const result = completion.choices[0]?.message?.content ?? ''
-		await incrementUsage(user.id)
 
 		return NextResponse.json({ result })
 	} catch (error) {

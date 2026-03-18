@@ -11,7 +11,7 @@ export async function DELETE() {
         }
 
         await prisma.user.delete({
-            where: { userId: userSession.id }
+            where: { id: userSession.id }
         })
 
         return NextResponse.json({ success: true })
