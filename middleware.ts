@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getToken } from '@auth/core/jwt'
+import { checkRateLimit } from '@/lib/rate-limit'
+
+// Force Node.js runtime so the in-memory rate-limit store is available
+export const runtime = 'nodejs'
 
 const COOKIE_NAME = 'authjs.session-token'
 
@@ -24,6 +28,22 @@ async function isSessionValid(request: NextRequest): Promise<boolean> {
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl
+
+	// Rate-limit auth API endpoints — 10 attempts per 15 minutes per IP.
+	// Protects sign-in and sign-up from brute-force and credential-stuffing.
+	if (pathname.startsWith('/api/auth/')) {
+		const ip =
+			request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+			request.headers.get('x-real-ip') ??
+			'unknown'
+		const limited = checkRateLimit(`auth:${ip}`, 10, 15 * 60 * 1_000)
+		if (limited) return limited as unknown as NextResponse
+	}
+
+	// Pass through all other API routes without auth checks
+	if (pathname.startsWith('/api/')) {
+		return NextResponse.next()
+	}
 
 	const protectedRoutes = ['/dashboard', '/success', '/builder', '/cancel']
 	const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
@@ -56,6 +76,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
 	matcher: [
-		'/((?!api|_next/static|_next/image|favicon.ico).*)'
+		// Include /api/auth/* for rate limiting; exclude other API routes and static assets
+		'/((?!_next/static|_next/image|favicon.ico).*)'
 	]
 }

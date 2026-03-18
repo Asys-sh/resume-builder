@@ -212,7 +212,7 @@ model CoverLetter {
 
   user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
-  resume   Resume? @relation(fields: [resumeId], references: [id])
+  resume   Resume? @relation(fields: [resumeId], references: [id], onDelete: SetNull)
   resumeId String?
 
   @@index([userId])

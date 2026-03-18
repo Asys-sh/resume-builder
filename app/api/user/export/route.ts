@@ -31,8 +31,8 @@ export async function GET() {
             return NextResponse.json({ error: 'User not found' }, { status: 404 })
         }
 
-        // Remove sensitive data
-        const { hash, ...safeUser } = user
+        // Remove the password relation so the hash never reaches the client
+        const { password, ...safeUser } = user
 
         return NextResponse.json(safeUser)
     } catch (error) {

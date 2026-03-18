@@ -134,7 +134,7 @@ export default function BuilderPage() {
 				})
 			})
 
-			if (!response.ok) throw new Error('Failed to save')
+			if (!response.ok) { const err = await response.json().catch(() => ({})); throw new Error(err.error || 'Failed to save') }
 
 			const result = await response.json()
 			if (result.success) {

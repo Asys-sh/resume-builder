@@ -94,6 +94,9 @@ export async function POST(request: NextRequest) {
 		})
 
 		const suggestions = completion.choices[0]?.message?.content ?? ''
+		if (!suggestions) {
+			return NextResponse.json({ error: 'AI returned an empty response. Please try again.' }, { status: 502 })
+		}
 
 		return NextResponse.json({ suggestions })
 	} catch (error) {

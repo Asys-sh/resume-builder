@@ -60,9 +60,12 @@ export default function BillingClient({ user }: BillingClientProps) {
         if (user.stripeCustomerId) {
             setInvoicesLoading(true)
             fetch('/api/stripe/invoices')
-                .then((r) => r.json())
-                .then((data) => setInvoices(data.invoices ?? []))
-                .catch(() => {})
+                .then(async (r) => {
+                    const data = await r.json()
+                    if (!r.ok) throw new Error(data.error || 'Failed to load invoices')
+                    setInvoices(data.invoices ?? [])
+                })
+                .catch((err) => toast.error(err.message || 'Failed to load invoices'))
                 .finally(() => setInvoicesLoading(false))
         }
     }, [user.stripeCustomerId])

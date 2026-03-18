@@ -97,7 +97,8 @@ export default function CoverLettersView() {
 				}),
 			})
 			if (!res.ok) {
-				toast.error('Failed to save cover letter')
+				const err = await res.json().catch(() => ({}))
+				toast.error(err.error || 'Failed to save cover letter')
 				return
 			}
 			toast.success('Cover letter saved!')
@@ -119,7 +120,8 @@ export default function CoverLettersView() {
 				setCoverLetters((prev) => prev.filter((cl) => cl.id !== id))
 				toast.success('Cover letter deleted')
 			} else {
-				toast.error('Failed to delete cover letter')
+				const err = await res.json().catch(() => ({}))
+				toast.error(err.error || 'Failed to delete cover letter')
 			}
 		} catch {
 			toast.error('Failed to delete cover letter')

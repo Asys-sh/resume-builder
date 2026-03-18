@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerUser } from '@/lib/auth-helper'
 import { ResumeData } from '@/stores/builder'
+import { sanitizeResumeData } from '@/lib/sanitize'
 
 
 export async function DELETE(req: NextRequest) {
@@ -80,7 +81,8 @@ export async function POST(req: NextRequest) {
         }
 
         const body = await req.json()
-        const { resumeId, data, title } = body as { resumeId?: string; data: ResumeData; title?: string }
+        const { resumeId, title } = body as { resumeId?: string; data: ResumeData; title?: string }
+        const data = body.data ? sanitizeResumeData(body.data) : null
 
         if (!data) {
             return NextResponse.json({ error: 'Missing resume data' }, { status: 400 })

@@ -43,6 +43,16 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Job description too long (max 10000 characters)' }, { status: 400 })
         }
 
+        if (resumeId) {
+            const resume = await prisma.resume.findUnique({
+                where: { id: resumeId, userId: user.id },
+                select: { id: true }
+            })
+            if (!resume) {
+                return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
+            }
+        }
+
         const coverLetter = await prisma.coverLetter.create({
             data: {
                 userId: user.id,
