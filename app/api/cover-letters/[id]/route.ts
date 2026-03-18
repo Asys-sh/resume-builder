@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { sanitizeText, sanitizeUrl } from '@/lib/sanitize'
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
@@ -69,11 +70,11 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         const coverLetter = await prisma.coverLetter.update({
             where: { id },
             data: {
-                title,
-                content,
-                jobTitle,
-                companyName,
-                jobDescription,
+                title:          title          ? sanitizeText(title)          : undefined,
+                content:        content        ? sanitizeText(content)        : undefined,
+                jobTitle:       jobTitle       ? sanitizeText(jobTitle)       : undefined,
+                companyName:    companyName    ? sanitizeText(companyName)    : undefined,
+                jobDescription: jobDescription ? sanitizeText(jobDescription) : undefined,
                 status
             }
         })

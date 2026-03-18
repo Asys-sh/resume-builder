@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { sanitizeText } from '@/lib/sanitize'
 
 export async function GET() {
     try {
@@ -56,11 +57,11 @@ export async function POST(request: Request) {
         const coverLetter = await prisma.coverLetter.create({
             data: {
                 userId: user.id,
-                title: title || 'Untitled Cover Letter',
-                content: content || '',
-                jobTitle,
-                companyName,
-                jobDescription,
+                title:          sanitizeText(title)          || 'Untitled Cover Letter',
+                content:        sanitizeText(content)        || '',
+                jobTitle:       sanitizeText(jobTitle),
+                companyName:    sanitizeText(companyName),
+                jobDescription: sanitizeText(jobDescription),
                 resumeId,
                 status: status || 'draft'
             }
