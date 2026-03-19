@@ -3,9 +3,6 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { checkRateLimit } from '@/lib/rate-limit'
 
-// Force Node.js runtime so the in-memory rate-limit store is available
-export const runtime = 'nodejs'
-
 const COOKIE_NAME = 'authjs.session-token'
 
 async function isSessionValid(request: NextRequest): Promise<boolean> {

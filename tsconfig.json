@@ -15,9 +15,8 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@prisma-generated/*": [".robo/prisma/*"],
-      "@/*": ["src/*"],
-      "~/*": ["../robokit/src/*"]
+      "@prisma-generated/*": ["prisma/generated/*"],
+      "@/*": ["src/*"]
     },
     "noEmit": true,
     "jsx": "react-jsx",

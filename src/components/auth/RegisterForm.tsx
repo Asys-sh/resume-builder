@@ -1,9 +1,9 @@
 'use client'
 
-import { getCsrfToken } from '@robojs/auth/client'
 import { Loader2, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
+import { PasswordStrength } from '@/components/auth/PasswordStrength'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { FormInput } from '@/components/ui/form-input'
@@ -51,6 +51,14 @@ export default function RegisterForm() {
     }
     if (!formData.password || formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters'
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'Password must contain an uppercase letter'
+    } else if (!/[a-z]/.test(formData.password)) {
+      newErrors.password = 'Password must contain a lowercase letter'
+    } else if (!/[0-9]/.test(formData.password)) {
+      newErrors.password = 'Password must contain a number'
+    } else if (!/[^A-Za-z0-9]/.test(formData.password)) {
+      newErrors.password = 'Password must contain a special character'
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match'
@@ -72,23 +80,17 @@ export default function RegisterForm() {
     setIsSubmitting(true)
 
     try {
-      const csrfToken = await getCsrfToken()
-
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        redirect: 'manual',
         body: JSON.stringify({
           email: formData.email,
           name: formData.name,
           password: formData.password,
-          terms: formData.agreeToTerms,
-          csrfToken,
         }),
       })
 
-      // @robojs/auth returns 302 on success (redirect after signup)
-      if (res.status === 302 || res.status === 200 || res.type === 'opaqueredirect') {
+      if (res.ok) {
         setRegisteredEmail(formData.email)
         return
       }
@@ -194,18 +196,21 @@ export default function RegisterForm() {
           disabled={isSubmitting}
         />
 
-        <FormInput
-          ref={passwordRef}
-          id="password"
-          label="Password"
-          type="password"
-          placeholder="Create a password"
-          value={formData.password}
-          onChange={handleChange}
-          error={errors.password}
-          icon="lock"
-          disabled={isSubmitting}
-        />
+        <div className="space-y-2">
+          <FormInput
+            ref={passwordRef}
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="Create a password"
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+            icon="lock"
+            disabled={isSubmitting}
+          />
+          <PasswordStrength password={formData.password} />
+        </div>
 
         <FormInput
           ref={confirmPasswordRef}

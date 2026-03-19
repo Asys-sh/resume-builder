@@ -52,7 +52,7 @@ function formatDate(date: Date): string {
   if (days === 1) return 'Updated yesterday'
   if (days < 7) return `Updated ${days} days ago`
 
-  return `Updated ${new Date(date).toLocaleDateString(undefined, {
+  return `Updated ${new Date(date).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: new Date(date).getFullYear() !== now.getFullYear() ? 'numeric' : undefined,
@@ -61,9 +61,10 @@ function formatDate(date: Date): string {
 
 interface ResumeCardProps {
   resume: ResumeWithRelations
+  onDeleted?: (id: string) => void
 }
 
-export function ResumeCard({ resume }: ResumeCardProps) {
+export function ResumeCard({ resume, onDeleted }: ResumeCardProps) {
   const router = useRouter()
   const [isDeleting, setIsDeleting] = useState(false)
   const template = TEMPLATES.find((t) => t.id === (resume.template ?? 'modern')) ?? TEMPLATES[0]
@@ -78,7 +79,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
       const deleted = await deleteResume(resume.id)
       if (deleted) {
         toast.success('Resume deleted')
-        router.refresh()
+        onDeleted?.(resume.id)
       } else {
         toast.error('Failed to delete resume')
         setIsDeleting(false)

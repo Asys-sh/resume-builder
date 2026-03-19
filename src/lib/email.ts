@@ -75,7 +75,7 @@ interface SendVerificationEmailParams {
 }
 
 export async function sendVerificationEmail({ email, token, name }: SendVerificationEmailParams) {
-  const verifyUrl = `${process.env.APP_URL}/verify-email?token=${token}&email=${encodeURIComponent(email)}`
+  const verifyUrl = `${process.env.APP_URL}/api/auth/verify-email?token=${token}&email=${encodeURIComponent(email)}`
 
   const content = `
 		<!-- Accent bar -->

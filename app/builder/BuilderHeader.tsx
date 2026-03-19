@@ -1,20 +1,17 @@
-'use client'
+"use client";
 
-import { signOut } from '@robojs/auth/client'
-import { Download, LayoutDashboard, LogOut, Save } from 'lucide-react'
-import Link from 'next/link'
+import { Download, LayoutDashboard, Save } from "lucide-react";
+import Link from "next/link";
 
 interface BuilderHeaderProps {
-  isSaving: boolean
-  lastSaved: Date | null
-  onSave: () => void
-  onDownload: (format: 'pdf' | 'word' | 'text') => void
-  userInitials?: string
+  isSaving: boolean;
+  onSave: () => void;
+  onDownload: (format: "pdf" | "word" | "text") => void;
+  userInitials?: string;
 }
 
 export function BuilderHeader({
   isSaving,
-  lastSaved,
   onSave,
   onDownload,
   userInitials,
@@ -40,7 +37,9 @@ export function BuilderHeader({
             />
           </svg>
         </div>
-        <h2 className="text-lg font-bold leading-tight tracking-tight">Robo Resume</h2>
+        <h2 className="text-lg font-bold leading-tight tracking-tight">
+          Robo Resume
+        </h2>
       </Link>
 
       {/* Right side */}
@@ -54,15 +53,6 @@ export function BuilderHeader({
           Dashboard
         </Link>
 
-        {/* Save status */}
-        {(isSaving || lastSaved) && (
-          <span className="text-xs text-text-subtle hidden md:block">
-            {isSaving
-              ? 'Saving…'
-              : `Saved ${lastSaved!.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
-          </span>
-        )}
-
         {/* Save button */}
         <button
           type="button"
@@ -71,34 +61,21 @@ export function BuilderHeader({
           className="flex items-center gap-2 cursor-pointer rounded-xl h-10 px-4 bg-border-color/50 text-text-main text-sm font-semibold hover:bg-border-color/80 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Save className="h-4 w-4" />
-          <span className="hidden sm:inline">{isSaving ? 'Saving…' : 'Save'}</span>
+          <span className="hidden sm:inline">
+            {isSaving ? "Saving…" : "Save"}
+          </span>
         </button>
 
         {/* Download button */}
         <button
           type="button"
-          onClick={() => onDownload('pdf')}
+          onClick={() => onDownload("pdf")}
           className="flex items-center gap-2 cursor-pointer rounded-xl h-10 px-4 bg-primary text-white text-sm font-semibold hover:bg-primary/90 active:scale-95 transition-all"
         >
           <Download className="h-4 w-4" />
           <span className="hidden sm:inline">Download</span>
         </button>
-
-        {/* User avatar */}
-        <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center shrink-0">
-          <span className="text-white text-xs font-bold">{userInitials ?? '?'}</span>
-        </div>
-
-        {/* Sign out */}
-        <button
-          type="button"
-          onClick={() => signOut({ callbackUrl: '/' })}
-          title="Sign out"
-          className="flex items-center justify-center h-9 w-9 rounded-lg text-text-subtle hover:text-text-main hover:bg-border-color/40 active:scale-95 transition-all"
-        >
-          <LogOut className="h-4 w-4" />
-        </button>
       </div>
     </header>
-  )
+  );
 }

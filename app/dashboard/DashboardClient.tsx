@@ -1,7 +1,7 @@
 'use client'
 
 import type { User } from '@prisma-generated/client'
-import { signOut } from '@robojs/auth/client'
+import { signOut } from 'next-auth/react'
 import {
   Award,
   CreditCard,
@@ -56,6 +56,10 @@ export default function DashboardClient({
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const searchParams = useSearchParams()
   const view = (searchParams.get('view') as DashboardView) ?? 'home'
+
+  const handleResumeDeleted = (id: string) => {
+    setResumeList((prev) => prev.filter((r) => r.id !== id))
+  }
 
   const handleLoadMore = async () => {
     setIsLoadingMore(true)
@@ -287,7 +291,7 @@ export default function DashboardClient({
                           <>
                             <div className="flex flex-wrap gap-5">
                               {resumeList.map((resume) => (
-                                <ResumeCard key={resume.id} resume={resume} />
+                                <ResumeCard key={resume.id} resume={resume} onDeleted={handleResumeDeleted} />
                               ))}
                             </div>
                             {hasMore && (

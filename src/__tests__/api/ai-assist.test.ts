@@ -164,7 +164,7 @@ describe('POST /api/ai/assist', () => {
 
     expect(res.status).toBe(400)
     const body = await res.json()
-    expect(body.error).toMatch(/invalid type/i)
+    expect(body.error).toMatch(/validation error/i)
   })
 
   // ── Summary generation ────────────────────────────────────────

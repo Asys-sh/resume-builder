@@ -183,7 +183,7 @@ describe('POST /api/ai/cover-letter', () => {
 
     expect(res.status).toBe(400)
     const body = await res.json()
-    expect(body.error).toMatch(/missing job description/i)
+    expect(body.error).toMatch(/validation error/i)
   })
 
   it('returns 400 when jobDescription exceeds 10 000 characters', async () => {

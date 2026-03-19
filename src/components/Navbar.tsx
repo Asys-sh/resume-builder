@@ -1,7 +1,7 @@
 'use client'
 
 import type { User } from '@prisma-generated/client'
-import { signOut } from '@robojs/auth/client'
+import { signOut } from 'next-auth/react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useState } from 'react'

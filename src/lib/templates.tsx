@@ -1,5 +1,11 @@
 import type { ResumeData } from '@/stores/builder'
 
+/** Formats a date string consistently on server and client — avoids hydration mismatches from locale differences. */
+const fmtDate = (value: string | Date | null | undefined): string => {
+  if (!value) return ''
+  return new Date(value).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+}
+
 export interface Template {
   id: string
   name: string
@@ -215,8 +221,8 @@ function BaseResumeLayout({
             <section className={styles.section.container}>
               <h2 className={styles.section.title}>Experience</h2>
               {experiences.map((exp, index) => {
-                const startDate = exp.startDate ? new Date(exp.startDate).toLocaleDateString() : ''
-                const endDate = exp.endDate ? new Date(exp.endDate).toLocaleDateString() : ''
+                const startDate = fmtDate(exp.startDate)
+                const endDate = fmtDate(exp.endDate)
                 const displayEndDate = endDate || 'Present'
 
                 return (
@@ -312,8 +318,8 @@ function BaseResumeLayout({
                       {edu.fieldOfStudy ? ` - ${edu.fieldOfStudy}` : ''}
                     </h3>
                     <span className={styles.education.dateRange}>
-                      {edu.startDate ? new Date(edu.startDate).toLocaleDateString() : ''} -{' '}
-                      {edu.endDate ? new Date(edu.endDate).toLocaleDateString() : 'Present'}
+                      {fmtDate(edu.startDate)} -{' '}
+                      {fmtDate(edu.endDate) || 'Present'}
                     </span>
                   </div>
                   <p className={styles.education.school}>{edu.school}</p>
@@ -384,8 +390,8 @@ function BaseResumeLayout({
         <section className={styles.section.container}>
           <h2 className={styles.section.title}>Experience</h2>
           {experiences.map((exp, index) => {
-            const startDate = exp.startDate ? new Date(exp.startDate).toLocaleDateString() : ''
-            const endDate = exp.endDate ? new Date(exp.endDate).toLocaleDateString() : ''
+            const startDate = fmtDate(exp.startDate)
+            const endDate = fmtDate(exp.endDate)
             const displayEndDate = endDate || 'Present'
 
             return (
@@ -517,8 +523,8 @@ function BaseResumeLayout({
                   {edu.fieldOfStudy ? ` - ${edu.fieldOfStudy}` : ''}
                 </h3>
                 <span className={styles.education.dateRange}>
-                  {edu.startDate ? new Date(edu.startDate).toLocaleDateString() : ''} -{' '}
-                  {edu.endDate ? new Date(edu.endDate).toLocaleDateString() : 'Present'}
+                  {fmtDate(edu.startDate)} -{' '}
+                  {fmtDate(edu.endDate) || 'Present'}
                 </span>
               </div>
               <p className={styles.education.school}>{edu.school}</p>

@@ -63,12 +63,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </JotaiProvider>
         <CookieBanner />
         <Toaster
-          position="bottom-right"
+          position="top-center"
           richColors
           closeButton
           toastOptions={{
-            style: { fontFamily: 'var(--font-display)' },
-            duration: 4000,
+            style: {
+              fontFamily: 'var(--font-display)',
+              fontSize: '14px',
+              fontWeight: 500,
+              padding: '14px 18px',
+              borderRadius: '12px',
+              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)',
+            },
+            duration: 3500,
           }}
         />
       </body>

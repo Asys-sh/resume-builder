@@ -1,4 +1,9 @@
-import type { EmailContext } from '@robojs/auth/emails'
+interface EmailContext {
+  user: { name?: string | null }
+  links?: { verifyEmail?: string; resetPassword?: string }
+  tokens?: { verifyEmail?: string; resetPassword?: string }
+  session?: { ip?: string; userAgent?: string }
+}
 
 const colors = {
   primary: '#d4a373',

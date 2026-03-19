@@ -103,7 +103,7 @@ export const AwardItemSchema = z.object({
 // ─── Resume POST body ─────────────────────────────────────────────────────────
 
 export const ResumeBodySchema = z.object({
-  resumeId: z.string().optional(),
+  resumeId: z.string().nullish(),
   title: z.string().max(200, 'Title too long (max 200 characters)').optional(),
   data: z.object({
     summary: z.string().max(5000, 'Summary too long (max 5000 characters)').optional(),
@@ -170,7 +170,8 @@ export const AIAssistSchema = z.object({
   role: z.string().optional(),
   company: z.string().optional(),
   currentContent: z.string().optional(),
-  skills: z.array(z.string()).default([]),
+  // Accept non-array values (e.g. a stray string) and coerce them to []
+  skills: z.preprocess((v) => (Array.isArray(v) ? v : []), z.array(z.string())),
 })
 
 export type AIAssistBody = z.infer<typeof AIAssistSchema>

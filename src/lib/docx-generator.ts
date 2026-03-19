@@ -61,7 +61,7 @@ export const generateDocx = async (data: ResumeData) => {
                       new TextRun({ text: exp.role, bold: true, size: 24 }),
                       new TextRun({ text: ` at ${exp.company}`, bold: true }),
                       new TextRun({
-                        text: `  (${exp.startDate ? new Date(exp.startDate).toLocaleDateString() : ''} - ${exp.endDate ? new Date(exp.endDate).toLocaleDateString() : 'Present'})`,
+                        text: `  (${exp.startDate ? new Date(exp.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : ''} - ${exp.endDate ? new Date(exp.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present'})`,
                         italics: true,
                       }),
                     ],
@@ -89,7 +89,7 @@ export const generateDocx = async (data: ResumeData) => {
                       new TextRun({ text: edu.school, bold: true, size: 24 }),
                       new TextRun({ text: ` - ${edu.degree} in ${edu.fieldOfStudy}` }),
                       new TextRun({
-                        text: `  (${edu.startDate ? new Date(edu.startDate).toLocaleDateString() : ''} - ${edu.endDate ? new Date(edu.endDate).toLocaleDateString() : 'Present'})`,
+                        text: `  (${edu.startDate ? new Date(edu.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : ''} - ${edu.endDate ? new Date(edu.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present'})`,
                         italics: true,
                       }),
                     ],

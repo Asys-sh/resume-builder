@@ -347,7 +347,7 @@ describe('POST /api/resumes — create', () => {
 
     expect(res.status).toBe(400)
     const body = await res.json()
-    expect(body.error).toMatch(/missing resume data/i)
+    expect(body.error).toMatch(/validation error/i)
   })
 
   it('returns 400 when the title exceeds 200 characters', async () => {

@@ -166,8 +166,8 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                 </Text>
               </View>
               <Text style={styles.date}>
-                {exp.startDate ? new Date(exp.startDate).toLocaleDateString() : ''} -{' '}
-                {exp.endDate ? new Date(exp.endDate).toLocaleDateString() : 'Present'}
+                {exp.startDate ? new Date(exp.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : ''} -{' '}
+                {exp.endDate ? new Date(exp.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present'}
               </Text>
             </View>
             <Text style={styles.description}>{exp.description}</Text>
@@ -190,8 +190,8 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                 </Text>
               </View>
               <Text style={styles.date}>
-                {edu.startDate ? new Date(edu.startDate).toLocaleDateString() : ''} -{' '}
-                {edu.endDate ? new Date(edu.endDate).toLocaleDateString() : 'Present'}
+                {edu.startDate ? new Date(edu.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : ''} -{' '}
+                {edu.endDate ? new Date(edu.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present'}
               </Text>
             </View>
             {edu.gpa && <Text style={styles.description}>GPA: {edu.gpa}</Text>}

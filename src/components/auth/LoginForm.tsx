@@ -1,6 +1,6 @@
 'use client'
 
-import { getCsrfToken, signIn } from '@robojs/auth/client'
+import { signIn } from 'next-auth/react'
 import { Loader2 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
@@ -57,15 +57,11 @@ export default function LoginForm() {
     setIsSubmitting(true)
 
     try {
-      const csrfToken = await getCsrfToken()
-
-      // redirect must be the 4th argument — not inside the options object
-      const result = await signIn(
-        'credentials',
-        { email: formData.email, password: formData.password, csrfToken, callbackUrl: '/' },
-        undefined,
-        false,
-      )
+      const result = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      })
 
       if (result?.error || !result?.ok) {
         const error = result?.error ?? ''

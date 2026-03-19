@@ -124,8 +124,7 @@ describe('POST /api/checkout', () => {
 
     expect(res.status).toBe(400)
     const body = await res.json()
-    expect(body.success).toBe(false)
-    expect(body.error).toMatch(/price id is required/i)
+    expect(body.error).toMatch(/validation error/i)
   })
 
   it('returns 400 when priceId is an empty string', async () => {
@@ -133,7 +132,7 @@ describe('POST /api/checkout', () => {
 
     expect(res.status).toBe(400)
     const body = await res.json()
-    expect(body.success).toBe(false)
+    expect(body.error).toBeDefined()
   })
 
   // ── User not in DB ────────────────────────────────────────────

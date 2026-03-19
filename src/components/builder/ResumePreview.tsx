@@ -35,26 +35,22 @@ export function ResumePreview() {
   // Guard against empty TEMPLATES array
   if (TEMPLATES.length === 0) {
     return (
-      <div className="hidden lg:block sticky top-28 h-fit">
-        <div className="bg-white p-8 rounded-xl shadow-lg border border-border-color/20 text-center">
-          <p className="text-text-subtle">No templates available</p>
-        </div>
+      <div className="bg-white p-8 rounded-xl shadow-lg border border-border-color/20 text-center">
+        <p className="text-text-subtle">No templates available</p>
       </div>
     )
   }
 
   return (
-    <>
-      <div className="hidden lg:block sticky top-28 h-fit">
-        <div className="bg-white p-2 rounded-xl shadow-lg border border-border-color/20">
-          <div className="aspect-[8.5/11] w-full overflow-hidden">
-            <TemplateComponent resumeData={resumeData} />
-          </div>
+    <div className="flex flex-col h-full">
+      <div className="flex-1 min-h-0 bg-white p-2 rounded-xl shadow-lg border border-border-color/20">
+        <div className="h-full w-full overflow-hidden" style={{ aspectRatio: '8.5/11', maxHeight: '100%' }}>
+          <TemplateComponent resumeData={resumeData} />
         </div>
-        <p className="text-center mt-4 text-sm text-text-subtle">
-          This is a live preview. Your changes will appear here.
-        </p>
       </div>
-    </>
+      <p className="text-center mt-3 text-sm text-text-subtle shrink-0">
+        This is a live preview. Your changes will appear here.
+      </p>
+    </div>
   )
 }

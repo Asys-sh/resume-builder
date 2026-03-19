@@ -39,7 +39,10 @@ export default function BuilderPage() {
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const debouncedResumeData = useDebounce(resumeData, 2000)
-  const isFirstRender = useRef(true)
+  // Snapshot of the last data that was successfully saved or loaded from the server.
+  // Auto-save compares against this — if nothing changed, the save is skipped.
+  // This is robust against React Strict Mode double-invoking effects (unlike boolean flags).
+  const lastSyncedSnapshot = useRef(JSON.stringify(initialResumeData))
 
   // Initialize resumeId from URL on mount (single source of truth)
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional mount-only effect
@@ -53,6 +56,8 @@ export default function BuilderPage() {
       // Reset state for new resume
       setResumeDataPartial(initialResumeData)
       setCurrentStep(1)
+      // Snapshot matches the blank state — auto-save will skip until the user edits something
+      lastSyncedSnapshot.current = JSON.stringify(initialResumeData)
     }
   }, [])
 
@@ -70,6 +75,8 @@ export default function BuilderPage() {
           if (res.ok) {
             const data = await res.json()
             setResumeDataPartial(data)
+            // Mark the loaded state as "already synced" so auto-save doesn't echo it back
+            lastSyncedSnapshot.current = JSON.stringify({ ...initialResumeData, ...data })
           }
         } catch (err) {
           if ((err as Error).name !== 'AbortError') {
@@ -126,7 +133,7 @@ export default function BuilderPage() {
     const currentResumeId = resumeIdRef.current
 
     try {
-      const response = await fetch('/api/resumes/', {
+      const response = await fetch('/api/resumes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -149,12 +156,26 @@ export default function BuilderPage() {
         resumeIdRef.current = result.resumeId
         setResumeId(result.resumeId)
         setLastSaved(new Date())
-        if (!silent) {
+        // Record what we just saved so the next auto-save comparison is accurate
+        lastSyncedSnapshot.current = JSON.stringify(resumeData)
+        if (silent) {
+          toast('Saved', {
+            duration: 1500,
+            icon: '✓',
+            style: {
+              background: '#f0fdf4',
+              color: '#166534',
+              border: '1px solid #bbf7d0',
+              fontSize: '13px',
+              padding: '10px 14px',
+              minHeight: 'unset',
+            },
+          })
+        } else {
           toast.success('Resume saved!')
         }
       }
     } catch (error) {
-      console.error('Save error:', error)
       if (!silent) toast.error('Failed to save resume. Please try again.')
     } finally {
       isSavingRef.current = false
@@ -169,14 +190,15 @@ export default function BuilderPage() {
   // Auto-save effect — fires 2s after the user stops typing
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — stable refs excluded
   useEffect(() => {
-    // Skip the very first render so we don't save stale initial state on mount
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
-    if (user) {
-      saveResume(true)
-    }
+    if (!user) return
+    // Only save if something actually changed since the last save/load.
+    // JSON.stringify on the debounced value is stable — it won't change unless
+    // the user genuinely edited something. This is also immune to React Strict
+    // Mode double-invoking the effect, because the snapshot comparison is
+    // idempotent no matter how many times it runs.
+    const snapshot = JSON.stringify(debouncedResumeData)
+    if (snapshot === lastSyncedSnapshot.current) return
+    saveResume(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedResumeData])
 
@@ -217,7 +239,6 @@ export default function BuilderPage() {
     <div className="flex flex-col min-h-screen bg-background-light">
       <BuilderHeader
         isSaving={isSaving}
-        lastSaved={lastSaved}
         onSave={handleSave}
         onDownload={handleDownload}
         userInitials={
