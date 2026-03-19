@@ -1,7 +1,7 @@
 'use client'
 
 import type { User } from '@prisma-generated/client'
-import { signOut } from 'next-auth/react'
+import { handleSignOut } from '@/lib/auth-client'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -94,7 +94,7 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
                 </Link>
                 <button
                   type="button"
-                  onClick={() => signOut({ callbackUrl: '/' })}
+                  onClick={() => handleSignOut()}
                   className="block w-full rounded px-4 py-2 text-left text-sm text-red-500 hover:bg-red-50"
                 >
                   Sign out
@@ -182,7 +182,7 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
                   </Link>
                   <button
                     type="button"
-                    onClick={() => signOut({ callbackUrl: '/' })}
+                    onClick={() => handleSignOut()}
                     className="flex w-full items-center rounded px-4 py-3 text-sm text-red-500 hover:bg-red-50"
                   >
                     Sign out

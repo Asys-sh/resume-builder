@@ -1,6 +1,6 @@
 'use client'
 
-import { signIn } from 'next-auth/react'
+import { handleSignIn } from '@/lib/auth-client'
 import { Loader2 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
@@ -57,15 +57,10 @@ export default function LoginForm() {
     setIsSubmitting(true)
 
     try {
-      const result = await signIn('credentials', {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      })
+      const result = await handleSignIn(formData.email, formData.password)
 
-      if (result?.error || !result?.ok) {
-        const error = result?.error ?? ''
-        if (error === 'CredentialsSignin' || error.startsWith('CredentialsSignin')) {
+      if (!result.ok) {
+        if (result.error === 'CredentialsSignin') {
           setErrors({ email: 'Invalid email or password' })
           emailRef.current?.focus()
         } else {

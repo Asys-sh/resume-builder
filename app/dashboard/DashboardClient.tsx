@@ -1,7 +1,7 @@
 'use client'
 
 import type { User } from '@prisma-generated/client'
-import { signOut } from 'next-auth/react'
+import { handleSignOut } from '@/lib/auth-client'
 import {
   Award,
   CreditCard,
@@ -151,7 +151,7 @@ export default function DashboardClient({
           </div>
           <button
             type="button"
-            onClick={() => signOut({ callbackUrl: '/' })}
+            onClick={() => handleSignOut()}
             title="Sign out"
             className="shrink-0 p-1.5 rounded-lg text-dark/50 hover:text-dark hover:bg-yellow/60 transition-colors"
           >
