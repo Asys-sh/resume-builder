@@ -9,6 +9,7 @@ export function ExportButtons({ onExport }: ExportButtonsProps) {
     <div className="flex flex-col gap-3">
       {/* PDF Button - Primary */}
       <button
+        type="button"
         onClick={() => onExport('pdf')}
         className="h-14 px-6 rounded-lg font-bold transition-colors bg-primary text-white hover:bg-primary/90 flex items-center justify-between"
       >
@@ -21,6 +22,7 @@ export function ExportButtons({ onExport }: ExportButtonsProps) {
 
       {/* Word Button */}
       <button
+        type="button"
         onClick={() => onExport('word')}
         className="h-14 px-6 rounded-lg font-bold transition-colors bg-border-color/60 text-text-main hover:bg-border-color/80 flex items-center gap-3"
       >
@@ -30,6 +32,7 @@ export function ExportButtons({ onExport }: ExportButtonsProps) {
 
       {/* Plain Text Button */}
       <button
+        type="button"
         onClick={() => onExport('text')}
         className="h-14 px-6 rounded-lg font-bold transition-colors bg-border-color/60 text-text-main hover:bg-border-color/80 flex items-center justify-between"
       >

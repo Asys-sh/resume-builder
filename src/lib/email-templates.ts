@@ -1,16 +1,16 @@
 import type { EmailContext } from '@robojs/auth/emails'
 
 const colors = {
-	primary: '#d4a373',
-	cream: '#fefae0',
-	beige: '#e9edc9',
-	dark: '#3a3226',
-	subtle: '#6f6454',
-	border: '#ccd5ae'
+  primary: '#d4a373',
+  cream: '#fefae0',
+  beige: '#e9edc9',
+  dark: '#3a3226',
+  subtle: '#6f6454',
+  border: '#ccd5ae',
 }
 
 function layout(content: string) {
-	return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -57,7 +57,7 @@ function layout(content: string) {
 }
 
 function button(href: string, label: string) {
-	return `<table role="presentation" style="border-collapse: collapse;">
+  return `<table role="presentation" style="border-collapse: collapse;">
 		<tr>
 			<td style="border-radius: 10px; background-color: ${colors.primary};">
 				<a href="${href}" style="display: inline-block; padding: 14px 36px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">
@@ -69,7 +69,7 @@ function button(href: string, label: string) {
 }
 
 function linkFallback(url: string) {
-	return `<div style="background-color: ${colors.cream}; border-radius: 8px; padding: 16px;">
+  return `<div style="background-color: ${colors.cream}; border-radius: 8px; padding: 16px;">
 		<p style="margin: 0 0 6px 0; color: ${colors.subtle}; font-size: 12px;">Or copy this link into your browser:</p>
 		<p style="margin: 0; font-size: 13px; word-break: break-all;">
 			<a href="${url}" style="color: ${colors.primary}; text-decoration: none;">${url}</a>
@@ -80,15 +80,15 @@ function linkFallback(url: string) {
 // ── Welcome / Verification ──────────────────────────────────────────────
 
 export function welcomeSubject(ctx: EmailContext): string {
-	const name = ctx.user.name?.trim()
-	return name ? `Welcome to RoboResume, ${name}` : 'Welcome to RoboResume'
+  const name = ctx.user.name?.trim()
+  return name ? `Welcome to RoboResume, ${name}` : 'Welcome to RoboResume'
 }
 
 export function welcomeHtml(ctx: EmailContext): string {
-	const name = ctx.user.name?.trim()
-	const verifyUrl = ctx.links?.verifyEmail ?? '#'
+  const name = ctx.user.name?.trim()
+  const verifyUrl = ctx.links?.verifyEmail ?? '#'
 
-	return layout(`
+  return layout(`
 		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
 		<tr>
 			<td style="padding: 40px 40px 0 40px;">
@@ -110,22 +110,22 @@ export function welcomeHtml(ctx: EmailContext): string {
 }
 
 export function welcomeText(ctx: EmailContext): string {
-	const name = ctx.user.name?.trim() || 'there'
-	const link = ctx.links?.verifyEmail ?? ''
-	return `Hey ${name}, thanks for signing up for RoboResume!\n\nVerify your email: ${link}\n\nThis link expires in 1 hour.`
+  const name = ctx.user.name?.trim() || 'there'
+  const link = ctx.links?.verifyEmail ?? ''
+  return `Hey ${name}, thanks for signing up for RoboResume!\n\nVerify your email: ${link}\n\nThis link expires in 1 hour.`
 }
 
 // ── Email Verification (separate from welcome) ─────────────────────────
 
 export function verificationSubject(): string {
-	return 'Verify your email — RoboResume'
+  return 'Verify your email — RoboResume'
 }
 
 export function verificationHtml(ctx: EmailContext): string {
-	const name = ctx.user.name?.trim()
-	const verifyUrl = ctx.links?.verifyEmail ?? ctx.tokens?.verifyEmail ?? '#'
+  const name = ctx.user.name?.trim()
+  const verifyUrl = ctx.links?.verifyEmail ?? ctx.tokens?.verifyEmail ?? '#'
 
-	return layout(`
+  return layout(`
 		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
 		<tr>
 			<td style="padding: 40px 40px 0 40px;">
@@ -147,21 +147,21 @@ export function verificationHtml(ctx: EmailContext): string {
 }
 
 export function verificationText(ctx: EmailContext): string {
-	const link = ctx.links?.verifyEmail ?? ctx.tokens?.verifyEmail ?? ''
-	return `Verify your email for RoboResume: ${link}`
+  const link = ctx.links?.verifyEmail ?? ctx.tokens?.verifyEmail ?? ''
+  return `Verify your email for RoboResume: ${link}`
 }
 
 // ── Password Reset ──────────────────────────────────────────────────────
 
 export function resetSubject(): string {
-	return 'Reset your password — RoboResume'
+  return 'Reset your password — RoboResume'
 }
 
 export function resetHtml(ctx: EmailContext): string {
-	const name = ctx.user.name?.trim()
-	const resetUrl = ctx.links?.resetPassword ?? ctx.tokens?.resetPassword ?? '#'
+  const name = ctx.user.name?.trim()
+  const resetUrl = ctx.links?.resetPassword ?? ctx.tokens?.resetPassword ?? '#'
 
-	return layout(`
+  return layout(`
 		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
 		<tr>
 			<td style="padding: 40px 40px 0 40px;">
@@ -183,35 +183,41 @@ export function resetHtml(ctx: EmailContext): string {
 }
 
 export function resetText(ctx: EmailContext): string {
-	const link = ctx.links?.resetPassword ?? ctx.tokens?.resetPassword ?? ''
-	return `Reset your RoboResume password: ${link}\n\nThis link expires in 30 minutes. If you didn't request this, ignore this email.`
+  const link = ctx.links?.resetPassword ?? ctx.tokens?.resetPassword ?? ''
+  return `Reset your RoboResume password: ${link}\n\nThis link expires in 30 minutes. If you didn't request this, ignore this email.`
 }
 
 // ── Sign-in Alert ────────────────────────────────────────────────────────
 
 export function signinSubject(): string {
-	return 'New sign-in to your RoboResume account'
+  return 'New sign-in to your RoboResume account'
 }
 
 export function signinHtml(ctx: EmailContext): string {
-	const name = ctx.user.name?.trim()
-	const ip = ctx.session?.ip
-	const ua = ctx.session?.userAgent
+  const name = ctx.user.name?.trim()
+  const ip = ctx.session?.ip
+  const ua = ctx.session?.userAgent
 
-	const metaRows = [
-		ip ? `<tr>
+  const metaRows = [
+    ip
+      ? `<tr>
 			<td style="padding: 8px 0; border-bottom: 1px solid ${colors.border}; color: ${colors.subtle}; font-size: 13px;">
 				IP address: <strong style="color: ${colors.dark};">${ip}</strong>
 			</td>
-		</tr>` : '',
-		ua ? `<tr>
+		</tr>`
+      : '',
+    ua
+      ? `<tr>
 			<td style="padding: 8px 0; color: ${colors.subtle}; font-size: 13px;">
 				Device: <strong style="color: ${colors.dark};">${ua}</strong>
 			</td>
-		</tr>` : ''
-	].filter(Boolean).join('')
+		</tr>`
+      : '',
+  ]
+    .filter(Boolean)
+    .join('')
 
-	return layout(`
+  return layout(`
 		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
 		<tr>
 			<td style="padding: 40px 40px 0 40px;">
@@ -221,13 +227,17 @@ export function signinHtml(ctx: EmailContext): string {
 				</p>
 			</td>
 		</tr>
-		${metaRows ? `<tr>
+		${
+      metaRows
+        ? `<tr>
 			<td style="padding: 24px 40px 0 40px;">
 				<table role="presentation" width="100%" style="border-collapse: collapse; background-color: ${colors.cream}; border-radius: 8px; padding: 4px 16px;">
 					${metaRows}
 				</table>
 			</td>
-		</tr>` : ''}
+		</tr>`
+        : ''
+    }
 		<tr>
 			<td style="padding: 32px 40px 40px 40px;">
 				<p style="margin: 0; color: ${colors.subtle}; font-size: 13px; line-height: 20px;">
@@ -238,14 +248,14 @@ export function signinHtml(ctx: EmailContext): string {
 }
 
 export function signinText(ctx: EmailContext): string {
-	const ip = ctx.session?.ip
-	const ua = ctx.session?.userAgent
-	const lines = [
-		'New sign-in detected on your RoboResume account.',
-		ip ? `IP: ${ip}` : undefined,
-		ua ? `Device: ${ua}` : undefined,
-		'',
-		"If this was you, no action is needed. If not, reset your password immediately to secure your account."
-	].filter(Boolean)
-	return lines.join('\n')
+  const ip = ctx.session?.ip
+  const ua = ctx.session?.userAgent
+  const lines = [
+    'New sign-in detected on your RoboResume account.',
+    ip ? `IP: ${ip}` : undefined,
+    ua ? `Device: ${ua}` : undefined,
+    '',
+    'If this was you, no action is needed. If not, reset your password immediately to secure your account.',
+  ].filter(Boolean)
+  return lines.join('\n')
 }

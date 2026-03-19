@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function deleteResume(resumeId: string) {
   const res = await fetch('/api/resumes?resumeId=' + resumeId, {
-    method: 'DELETE'
+    method: 'DELETE',
   })
 
   if (res.ok) {
@@ -50,10 +50,17 @@ Resume Summary:
 - Professional Summary: ${summary || 'N/A'}
 
 Work Experience:
-${experiences.map((exp, i) => `${i + 1}. ${exp.role} at ${exp.company} (${exp.startDate ? new Date(exp.startDate).toLocaleDateString() : 'N/A'} - ${exp.endDate ? new Date(exp.endDate).toLocaleDateString() : 'Present'})
-   ${exp.description || 'No description provided'}`).join('\n')}
+${experiences
+  .map(
+    (
+      exp,
+      i,
+    ) => `${i + 1}. ${exp.role} at ${exp.company} (${exp.startDate ? new Date(exp.startDate).toLocaleDateString() : 'N/A'} - ${exp.endDate ? new Date(exp.endDate).toLocaleDateString() : 'Present'})
+   ${exp.description || 'No description provided'}`,
+  )
+  .join('\n')}
 
-Skills: ${skills.map(s => s.name).join(', ')}
+Skills: ${skills.map((s) => s.name).join(', ')}
 
 Education:
 ${education.map((edu, i) => `${i + 1}. ${edu.degree} from ${edu.school} (${edu.startDate ? new Date(edu.startDate).toLocaleDateString() : 'N/A'} - ${edu.endDate ? new Date(edu.endDate).toLocaleDateString() : 'Present'})`).join('\n')}

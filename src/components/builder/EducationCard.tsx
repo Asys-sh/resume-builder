@@ -1,28 +1,28 @@
-'use client';
+'use client'
 
-import { Education } from '@/stores/builder';
-import { BuilderFormField } from '@/components/builder';
-import { DatePicker } from '@/components/ui/date-picker';
+import { BuilderFormField } from '@/components/builder'
+import { DatePicker } from '@/components/ui/date-picker'
+import type { Education } from '@/stores/builder'
 
 interface EducationCardProps {
-  education: Education;
-  onUpdate: (field: keyof Education, value: any) => void;
-  onDelete: () => void;
-  index: number;
+  education: Education
+  onUpdate: (field: keyof Education, value: any) => void
+  onDelete: () => void
+  index: number
 }
 
 export function EducationCard({ education, onUpdate, onDelete, index }: EducationCardProps) {
   // Helper to format Date object to YYYY-MM-DD string for input
   const formatDateForInput = (date: Date | null | string) => {
-    if (!date) return '';
+    if (!date) return ''
     // If it's already a string (legacy), return it
-    if (typeof date === 'string') return date;
+    if (typeof date === 'string') return date
     try {
-      return date.toISOString().split('T')[0];
+      return date.toISOString().split('T')[0]
     } catch (e) {
-      return '';
+      return ''
     }
-  };
+  }
 
   return (
     <div className="p-6 bg-white/50 rounded-lg border border-border-color/50">
@@ -30,6 +30,7 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-text-main">Education {index + 1}</h3>
         <button
+          type="button"
           onClick={onDelete}
           className="text-text-subtle hover:text-primary transition-colors"
           aria-label={`Delete education ${index + 1}`}
@@ -79,14 +80,18 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
             <DatePicker
               label="Start Date"
               value={formatDateForInput(education.startDate)}
-              onChange={(e) => onUpdate('startDate', e.target.value ? new Date(e.target.value) : new Date())}
+              onChange={(e) =>
+                onUpdate('startDate', e.target.value ? new Date(e.target.value) : new Date())
+              }
             />
           </div>
           <div className="flex-1">
             <DatePicker
               label="End Date"
               value={formatDateForInput(education.endDate)}
-              onChange={(e) => onUpdate('endDate', e.target.value ? new Date(e.target.value) : null)}
+              onChange={(e) =>
+                onUpdate('endDate', e.target.value ? new Date(e.target.value) : null)
+              }
             />
           </div>
           <div className="flex-1">
@@ -101,5 +106,5 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
         </div>
       </div>
     </div>
-  );
+  )
 }

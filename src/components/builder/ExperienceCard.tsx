@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { Experience } from '@/stores/builder';
-import { BuilderTextarea, BuilderFormField } from '@/components/builder';
-import { Combobox } from '@/components/ui/combobox';
-import { DatePicker } from '@/components/ui/date-picker';
-import { jobs_title } from '@/lib/arrays';
-import { toast } from 'sonner';
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { BuilderFormField, BuilderTextarea } from '@/components/builder'
+import { Combobox } from '@/components/ui/combobox'
+import { DatePicker } from '@/components/ui/date-picker'
+import { jobs_title } from '@/lib/arrays'
+import type { Experience } from '@/stores/builder'
 
 interface ExperienceCardProps {
-  experience: Experience;
-  onUpdate: (field: keyof Experience, value: any) => void;
-  onDelete: () => void;
-  index: number;
+  experience: Experience
+  onUpdate: (field: keyof Experience, value: any) => void
+  onDelete: () => void
+  index: number
 }
 
 export function ExperienceCard({ experience, onUpdate, onDelete, index }: ExperienceCardProps) {
@@ -28,8 +28,8 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
           type: 'description',
           role: experience.role,
           company: experience.company,
-          currentContent: experience.description
-        })
+          currentContent: experience.description,
+        }),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -51,6 +51,7 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-text-main">Experience {index + 1}</h3>
         <button
+          type="button"
           onClick={onDelete}
           className="text-text-subtle hover:text-primary transition-colors"
           aria-label={`Delete experience ${index + 1}`}
@@ -64,7 +65,7 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
         {/* Row 1: Role & Company */}
         <div className="flex flex-col md:flex-row gap-6">
           <div className="min-w-40 flex-1 flex flex-col gap-2">
-            <label className="text-base font-medium text-text-main">Role</label>
+            <span className="text-base font-medium text-text-main">Role</span>
             <Combobox
               value={experience.role}
               onSelect={(value) => onUpdate('role', value)}
@@ -99,15 +100,25 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
             <div className="flex-1">
               <DatePicker
                 label="Start Date"
-                value={experience.startDate ? new Date(experience.startDate).toISOString().split('T')[0] : ''}
-                onChange={(e) => onUpdate('startDate', e.target.value ? new Date(e.target.value) : null)}
+                value={
+                  experience.startDate
+                    ? new Date(experience.startDate).toISOString().split('T')[0]
+                    : ''
+                }
+                onChange={(e) =>
+                  onUpdate('startDate', e.target.value ? new Date(e.target.value) : null)
+                }
               />
             </div>
             <div className="flex-1">
               <DatePicker
                 label="End Date"
-                value={experience.endDate ? new Date(experience.endDate).toISOString().split('T')[0] : ''}
-                onChange={(e) => onUpdate('endDate', e.target.value ? new Date(e.target.value) : null)}
+                value={
+                  experience.endDate ? new Date(experience.endDate).toISOString().split('T')[0] : ''
+                }
+                onChange={(e) =>
+                  onUpdate('endDate', e.target.value ? new Date(e.target.value) : null)
+                }
               />
             </div>
           </div>
@@ -132,5 +143,5 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -6,12 +6,12 @@ import type { ResumeData } from '@/stores/builder'
  * template and export format is protected automatically.
  */
 export function sanitizeText(value: string | undefined | null): string {
-    if (!value) return value ?? ''
-    return value
-        .replace(/<[^>]*>/g, '')         // strip HTML tags
-        .replace(/javascript\s*:/gi, '')  // strip javascript: URI scheme
-        .replace(/data\s*:/gi, '')        // strip data: URI scheme
-        .trim()
+  if (!value) return value ?? ''
+  return value
+    .replace(/<[^>]*>/g, '') // strip HTML tags
+    .replace(/javascript\s*:/gi, '') // strip javascript: URI scheme
+    .replace(/data\s*:/gi, '') // strip data: URI scheme
+    .trim()
 }
 
 /**
@@ -19,10 +19,10 @@ export function sanitizeText(value: string | undefined | null): string {
  * Returns an empty string if the URL uses a dangerous scheme (javascript:, data:, vbscript:).
  */
 export function sanitizeUrl(value: string | undefined | null): string {
-    if (!value) return value ?? ''
-    const trimmed = value.trim()
-    if (/^(javascript|data|vbscript)\s*:/i.test(trimmed)) return ''
-    return trimmed
+  if (!value) return value ?? ''
+  const trimmed = value.trim()
+  if (/^(javascript|data|vbscript)\s*:/i.test(trimmed)) return ''
+  return trimmed
 }
 
 /**
@@ -30,54 +30,54 @@ export function sanitizeUrl(value: string | undefined | null): string {
  * Call this once at the API boundary before saving to the database.
  */
 export function sanitizeResumeData(data: ResumeData): ResumeData {
-    return {
-        ...data,
-        summary: sanitizeText(data.summary),
-        contactInfo: {
-            fullName: sanitizeText(data.contactInfo.fullName),
-            headline: sanitizeText(data.contactInfo.headline),
-            email: sanitizeText(data.contactInfo.email),
-            phone: sanitizeText(data.contactInfo.phone),
-            address: sanitizeText(data.contactInfo.address),
-            linkedin: sanitizeUrl(data.contactInfo.linkedin),
-            website: sanitizeUrl(data.contactInfo.website),
-        },
-        experiences: data.experiences.map(exp => ({
-            ...exp,
-            company: sanitizeText(exp.company),
-            role: sanitizeText(exp.role),
-            description: sanitizeText(exp.description ?? null),
-            location: sanitizeText(exp.location ?? null),
-        })),
-        skills: data.skills.map(skill => ({
-            ...skill,
-            name: sanitizeText(skill.name),
-            level: sanitizeText(skill.level ?? null),
-        })),
-        education: data.education.map(edu => ({
-            ...edu,
-            school: sanitizeText(edu.school),
-            degree: sanitizeText(edu.degree),
-            fieldOfStudy: sanitizeText(edu.fieldOfStudy ?? null),
-            gpa: sanitizeText(edu.gpa ?? null),
-        })),
-        projects: data.projects.map(proj => ({
-            ...proj,
-            title: sanitizeText(proj.title),
-            description: sanitizeText(proj.description ?? null),
-            technologies: sanitizeText(proj.technologies ?? null),
-            link: sanitizeUrl(proj.link ?? null),
-        })),
-        certifications: data.certifications.map(cert => ({
-            ...cert,
-            name: sanitizeText(cert.name),
-            issuer: sanitizeText(cert.issuer),
-            date: sanitizeText(cert.date ?? null),
-        })),
-        languages: data.languages.map(lang => ({
-            ...lang,
-            name: sanitizeText(lang.name),
-            proficiency: sanitizeText(lang.proficiency),
-        })),
-    }
+  return {
+    ...data,
+    summary: sanitizeText(data.summary),
+    contactInfo: {
+      fullName: sanitizeText(data.contactInfo.fullName),
+      headline: sanitizeText(data.contactInfo.headline),
+      email: sanitizeText(data.contactInfo.email),
+      phone: sanitizeText(data.contactInfo.phone),
+      address: sanitizeText(data.contactInfo.address),
+      linkedin: sanitizeUrl(data.contactInfo.linkedin),
+      website: sanitizeUrl(data.contactInfo.website),
+    },
+    experiences: data.experiences.map((exp) => ({
+      ...exp,
+      company: sanitizeText(exp.company),
+      role: sanitizeText(exp.role),
+      description: sanitizeText(exp.description ?? null),
+      location: sanitizeText(exp.location ?? null),
+    })),
+    skills: data.skills.map((skill) => ({
+      ...skill,
+      name: sanitizeText(skill.name),
+      level: sanitizeText(skill.level ?? null),
+    })),
+    education: data.education.map((edu) => ({
+      ...edu,
+      school: sanitizeText(edu.school),
+      degree: sanitizeText(edu.degree),
+      fieldOfStudy: sanitizeText(edu.fieldOfStudy ?? null),
+      gpa: sanitizeText(edu.gpa ?? null),
+    })),
+    projects: data.projects.map((proj) => ({
+      ...proj,
+      title: sanitizeText(proj.title),
+      description: sanitizeText(proj.description ?? null),
+      technologies: sanitizeText(proj.technologies ?? null),
+      link: sanitizeUrl(proj.link ?? null),
+    })),
+    certifications: data.certifications.map((cert) => ({
+      ...cert,
+      name: sanitizeText(cert.name),
+      issuer: sanitizeText(cert.issuer),
+      date: sanitizeText(cert.date ?? null),
+    })),
+    languages: data.languages.map((lang) => ({
+      ...lang,
+      name: sanitizeText(lang.name),
+      proficiency: sanitizeText(lang.proficiency),
+    })),
+  }
 }

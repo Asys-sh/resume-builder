@@ -1,6 +1,6 @@
 'use client'
 
-import { Project } from '@/stores/builder'
+import type { Project } from '@/stores/builder'
 import { BuilderFormField } from './BuilderFormField'
 import { BuilderTextarea } from './BuilderTextarea'
 
@@ -16,10 +16,9 @@ export function ProjectCard({ project, onUpdate, onDelete, index }: ProjectCardP
     <div className="p-6 bg-white/50 rounded-lg border border-border-color/50">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-text-main">
-          Project {index + 1}
-        </h3>
+        <h3 className="text-lg font-semibold text-text-main">Project {index + 1}</h3>
         <button
+          type="button"
           onClick={onDelete}
           className="text-text-subtle hover:text-red-500 transition-colors"
           aria-label="Delete project"

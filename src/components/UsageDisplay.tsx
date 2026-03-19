@@ -14,11 +14,10 @@ export function UsageDisplay({ usageCount, usageLimit, onClick, className }: Usa
     <button
       type="button"
       className={cn(
-        "flex items-center gap-2 hover:scale-105 transition-transform duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md p-2",
-        className
+        'flex items-center gap-2 hover:scale-105 transition-transform duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md p-2',
+        className,
       )}
       aria-label={`Usage: ${usageCount ?? 0} out of ${usageLimit ?? 0} AI assists used`}
-      role="button"
       onClick={onClick}
     >
       <span className="text-primary text-lg" aria-hidden="true">

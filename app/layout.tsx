@@ -1,50 +1,44 @@
-import type { Metadata } from "next";
-import { Roboto_Flex } from "next/font/google";
-import "./globals.css";
-import { JotaiProvider } from "@/components/JotaiProvider";
-import { getUserData } from "@/lib/auth-helper";
-import { validateEnv } from "@/lib/env";
-import { Toaster } from "sonner";
-import CookieBanner from "@/components/CookieBanner";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-
-validateEnv();
+import type { Metadata } from 'next'
+import { Roboto_Flex } from 'next/font/google'
+import './globals.css'
+import { Toaster } from 'sonner'
+import CookieBanner from '@/components/CookieBanner'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { JotaiProvider } from '@/components/JotaiProvider'
+import { getUserData } from '@/lib/auth-helper'
+import '@/lib/env' // validates env vars on server startup — throws if invalid
 
 const robotoFlex = Roboto_Flex({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-display",
-});
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-display',
+})
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://resume.dev";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://resume.dev'
 
 export const metadata: Metadata = {
-  title: "RoboResume - AI-Powered Resume Builder",
+  title: 'RoboResume - AI-Powered Resume Builder',
   description:
-    "Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start, no credit card required.",
+    'Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start, no credit card required.',
   metadataBase: new URL(baseUrl),
   openGraph: {
-    title: "RoboResume - AI-Powered Resume Builder",
+    title: 'RoboResume - AI-Powered Resume Builder',
     description:
-      "Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start.",
+      'Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start.',
     url: baseUrl,
-    siteName: "RoboResume",
-    type: "website",
+    siteName: 'RoboResume',
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "RoboResume - AI-Powered Resume Builder",
+    card: 'summary_large_image',
+    title: 'RoboResume - AI-Powered Resume Builder',
     description:
-      "Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start.",
+      'Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start.',
   },
-};
+}
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const user = await getUserData();
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const user = await getUserData()
   return (
     <html lang="en">
       <head>
@@ -73,11 +67,11 @@ export default async function RootLayout({
           richColors
           closeButton
           toastOptions={{
-            style: { fontFamily: "var(--font-display)" },
+            style: { fontFamily: 'var(--font-display)' },
             duration: 4000,
           }}
         />
       </body>
     </html>
-  );
+  )
 }

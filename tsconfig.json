@@ -1,52 +1,36 @@
 {
-	"compilerOptions": {
-		"target": "ESNext",
-		"lib": [
-			"esnext",
-			"DOM",
-			"DOM.Iterable"
-		],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"esModuleInterop": true,
-		"module": "esnext",
-		"useDefineForClassFields": true,
-		"incremental": true,
-		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"baseUrl": ".",
-		"paths": {
-			"@prisma-generated/*": [
-				".robo/prisma/*"
-			],
-			"@/*": [
-				"src/*"
-			],
-			"~/*": [
-				"../robokit/src/*"
-			]
-		},
-		"noEmit": true,
-		"jsx": "preserve",
-		"strict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true,
-		"plugins": [
-			{
-				"name": "next"
-			}
-		]
-	},
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-		".next/types/**/*.ts"
-	],
-	"exclude": [
-		"node_modules"
-	]
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "useDefineForClassFields": true,
+    "incremental": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@prisma-generated/*": [".robo/prisma/*"],
+      "@/*": ["src/*"],
+      "~/*": ["../robokit/src/*"]
+    },
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

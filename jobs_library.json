@@ -4,15 +4,8 @@
   "roles": [
     {
       "title": "3D Artist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Gaming",
-        "Media"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Gaming", "Media"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -22,9 +15,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -68,14 +59,8 @@
     },
     {
       "title": "Account Executive",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Sales"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Sales"],
       "examples": [
         "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
         "Negotiated and closed deals worth {amount}, exceeding quota by {percent}%."
@@ -85,9 +70,7 @@
         "Expanded ARR +{amount} via {upsell/cross‑sell}.",
         "Cut sales cycle from {baseline} to {result} days by {action}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
@@ -129,14 +112,8 @@
     },
     {
       "title": "Account Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Sales"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Sales"],
       "examples": [
         "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
         "Negotiated and closed deals worth {amount}, exceeding quota by {percent}%."
@@ -146,9 +123,7 @@
         "Expanded ARR +{amount} via {upsell/cross‑sell}.",
         "Cut sales cycle from {baseline} to {result} days by {action}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
@@ -190,14 +165,8 @@
     },
     {
       "title": "Accountant",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
         "Negotiated and closed deals worth {amount}, exceeding quota by {percent}%."
@@ -207,9 +176,7 @@
         "Expanded ARR +{amount} via {upsell/cross‑sell}.",
         "Cut sales cycle from {baseline} to {result} days by {action}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
@@ -250,15 +217,8 @@
     },
     {
       "title": "Actuary",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance",
-        "Insurance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance", "Insurance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -268,9 +228,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -315,14 +273,8 @@
     },
     {
       "title": "Aerospace Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Aerospace"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Aerospace"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -332,9 +284,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -377,15 +327,8 @@
     },
     {
       "title": "Animator",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Media",
-        "Gaming"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Media", "Gaming"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -395,9 +338,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -441,14 +382,8 @@
     },
     {
       "title": "Assembler",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -458,9 +393,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -501,14 +434,8 @@
     },
     {
       "title": "Attorney",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Legal"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Legal"],
       "examples": [
         "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
         "Conducted legal research and risk assessments to support {matter}, ensuring compliance with {regulation}."
@@ -518,9 +445,7 @@
         "Reduced outside counsel spend by {percent}% via {action}.",
         "Closed {cases} matters with {success_rate}% favorable outcomes."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
@@ -559,14 +484,8 @@
     },
     {
       "title": "Auditor",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -576,9 +495,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -619,14 +536,8 @@
     },
     {
       "title": "Automation Test Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -636,9 +547,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -682,14 +591,8 @@
     },
     {
       "title": "Backend Developer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -699,9 +602,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -744,14 +645,8 @@
     },
     {
       "title": "Barista",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Hospitality"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Hospitality"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -761,9 +656,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -802,14 +695,8 @@
     },
     {
       "title": "Bartender",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Hospitality"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Hospitality"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -819,9 +706,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -860,16 +745,8 @@
     },
     {
       "title": "BI Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Retail",
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Retail", "Finance"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -879,9 +756,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -931,14 +806,8 @@
     },
     {
       "title": "Biomedical Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -948,9 +817,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -993,14 +860,8 @@
     },
     {
       "title": "Bookkeeper",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -1010,9 +871,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -1053,14 +912,8 @@
     },
     {
       "title": "Brand Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
         "Optimized {channel} with A/B tests, reducing CPA from {baseline} to {result}."
@@ -1070,9 +923,7 @@
         "Lowered CPA from {baseline} to {result} through {optimization}.",
         "Increased email CTR to {result}% after {test}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
@@ -1115,15 +966,8 @@
     },
     {
       "title": "Business Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -1133,9 +977,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -1181,14 +1023,8 @@
     },
     {
       "title": "Carpenter",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Construction"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Construction"],
       "examples": [
         "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
         "Implemented safety program that reduced incidents by {percent}% year‑over‑year."
@@ -1198,9 +1034,7 @@
         "Improved safety incidents by {percent}% through {program}.",
         "Increased equipment uptime to {result}% by {maintenance practice}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
@@ -1240,14 +1074,8 @@
     },
     {
       "title": "Cashier",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Retail"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Retail"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -1257,9 +1085,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -1298,14 +1124,8 @@
     },
     {
       "title": "Chef",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Hospitality"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Hospitality"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -1315,9 +1135,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -1356,14 +1174,8 @@
     },
     {
       "title": "Chemical Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -1373,9 +1185,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -1418,14 +1228,8 @@
     },
     {
       "title": "Civil Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Construction"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Construction"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -1435,9 +1239,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -1480,14 +1282,8 @@
     },
     {
       "title": "Cloud Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -1497,9 +1293,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -1542,14 +1336,8 @@
     },
     {
       "title": "Compensation & Benefits Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "HR"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["HR"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -1559,9 +1347,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -1604,14 +1390,8 @@
     },
     {
       "title": "Compliance Counsel",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Legal"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Legal"],
       "examples": [
         "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
         "Conducted legal research and risk assessments to support {matter}, ensuring compliance with {regulation}."
@@ -1621,9 +1401,7 @@
         "Reduced outside counsel spend by {percent}% via {action}.",
         "Closed {cases} matters with {success_rate}% favorable outcomes."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
@@ -1662,14 +1440,8 @@
     },
     {
       "title": "Compliance Officer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -1679,9 +1451,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -1723,14 +1493,8 @@
     },
     {
       "title": "Construction Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Construction"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Construction"],
       "examples": [
         "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
         "Implemented safety program that reduced incidents by {percent}% year‑over‑year."
@@ -1740,9 +1504,7 @@
         "Improved safety incidents by {percent}% through {program}.",
         "Increased equipment uptime to {result}% by {maintenance practice}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
@@ -1783,14 +1545,8 @@
     },
     {
       "title": "Content Marketer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
         "Optimized {channel} with A/B tests, reducing CPA from {baseline} to {result}."
@@ -1800,9 +1556,7 @@
         "Lowered CPA from {baseline} to {result} through {optimization}.",
         "Increased email CTR to {result}% after {test}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
@@ -1844,14 +1598,8 @@
     },
     {
       "title": "Contract Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Legal"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Legal"],
       "examples": [
         "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
         "Conducted legal research and risk assessments to support {matter}, ensuring compliance with {regulation}."
@@ -1861,9 +1609,7 @@
         "Reduced outside counsel spend by {percent}% via {action}.",
         "Closed {cases} matters with {success_rate}% favorable outcomes."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
@@ -1903,14 +1649,8 @@
     },
     {
       "title": "Cook",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Hospitality"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Hospitality"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -1920,9 +1660,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -1961,14 +1699,8 @@
     },
     {
       "title": "Credit Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -1978,9 +1710,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -2022,14 +1752,8 @@
     },
     {
       "title": "Curriculum Developer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Education"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Education"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -2039,9 +1763,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -2084,15 +1806,8 @@
     },
     {
       "title": "Customer Success Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Sales",
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Sales", "Technology"],
       "examples": [
         "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
         "Negotiated and closed deals worth {amount}, exceeding quota by {percent}%."
@@ -2102,9 +1817,7 @@
         "Expanded ARR +{amount} via {upsell/cross‑sell}.",
         "Cut sales cycle from {baseline} to {result} days by {action}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
@@ -2151,15 +1864,8 @@
     },
     {
       "title": "Cybersecurity Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -2169,9 +1875,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -2217,16 +1921,8 @@
     },
     {
       "title": "Data Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Finance",
-        "Retail"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Finance", "Retail"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -2236,9 +1932,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -2289,14 +1983,8 @@
     },
     {
       "title": "Data Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -2306,9 +1994,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -2351,15 +2037,8 @@
     },
     {
       "title": "Data Privacy Officer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Legal"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Legal"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -2369,9 +2048,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -2419,16 +2096,8 @@
     },
     {
       "title": "Data Scientist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Finance",
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Finance", "Healthcare"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -2438,9 +2107,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -2491,14 +2158,8 @@
     },
     {
       "title": "Database Administrator",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -2508,9 +2169,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -2553,14 +2212,8 @@
     },
     {
       "title": "Dentist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -2570,9 +2223,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -2613,14 +2264,8 @@
     },
     {
       "title": "DevOps Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -2630,9 +2275,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -2675,14 +2318,8 @@
     },
     {
       "title": "Electrical Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -2692,9 +2329,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -2737,14 +2372,8 @@
     },
     {
       "title": "Electrician",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Construction"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Construction"],
       "examples": [
         "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
         "Implemented safety program that reduced incidents by {percent}% year‑over‑year."
@@ -2754,9 +2383,7 @@
         "Improved safety incidents by {percent}% through {program}.",
         "Increased equipment uptime to {result}% by {maintenance practice}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
@@ -2796,14 +2423,8 @@
     },
     {
       "title": "Email Marketing Specialist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -2813,9 +2434,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -2859,14 +2478,8 @@
     },
     {
       "title": "Environmental Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Energy"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Energy"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -2876,9 +2489,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -2921,15 +2532,8 @@
     },
     {
       "title": "E‑commerce Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Retail",
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Retail", "Technology"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -2939,9 +2543,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -2985,14 +2587,8 @@
     },
     {
       "title": "Financial Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3002,9 +2598,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3046,14 +2640,8 @@
     },
     {
       "title": "Financial Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3063,9 +2651,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3107,14 +2693,8 @@
     },
     {
       "title": "Forklift Operator",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Logistics"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Logistics"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3124,9 +2704,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3168,14 +2746,8 @@
     },
     {
       "title": "Frontend Developer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -3185,9 +2757,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -3230,14 +2800,8 @@
     },
     {
       "title": "Full‑Stack Developer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -3247,9 +2811,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -3292,14 +2854,8 @@
     },
     {
       "title": "Game Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Gaming"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Gaming"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -3309,9 +2865,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -3352,14 +2906,8 @@
     },
     {
       "title": "Game Developer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Gaming"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Gaming"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -3369,9 +2917,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -3414,15 +2960,8 @@
     },
     {
       "title": "Graphic Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing",
-        "Media"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing", "Media"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -3432,9 +2971,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -3479,15 +3016,8 @@
     },
     {
       "title": "GRC Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3497,9 +3027,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3545,14 +3073,8 @@
     },
     {
       "title": "Growth Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
         "Optimized {channel} with A/B tests, reducing CPA from {baseline} to {result}."
@@ -3562,9 +3084,7 @@
         "Lowered CPA from {baseline} to {result} through {optimization}.",
         "Increased email CTR to {result}% after {test}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
@@ -3607,14 +3127,8 @@
     },
     {
       "title": "Help Desk Technician",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3624,9 +3138,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3669,14 +3181,8 @@
     },
     {
       "title": "HR Generalist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "HR"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["HR"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3686,9 +3192,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3729,14 +3233,8 @@
     },
     {
       "title": "HR Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "HR"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["HR"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3746,9 +3244,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3789,14 +3285,8 @@
     },
     {
       "title": "Incident Responder",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3806,9 +3296,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3850,14 +3338,8 @@
     },
     {
       "title": "Industrial Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -3867,9 +3349,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -3912,14 +3392,8 @@
     },
     {
       "title": "Information Security Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -3929,9 +3403,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -3974,15 +3446,8 @@
     },
     {
       "title": "Instructional Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Education",
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Education", "Technology"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -3992,9 +3457,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -4039,14 +3502,8 @@
     },
     {
       "title": "Investment Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -4056,9 +3513,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -4100,14 +3555,8 @@
     },
     {
       "title": "IT Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -4117,9 +3566,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -4160,14 +3607,8 @@
     },
     {
       "title": "IT Support Specialist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -4177,9 +3618,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -4221,14 +3660,8 @@
     },
     {
       "title": "Legal Assistant",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Legal"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Legal"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -4238,9 +3671,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -4280,14 +3711,8 @@
     },
     {
       "title": "Librarian",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Education"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Education"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -4297,9 +3722,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -4340,14 +3763,8 @@
     },
     {
       "title": "Logistics Coordinator",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Operations"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Operations"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -4357,9 +3774,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -4401,14 +3816,8 @@
     },
     {
       "title": "Machine Learning Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -4418,9 +3827,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -4464,14 +3871,8 @@
     },
     {
       "title": "Marketing Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
         "Optimized {channel} with A/B tests, reducing CPA from {baseline} to {result}."
@@ -4481,9 +3882,7 @@
         "Lowered CPA from {baseline} to {result} through {optimization}.",
         "Increased email CTR to {result}% after {test}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
@@ -4526,14 +3925,8 @@
     },
     {
       "title": "Mechanical Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -4543,9 +3936,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -4588,14 +3979,8 @@
     },
     {
       "title": "Medical Assistant",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -4605,9 +3990,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -4647,14 +4030,8 @@
     },
     {
       "title": "Mobile Developer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -4664,9 +4041,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -4709,14 +4084,8 @@
     },
     {
       "title": "Motion Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Media"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Media"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -4726,9 +4095,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -4769,14 +4136,8 @@
     },
     {
       "title": "Network Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -4786,9 +4147,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -4831,14 +4190,8 @@
     },
     {
       "title": "Nurse Practitioner",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -4848,9 +4201,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -4890,14 +4241,8 @@
     },
     {
       "title": "Occupational Therapist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -4907,9 +4252,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -4949,14 +4292,8 @@
     },
     {
       "title": "Office Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Operations"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Operations"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -4966,9 +4303,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -5010,14 +4345,8 @@
     },
     {
       "title": "Operations Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Operations"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Operations"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -5027,9 +4356,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -5071,14 +4398,8 @@
     },
     {
       "title": "Paralegal",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Legal"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Legal"],
       "examples": [
         "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
         "Conducted legal research and risk assessments to support {matter}, ensuring compliance with {regulation}."
@@ -5088,9 +4409,7 @@
         "Reduced outside counsel spend by {percent}% via {action}.",
         "Closed {cases} matters with {success_rate}% favorable outcomes."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Drafted and negotiated {contract_type} agreements, reducing turnaround by {percent}%.",
@@ -5129,14 +4448,8 @@
     },
     {
       "title": "Penetration Tester",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -5146,9 +4459,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -5190,14 +4501,8 @@
     },
     {
       "title": "Performance Marketer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -5207,9 +4512,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -5251,14 +4554,8 @@
     },
     {
       "title": "Pharmacist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -5268,9 +4565,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -5309,14 +4604,8 @@
     },
     {
       "title": "Physical Therapist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -5326,9 +4615,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -5368,14 +4655,8 @@
     },
     {
       "title": "Physician",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -5385,9 +4666,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -5426,14 +4705,8 @@
     },
     {
       "title": "Physician Assistant",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -5443,9 +4716,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -5485,14 +4756,8 @@
     },
     {
       "title": "Plumber",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Construction"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Construction"],
       "examples": [
         "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
         "Implemented safety program that reduced incidents by {percent}% year‑over‑year."
@@ -5502,9 +4767,7 @@
         "Improved safety incidents by {percent}% through {program}.",
         "Increased equipment uptime to {result}% by {maintenance practice}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
@@ -5544,14 +4807,8 @@
     },
     {
       "title": "PPC Specialist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
         "Optimized {channel} with A/B tests, reducing CPA from {baseline} to {result}."
@@ -5561,9 +4818,7 @@
         "Lowered CPA from {baseline} to {result} through {optimization}.",
         "Increased email CTR to {result}% after {test}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
@@ -5606,14 +4861,8 @@
     },
     {
       "title": "PR Specialist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -5623,9 +4872,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -5666,14 +4913,8 @@
     },
     {
       "title": "Process Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -5683,9 +4924,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -5728,14 +4967,8 @@
     },
     {
       "title": "Procurement Specialist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Operations"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Operations"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -5745,9 +4978,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -5788,14 +5019,8 @@
     },
     {
       "title": "Product Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
         "Authored PRDs, aligned design/engineering, and ran experiments to raise {metric} from {baseline}% to {result}%."
@@ -5805,9 +5030,7 @@
         "Raised activation from {baseline}% to {result}% via {experiment}.",
         "Improved retention {cohort} +{percent}pp by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
@@ -5849,14 +5072,8 @@
     },
     {
       "title": "Product Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
         "Authored PRDs, aligned design/engineering, and ran experiments to raise {metric} from {baseline}% to {result}%."
@@ -5866,9 +5083,7 @@
         "Raised activation from {baseline}% to {result}% via {experiment}.",
         "Improved retention {cohort} +{percent}pp by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
@@ -5910,14 +5125,8 @@
     },
     {
       "title": "Production Worker",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
         "Authored PRDs, aligned design/engineering, and ran experiments to raise {metric} from {baseline}% to {result}%."
@@ -5927,9 +5136,7 @@
         "Raised activation from {baseline}% to {result}% via {experiment}.",
         "Improved retention {cohort} +{percent}pp by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
@@ -5971,14 +5178,8 @@
     },
     {
       "title": "Professor",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Education"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Education"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -5988,9 +5189,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -6031,14 +5230,8 @@
     },
     {
       "title": "Program Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
         "Authored PRDs, aligned design/engineering, and ran experiments to raise {metric} from {baseline}% to {result}%."
@@ -6048,9 +5241,7 @@
         "Raised activation from {baseline}% to {result}% via {experiment}.",
         "Improved retention {cohort} +{percent}pp by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
@@ -6092,15 +5283,8 @@
     },
     {
       "title": "Project Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology",
-        "Construction"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology", "Construction"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -6110,9 +5294,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -6158,14 +5340,8 @@
     },
     {
       "title": "QA Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -6175,9 +5351,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -6219,14 +5393,8 @@
     },
     {
       "title": "Quality Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -6236,9 +5404,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -6281,14 +5447,8 @@
     },
     {
       "title": "Radiologic Technologist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -6298,9 +5458,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -6340,14 +5498,8 @@
     },
     {
       "title": "Recruiter",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "HR"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["HR"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -6357,9 +5509,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -6399,14 +5549,8 @@
     },
     {
       "title": "Registered Nurse",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Healthcare"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Healthcare"],
       "examples": [
         "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
         "Educated patients and families on {condition}, improving adherence by {percent}%."
@@ -6416,9 +5560,7 @@
         "Achieved {metric} compliance by {initiative}.",
         "Maintained {caseload} with {satisfaction}% patient satisfaction."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Assessed patients, administered treatments per protocol, and maintained documentation meeting {standard} standards.",
@@ -6458,14 +5600,8 @@
     },
     {
       "title": "Restaurant Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Hospitality"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Hospitality"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -6475,9 +5611,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -6517,14 +5651,8 @@
     },
     {
       "title": "Retail Sales Associate",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Retail"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Retail"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -6534,9 +5662,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -6580,14 +5706,8 @@
     },
     {
       "title": "Risk Analyst",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Finance"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Finance"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -6597,9 +5717,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -6641,14 +5759,8 @@
     },
     {
       "title": "Sales Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Sales"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Sales"],
       "examples": [
         "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
         "Negotiated and closed deals worth {amount}, exceeding quota by {percent}%."
@@ -6658,9 +5770,7 @@
         "Expanded ARR +{amount} via {upsell/cross‑sell}.",
         "Cut sales cycle from {baseline} to {result} days by {action}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
@@ -6702,14 +5812,8 @@
     },
     {
       "title": "Sales Representative",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Sales"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Sales"],
       "examples": [
         "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
         "Negotiated and closed deals worth {amount}, exceeding quota by {percent}%."
@@ -6719,9 +5823,7 @@
         "Expanded ARR +{amount} via {upsell/cross‑sell}.",
         "Cut sales cycle from {baseline} to {result} days by {action}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Prospected and qualified leads, managing a pipeline of {count} opportunities with {winrate}% win rate.",
@@ -6763,14 +5865,8 @@
     },
     {
       "title": "Scrum Master",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
         "Authored PRDs, aligned design/engineering, and ran experiments to raise {metric} from {baseline}% to {result}%."
@@ -6780,9 +5876,7 @@
         "Raised activation from {baseline}% to {result}% via {experiment}.",
         "Improved retention {cohort} +{percent}pp by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Defined roadmap for {area}, prioritized backlog, and shipped {feature} driving {kpi} +{percent}%.",
@@ -6824,14 +5918,8 @@
     },
     {
       "title": "Security Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -6841,9 +5929,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -6886,14 +5972,8 @@
     },
     {
       "title": "SEO Specialist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
         "Optimized {channel} with A/B tests, reducing CPA from {baseline} to {result}."
@@ -6903,9 +5983,7 @@
         "Lowered CPA from {baseline} to {result} through {optimization}.",
         "Increased email CTR to {result}% after {test}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
@@ -6947,14 +6025,8 @@
     },
     {
       "title": "Site Reliability Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -6964,9 +6036,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -7010,14 +6080,8 @@
     },
     {
       "title": "Social Media Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Marketing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Marketing"],
       "examples": [
         "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
         "Optimized {channel} with A/B tests, reducing CPA from {baseline} to {result}."
@@ -7027,9 +6091,7 @@
         "Lowered CPA from {baseline} to {result} through {optimization}.",
         "Increased email CTR to {result}% after {test}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Planned and executed {campaign} across {channels}, growing {kpi} +{percent}% in {timeline}.",
@@ -7073,14 +6135,8 @@
     },
     {
       "title": "Software Engineer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -7090,9 +6146,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -7135,14 +6189,8 @@
     },
     {
       "title": "Solutions Architect",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -7152,9 +6200,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -7197,15 +6243,8 @@
     },
     {
       "title": "Sound Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Media",
-        "Gaming"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Media", "Gaming"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -7215,9 +6254,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -7262,14 +6299,8 @@
     },
     {
       "title": "Store Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Retail"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Retail"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -7279,9 +6310,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -7321,14 +6350,8 @@
     },
     {
       "title": "Supply Chain Manager",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Operations"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Operations"],
       "examples": [
         "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
         "Developed {algorithm/model} that improved {metric} by {percent}% and deployed it to production."
@@ -7338,9 +6361,7 @@
         "Cut pipeline runtime from {baseline} to {result} by {action}.",
         "Enabled {stakeholders} with {dashboard/report} used {frequency}/mo."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Cleaned and modeled datasets ({volume}) to produce {dashboard/model} used by {stakeholders}.",
@@ -7384,14 +6405,8 @@
     },
     {
       "title": "Systems Administrator",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Designed, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
         "Collaborated with cross‑functional teams to deliver {feature} to {users} users within {timeline}."
@@ -7401,9 +6416,7 @@
         "Improved {metric} from {baseline} to {result} by {action}.",
         "Delivered {feature} impacting {users} users within {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Implemented, built, and tested {component} using {stack}, improving {metric} by {percent}%.",
@@ -7446,14 +6459,8 @@
     },
     {
       "title": "Talent Acquisition Specialist",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "HR"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["HR"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -7463,9 +6470,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -7507,14 +6512,8 @@
     },
     {
       "title": "Teacher",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Education"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Education"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -7524,9 +6523,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -7567,14 +6564,8 @@
     },
     {
       "title": "Technical Writer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -7584,9 +6575,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -7628,14 +6617,8 @@
     },
     {
       "title": "Truck Driver",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Logistics"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Logistics"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -7645,9 +6628,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -7689,14 +6670,8 @@
     },
     {
       "title": "UI Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -7706,9 +6681,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -7748,14 +6721,8 @@
     },
     {
       "title": "UX Designer",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Technology"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Technology"],
       "examples": [
         "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
         "Built a component library covering {components} components, accelerating delivery by {percent}%."
@@ -7765,9 +6732,7 @@
         "Lifted conversion +{percent}% with {design change}.",
         "Shipped design system covering {components} components in {timeline}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Created wireframes and high‑fidelity prototypes, raising task success to {result}% in usability tests.",
@@ -7807,14 +6772,8 @@
     },
     {
       "title": "Visual Merchandiser",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Retail"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Retail"],
       "examples": [
         "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
         "Managed inventory and merchandising, reducing shrink by {percent}%."
@@ -7824,9 +6783,7 @@
         "Raised NPS from {baseline} to {result} via {initiative}.",
         "Cut shrinkage by {percent}% implementing {control}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Delivered exceptional service, achieving {nps}% NPS and surpassing sales targets by {percent}%.",
@@ -7866,14 +6823,8 @@
     },
     {
       "title": "Warehouse Associate",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Logistics"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Logistics"],
       "examples": [
         "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
         "Implemented {tool/system}, improving on‑time delivery from {baseline}% to {result}%."
@@ -7883,9 +6834,7 @@
         "Cut costs {amount} annually by {action}.",
         "Improved SLA from {baseline}% to {result}% by {initiative}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Standardized {process}, cutting cycle time by {percent}% and errors by {percent2}%.",
@@ -7927,14 +6876,8 @@
     },
     {
       "title": "Welder",
-      "levels": [
-        "Junior",
-        "Mid",
-        "Senior"
-      ],
-      "industries": [
-        "Manufacturing"
-      ],
+      "levels": ["Junior", "Mid", "Senior"],
+      "industries": ["Manufacturing"],
       "examples": [
         "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",
         "Implemented safety program that reduced incidents by {percent}% year‑over‑year."
@@ -7944,9 +6887,7 @@
         "Improved safety incidents by {percent}% through {program}.",
         "Increased equipment uptime to {result}% by {maintenance practice}."
       ],
-      "sources": [
-        "onet_task_summaries"
-      ],
+      "sources": ["onet_task_summaries"],
       "examples_by_level": {
         "Junior": [
           "Coordinated subcontractors and schedules to deliver {project} on time and under budget by {percent}%.",

@@ -5,17 +5,17 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 const fromAddress = `RoboResume <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`
 
 const colors = {
-	primary: '#d4a373',
-	primaryDark: '#b8894f',
-	cream: '#fefae0',
-	beige: '#e9edc9',
-	dark: '#3a3226',
-	subtle: '#6f6454',
-	border: '#ccd5ae'
+  primary: '#d4a373',
+  primaryDark: '#b8894f',
+  cream: '#fefae0',
+  beige: '#e9edc9',
+  dark: '#3a3226',
+  subtle: '#6f6454',
+  border: '#ccd5ae',
 }
 
 function emailLayout(content: string) {
-	return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -69,15 +69,15 @@ function emailLayout(content: string) {
 }
 
 interface SendVerificationEmailParams {
-	email: string
-	token: string
-	name?: string
+  email: string
+  token: string
+  name?: string
 }
 
 export async function sendVerificationEmail({ email, token, name }: SendVerificationEmailParams) {
-	const verifyUrl = `${process.env.APP_URL}/verify-email?token=${token}&email=${encodeURIComponent(email)}`
+  const verifyUrl = `${process.env.APP_URL}/verify-email?token=${token}&email=${encodeURIComponent(email)}`
 
-	const content = `
+  const content = `
 		<!-- Accent bar -->
 		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
 
@@ -131,35 +131,35 @@ export async function sendVerificationEmail({ email, token, name }: SendVerifica
 			</td>
 		</tr>`
 
-	try {
-		const { data, error } = await resend.emails.send({
-			from: fromAddress,
-			to: [email],
-			subject: 'Verify Your Email — RoboResume',
-			html: emailLayout(content)
-		})
+  try {
+    const { data, error } = await resend.emails.send({
+      from: fromAddress,
+      to: [email],
+      subject: 'Verify Your Email — RoboResume',
+      html: emailLayout(content),
+    })
 
-		if (error) {
-			console.error('Error sending verification email:', error)
-			return { success: false, error }
-		}
-		return { success: true, data }
-	} catch (error) {
-		console.error('Error sending verification email:', error)
-		return { success: false, error }
-	}
+    if (error) {
+      console.error('Error sending verification email:', error)
+      return { success: false, error }
+    }
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error sending verification email:', error)
+    return { success: false, error }
+  }
 }
 
 interface SendPasswordResetEmailParams {
-	email: string
-	token: string
-	name?: string
+  email: string
+  token: string
+  name?: string
 }
 
 export async function sendPasswordResetEmail({ email, token, name }: SendPasswordResetEmailParams) {
-	const resetUrl = `${process.env.APP_URL}/auth/reset-password?token=${token}`
+  const resetUrl = `${process.env.APP_URL}/auth/reset-password?token=${token}`
 
-	const content = `
+  const content = `
 		<!-- Accent bar -->
 		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
 
@@ -213,21 +213,21 @@ export async function sendPasswordResetEmail({ email, token, name }: SendPasswor
 			</td>
 		</tr>`
 
-	try {
-		const { data, error } = await resend.emails.send({
-			from: fromAddress,
-			to: [email],
-			subject: 'Reset Your Password — RoboResume',
-			html: emailLayout(content)
-		})
+  try {
+    const { data, error } = await resend.emails.send({
+      from: fromAddress,
+      to: [email],
+      subject: 'Reset Your Password — RoboResume',
+      html: emailLayout(content),
+    })
 
-		if (error) {
-			console.error('Error sending password reset email:', error)
-			return { success: false, error }
-		}
-		return { success: true, data }
-	} catch (error) {
-		console.error('Error sending password reset email:', error)
-		return { success: false, error }
-	}
+    if (error) {
+      console.error('Error sending password reset email:', error)
+      return { success: false, error }
+    }
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error sending password reset email:', error)
+    return { success: false, error }
+  }
 }

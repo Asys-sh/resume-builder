@@ -1,12 +1,9 @@
+import type { Env } from '@/lib/env'
+
 export {}
 declare global {
   namespace NodeJS {
-    interface ProcessEnv {
-      NODE_OPTIONS: string;
-      PORT: string;
-      DISCORD_CLIENT_ID: string;
-      DISCORD_CLIENT_SECRET: string;
-      VITE_DISCORD_CLIENT_ID: string;
-    }
+    // Typed from the Zod schema in src/lib/env.ts — add vars there, not here
+    interface ProcessEnv extends Env {}
   }
 }

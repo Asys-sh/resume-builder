@@ -3,148 +3,142 @@
 @tailwind utilities;
 
 :root {
-	font-family:
-		'Space Grotesk',
-		'Inter',
-		system-ui,
-		-apple-system,
-		'Segoe UI',
-		sans-serif;
-	color-scheme: light;
+  font-family: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
 }
 
 @layer base {
-	* {
-		scroll-behavior: smooth;
-	}
+  * {
+    scroll-behavior: smooth;
+  }
 
-	html,
-	body {
-		@apply min-h-full antialiased;
-		scroll-behavior: smooth;
-		-webkit-overflow-scrolling: touch;
-	}
+  html,
+  body {
+    @apply min-h-full antialiased;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
 
-	* {
-		@apply outline-none;
-	}
+  * {
+    @apply outline-none;
+  }
 
-	*:focus-visible {
-		@apply outline outline-2 outline-offset-2 outline-primary/80;
-	}
+  *:focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-primary/80;
+  }
 
-	button,
-	a,
-	input,
-	select,
-	textarea {
-		@apply transition-colors duration-200 ease-in-out;
-	}
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    @apply transition-colors duration-200 ease-in-out;
+  }
 
-	.form-input:focus {
-		@apply border-primary;
-		box-shadow: 0 0 0 2px theme('colors.highlight');
-		outline: none;
-	}
+  .form-input:focus {
+    @apply border-primary;
+    box-shadow: 0 0 0 2px theme("colors.highlight");
+    outline: none;
+  }
 
-	.hover-scale {
-		@apply transition-transform duration-200 ease-out;
-	}
+  .hover-scale {
+    @apply transition-transform duration-200 ease-out;
+  }
 
-	.hover-scale:hover {
-		@apply scale-105;
-	}
+  .hover-scale:hover {
+    @apply scale-105;
+  }
 
-	.hover-scale-lg {
-		@apply transition-transform duration-300 ease-out;
-	}
+  .hover-scale-lg {
+    @apply transition-transform duration-300 ease-out;
+  }
 
-	.hover-scale-lg:hover {
-		@apply scale-110;
-	}
+  .hover-scale-lg:hover {
+    @apply scale-110;
+  }
 
-	@keyframes pulse-soft {
-		0%,
-		100% {
-			opacity: 1;
-			transform: scale(1);
-		}
-		50% {
-			opacity: 0.9;
-			transform: scale(1.02);
-		}
-	}
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+  }
 
-	.animate-pulse-soft {
-		animation: pulse-soft 2s ease-in-out infinite;
-	}
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
 
-	.hover-reveal {
-		@apply opacity-0 transition-opacity duration-200 ease-in-out;
-	}
+  .hover-reveal {
+    @apply opacity-0 transition-opacity duration-200 ease-in-out;
+  }
 
-	.group:hover .hover-reveal {
-		@apply opacity-100;
-	}
+  .group:hover .hover-reveal {
+    @apply opacity-100;
+  }
 
-	@supports not (backdrop-filter: blur(12px)) {
-		.backdrop-blur-md {
-			background-color: hsl(var(--background) / 0.95) !important;
-		}
-	}
-	:root {
-		--background: 40 30% 96%;
-		--foreground: 30 15% 25%;
-		--surface: 40 25% 93%;
-		--card: 40 25% 93%;
-		--card-foreground: 30 15% 25%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 30 15% 25%;
-		--primary: 35 40% 65%;
-		--primary-foreground: 0 0% 100%;
-		--secondary: 35 25% 75%;
-		--secondary-foreground: 30 15% 25%;
-		--muted: 40 20% 88%;
-		--muted-foreground: 30 10% 45%;
-		--accent: 35 40% 65%;
-		--accent-foreground: 0 0% 100%;
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 0 0% 100%;
-		--border: 35 20% 80%;
-		--input: 35 20% 80%;
-		--ring: 35 40% 65%;
-		--chart-1: 35 40% 65%;
-		--chart-2: 35 25% 75%;
-		--chart-3: 40 20% 88%;
-		--chart-4: 30 15% 25%;
-		--chart-5: 40 30% 96%;
-		--radius: 0.5rem;
-	}
-	.dark {
-		--background: 40 30% 96%;
-		--foreground: 30 15% 25%;
-		--surface: 40 25% 93%;
-		--card: 40 25% 93%;
-		--card-foreground: 30 15% 25%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 30 15% 25%;
-		--primary: 35 40% 65%;
-		--primary-foreground: 0 0% 100%;
-		--secondary: 35 25% 75%;
-		--secondary-foreground: 30 15% 25%;
-		--muted: 40 20% 88%;
-		--muted-foreground: 30 10% 45%;
-		--accent: 35 40% 65%;
-		--accent-foreground: 0 0% 100%;
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 0 0% 100%;
-		--border: 35 20% 80%;
-		--input: 35 20% 80%;
-		--ring: 35 40% 65%;
-		--chart-1: 35 40% 65%;
-		--chart-2: 35 25% 75%;
-		--chart-3: 40 20% 88%;
-		--chart-4: 30 15% 25%;
-		--chart-5: 40 30% 96%;
-	}
+  @supports not (backdrop-filter: blur(12px)) {
+    .backdrop-blur-md {
+      background-color: hsl(var(--background) / 0.95) !important;
+    }
+  }
+  :root {
+    --background: 40 30% 96%;
+    --foreground: 30 15% 25%;
+    --surface: 40 25% 93%;
+    --card: 40 25% 93%;
+    --card-foreground: 30 15% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 15% 25%;
+    --primary: 35 40% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 35 25% 75%;
+    --secondary-foreground: 30 15% 25%;
+    --muted: 40 20% 88%;
+    --muted-foreground: 30 10% 45%;
+    --accent: 35 40% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 35 20% 80%;
+    --input: 35 20% 80%;
+    --ring: 35 40% 65%;
+    --chart-1: 35 40% 65%;
+    --chart-2: 35 25% 75%;
+    --chart-3: 40 20% 88%;
+    --chart-4: 30 15% 25%;
+    --chart-5: 40 30% 96%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 40 30% 96%;
+    --foreground: 30 15% 25%;
+    --surface: 40 25% 93%;
+    --card: 40 25% 93%;
+    --card-foreground: 30 15% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 15% 25%;
+    --primary: 35 40% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 35 25% 75%;
+    --secondary-foreground: 30 15% 25%;
+    --muted: 40 20% 88%;
+    --muted-foreground: 30 10% 45%;
+    --accent: 35 40% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 35 20% 80%;
+    --input: 35 20% 80%;
+    --ring: 35 40% 65%;
+    --chart-1: 35 40% 65%;
+    --chart-2: 35 25% 75%;
+    --chart-3: 40 20% 88%;
+    --chart-4: 30 15% 25%;
+    --chart-5: 40 30% 96%;
+  }
 }

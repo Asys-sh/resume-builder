@@ -1,43 +1,50 @@
-/**
- * Environment variable validation.
- * Runs at server startup — throws early with a clear message rather than
- * crashing deep inside a request with a cryptic undefined error.
- *
- * Import this at the top of app/layout.tsx (server component) so it runs
- * on every cold start before any request is handled.
- */
+import { z } from 'zod'
 
-const REQUIRED_SERVER_VARS = [
-    'DATABASE_URL',
-    'AUTH_SECRET',
-    'RESEND_API_KEY',
-    'STRIPE_SECRET_KEY',
-    'STRIPE_WEBHOOK_SECRET',
-    'APP_URL',
-    'OPENAI_API_KEY',
-] as const
+const envSchema = z.object({
+  // Database
+  DATABASE_URL: z.url('DATABASE_URL must be a valid URL'),
 
-const REQUIRED_PUBLIC_VARS = [
-    'NEXT_PUBLIC_BASE_URL',
-    'NEXT_PUBLIC_STRIPE_PRO_PRICE_ID',
-] as const
+  // Auth
+  AUTH_SECRET: z.string().min(32, 'AUTH_SECRET must be at least 32 characters (run: openssl rand -base64 32)'),
 
-export function validateEnv() {
-    const missing: string[] = []
+  // App
+  APP_URL: z.url('APP_URL must be a valid URL'),
+  NEXT_PUBLIC_BASE_URL: z.url('NEXT_PUBLIC_BASE_URL must be a valid URL'),
+  ADMIN_EMAIL: z.email('ADMIN_EMAIL must be a valid email address').optional(),
 
-    for (const key of REQUIRED_SERVER_VARS) {
-        if (!process.env[key]) missing.push(key)
-    }
+  // Stripe
+  STRIPE_SECRET_KEY: z
+    .string()
+    .startsWith('sk_', 'STRIPE_SECRET_KEY must start with sk_ (use sk_test_ for development)'),
+  STRIPE_WEBHOOK_SECRET: z
+    .string()
+    .startsWith('whsec_', 'STRIPE_WEBHOOK_SECRET must start with whsec_'),
+  NEXT_PUBLIC_STRIPE_PRO_PRICE_ID: z
+    .string()
+    .startsWith('price_', 'NEXT_PUBLIC_STRIPE_PRO_PRICE_ID must start with price_'),
 
-    for (const key of REQUIRED_PUBLIC_VARS) {
-        if (!process.env[key]) missing.push(key)
-    }
+  // Resend
+  RESEND_API_KEY: z.string().startsWith('re_', 'RESEND_API_KEY must start with re_'),
 
-    if (missing.length > 0) {
-        throw new Error(
-            `Missing required environment variables:\n` +
-            missing.map((k) => `  - ${k}`).join('\n') +
-            `\n\nCopy .env.example to .env.local and fill in the missing values.`
-        )
-    }
+  // OpenAI
+  OPENAI_API_KEY: z.string().startsWith('sk-', 'OPENAI_API_KEY must start with sk-'),
+})
+
+export type Env = z.infer<typeof envSchema>
+
+function validateEnv(): Env {
+  const result = envSchema.safeParse(process.env)
+
+  if (!result.success) {
+    const errors = result.error.issues.map((issue) => `  - ${String(issue.path[0])}: ${issue.message}`)
+    throw new Error(
+      `\n\nInvalid environment configuration:\n` +
+        errors.join('\n') +
+        `\n\nCopy .env.example to .env.local and fill in the missing values.\n`,
+    )
+  }
+
+  return result.data
 }
+
+export const env = validateEnv()
