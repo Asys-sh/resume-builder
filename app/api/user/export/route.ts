@@ -32,7 +32,7 @@ export async function GET() {
         }
 
         // Remove the password relation so the hash never reaches the client
-        const { password, ...safeUser } = user
+        const { password: _password, ...safeUser } = user
 
         return NextResponse.json(safeUser)
     } catch (error) {

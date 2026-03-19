@@ -33,7 +33,7 @@ export default function CoverLetterEditor({ params }: { params: Promise<{ id: st
                     toast.error('Failed to load cover letter')
                     router.push('/dashboard/cover-letters')
                 }
-            } catch (error) {
+            } catch {
                 console.error(error)
             } finally {
                 setIsLoading(false)
@@ -55,7 +55,7 @@ export default function CoverLetterEditor({ params }: { params: Promise<{ id: st
             } else {
                 throw new Error('Failed to save')
             }
-        } catch (error) {
+        } catch {
             toast.error('Failed to save cover letter')
         } finally {
             setIsSaving(false)

@@ -18,7 +18,7 @@ export class TrieManager {
 
     insert(word: string) {
         let node = this.root;
-        for (let letter of word) {
+        for (const letter of word) {
 
             if (!node.children.has(letter)) {
                 node.children.set(letter, new TrieNode())
@@ -34,7 +34,7 @@ export class TrieManager {
     search(word: string) {
         let node = this.root;
 
-        for (let letter of word) {
+        for (const letter of word) {
             if (node.children.has(letter)) {
                 node = node.children.get(letter)!
             } else {
@@ -48,7 +48,7 @@ export class TrieManager {
     startsWith(prefix: string) {
         let node = this.root;
 
-        for (let letter of prefix) {
+        for (const letter of prefix) {
             if (node.children.has(letter)) {
                 node = node.children.get(letter)!
             } else {
@@ -74,7 +74,7 @@ export class TrieManager {
     }
 
     suggest(prefix: string): string[] {
-        let node = this.startsWith(prefix);
+        const node = this.startsWith(prefix);
         this.suggestions = [];
         this.sug_pref = prefix;
 

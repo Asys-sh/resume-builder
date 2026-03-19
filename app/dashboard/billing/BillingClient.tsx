@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { CreditCard, Zap, CheckCircle2, XCircle, Calendar, TrendingUp, Crown, ArrowUpCircle, FileText, ExternalLink, Loader2 } from 'lucide-react'
+import { CreditCard, Zap, CheckCircle2, XCircle, Calendar, TrendingUp, Crown, ArrowUpCircle, FileText, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 import { User } from '@prisma-generated/client'
 
