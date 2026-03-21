@@ -1,6 +1,7 @@
 'use client'
 
 import { Check, Copy, Edit, Eye, GitBranch, Globe, Link2, Loader2, Lock, Share2, Trash2 } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
@@ -114,7 +115,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
     setIsTogglingShare(true)
     try {
       const res = await fetch('/api/resumes/share', {
-        method: 'PATCH',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           resumeId: resume.id,
@@ -261,8 +262,14 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
             </Button>
 
             {/* Quick share popover */}
+            <AnimatePresence>
             {isShareOpen && (
-              <div className="absolute right-0 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92, y: 6 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.92, y: 6 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
+                className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
                 <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
 
                 {/* Public toggle */}
@@ -318,8 +325,9 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
                     Enable sharing to get a public link.
                   </p>
                 )}
-              </div>
+              </motion.div>
             )}
+            </AnimatePresence>
           </div>
 
           <Button

@@ -1,8 +1,9 @@
 'use client'
 
-import { Edit, GitBranch, Loader2, Trash2 } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
+import { Check, Copy, Edit, GitBranch, Globe, Link2, Loader2, Lock, Share2, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { deleteResume } from '@/lib/utils'
@@ -30,6 +31,67 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
 
   const contactName = (resume.contactInfo as ResumeData['contactInfo'])?.fullName
 
+  // Share state
+  const [isShareOpen, setIsShareOpen] = useState(false)
+  const [isPublic, setIsPublic] = useState(resume.isPublic)
+  const [publicSlug, setPublicSlug] = useState<string | null>(resume.publicSlug ?? null)
+  const [isTogglingShare, setIsTogglingShare] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
+  const shareRef = useRef<HTMLDivElement>(null)
+
+  const shareUrl =
+    publicSlug && typeof window !== 'undefined'
+      ? `${window.location.origin}/r/${publicSlug}`
+      : null
+
+  useEffect(() => {
+    if (!isShareOpen) return
+    function handleClick(e: MouseEvent) {
+      if (shareRef.current && !shareRef.current.contains(e.target as Node)) {
+        setIsShareOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [isShareOpen])
+
+  const handleTogglePublic = async () => {
+    setIsTogglingShare(true)
+    try {
+      const res = await fetch('/api/resumes/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          resumeId: resume.id,
+          isPublic: !isPublic,
+          hideContactInfo: true,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.message || 'Failed to update sharing')
+        return
+      }
+      setIsPublic(!isPublic)
+      if (data.publicSlug) setPublicSlug(data.publicSlug)
+    } catch {
+      toast.error('Failed to update sharing')
+    } finally {
+      setIsTogglingShare(false)
+    }
+  }
+
+  const handleCopy = async () => {
+    if (!shareUrl) return
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      setIsCopied(true)
+      setTimeout(() => setIsCopied(false), 2000)
+    } catch {
+      toast.error('Could not copy link')
+    }
+  }
+
   const handleDelete = async (e: React.MouseEvent) => {
     e.stopPropagation()
     setIsDeleting(true)
@@ -50,7 +112,7 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
 
   return (
     <div
-      className="group flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border border-border-color/30 bg-white hover:border-primary/30 hover:bg-primary/[0.02] transition-all cursor-pointer"
+      className="group relative flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border border-border-color/30 bg-white hover:border-primary/30 hover:bg-primary/[0.02] transition-all cursor-pointer"
       onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
     >
       {/* Left: icon + labels */}
@@ -78,6 +140,85 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
         >
           <Edit className="h-3.5 w-3.5" />
         </Button>
+
+        {/* Share button */}
+        <div className="relative" ref={shareRef}>
+          <Button
+            size="icon"
+            variant="ghost"
+            className={`h-7 w-7 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
+            aria-label="Share"
+            title="Share"
+            onClick={() => setIsShareOpen((v) => !v)}
+          >
+            <Share2 className="h-3.5 w-3.5" />
+          </Button>
+
+          <AnimatePresence>
+            {isShareOpen && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92, y: 6 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.92, y: 6 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
+                className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5"
+              >
+                <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
+
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 text-sm text-text-main">
+                    {isPublic ? (
+                      <Globe className="h-3.5 w-3.5 text-primary shrink-0" />
+                    ) : (
+                      <Lock className="h-3.5 w-3.5 text-text-subtle shrink-0" />
+                    )}
+                    <span>{isPublic ? 'Public' : 'Private'}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleTogglePublic}
+                    disabled={isTogglingShare}
+                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${isPublic ? 'bg-primary' : 'bg-border-color/60'}`}
+                    role="switch"
+                    aria-checked={isPublic}
+                  >
+                    {isTogglingShare ? (
+                      <Loader2 className="absolute inset-0 m-auto h-3 w-3 animate-spin text-white" />
+                    ) : (
+                      <span
+                        className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition-transform ${isPublic ? 'translate-x-4' : 'translate-x-0'}`}
+                      />
+                    )}
+                  </button>
+                </div>
+
+                {isPublic && shareUrl && (
+                  <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-primary/5 border border-primary/20">
+                    <Link2 className="h-3 w-3 text-primary shrink-0" />
+                    <p className="text-xs text-primary truncate flex-1">{shareUrl}</p>
+                    <button
+                      type="button"
+                      onClick={handleCopy}
+                      className="shrink-0 p-1 rounded hover:bg-primary/10 transition-colors"
+                      aria-label="Copy link"
+                    >
+                      {isCopied ? (
+                        <Check className="h-3.5 w-3.5 text-green-600" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5 text-primary" />
+                      )}
+                    </button>
+                  </div>
+                )}
+
+                {!isPublic && (
+                  <p className="text-xs text-text-subtle">Enable sharing to get a public link.</p>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
         <Button
           size="icon"
           variant="ghost"
