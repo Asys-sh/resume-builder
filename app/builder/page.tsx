@@ -35,7 +35,7 @@ export default function BuilderPage() {
   const isSavingRef = useRef(false)
   const [user] = useAtom(userAtom)
   const [isSaving, setIsSaving] = useState(false)
-  const [lastSaved, setLastSaved] = useState<Date | null>(null)
+  const [, setLastSaved] = useState<Date | null>(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const debouncedResumeData = useDebounce(resumeData, 2000)
   // Snapshot of the last data that was successfully saved or loaded from the server.
@@ -240,12 +240,6 @@ export default function BuilderPage() {
         isSaving={isSaving}
         onSave={handleSave}
         onDownload={handleDownload}
-        userInitials={
-          user?.name
-            ?.split(' ')
-            .map((w) => w[0].toUpperCase())
-            .join('') ?? '?'
-        }
       />
       <AuthDialog open={showAuthModal} onOpenChange={setShowAuthModal} />
 

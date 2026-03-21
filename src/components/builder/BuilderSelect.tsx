@@ -21,6 +21,7 @@ export interface BuilderSelectProps
   id: string
   label: string
   options: SelectOption[]
+  placeholder?: string
   error?: string
   onValueChange?: (value: string) => void
 }

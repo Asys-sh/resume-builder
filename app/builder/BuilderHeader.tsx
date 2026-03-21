@@ -7,14 +7,12 @@ interface BuilderHeaderProps {
   isSaving: boolean;
   onSave: () => void;
   onDownload: (format: "pdf" | "word" | "text") => void;
-  userInitials?: string;
 }
 
 export function BuilderHeader({
   isSaving,
   onSave,
   onDownload,
-  userInitials,
 }: BuilderHeaderProps) {
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-color/50 px-6 md:px-10 py-3 bg-background-light sticky top-0 z-20">

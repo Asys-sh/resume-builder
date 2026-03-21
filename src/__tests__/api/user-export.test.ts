@@ -28,8 +28,6 @@ import { GET } from '../../../app/api/user/export/route'
 // Helpers
 // ─────────────────────────────────────────────────────────────────
 
-const makeRequest = () => new Request('http://localhost/api/user/export', { method: 'GET' })
-
 const authUser = { id: 'user1', email: 'test@test.com' }
 
 /** Full DB user shape — includes the password relation that must be scrubbed */

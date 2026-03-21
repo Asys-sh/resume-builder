@@ -1,6 +1,5 @@
 'use client'
 
-import type { User } from '@prisma-generated/client'
 import { handleSignOut } from '@/lib/auth-client'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
@@ -8,7 +7,7 @@ import { useState } from 'react'
 
 interface NavbarProps {
   isAuthenticated?: boolean
-  user?: User
+  user?: { id: string; image?: string | null } | null
 }
 
 export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
@@ -140,7 +139,7 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
               <div className="flex flex-col gap-2 p-4">
                 <Link
                   href="/auth?login=true"
-                  onClick={(e) => {
+                  onClick={() => {
                     setMobileMenuOpen(false)
                   }}
                   className="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-transparent text-dark text-sm font-bold hover:bg-yellow"
@@ -149,7 +148,7 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
                 </Link>
                 <Link
                   href="/auth?login=false"
-                  onClick={(e) => {
+                  onClick={() => {
                     setMobileMenuOpen(false)
                   }}
                   className="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-primary text-dark text-sm font-bold hover:bg-primary/90"

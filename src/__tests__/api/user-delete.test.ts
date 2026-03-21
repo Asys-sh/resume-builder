@@ -33,8 +33,6 @@ import { DELETE } from '../../../app/api/user/delete/route'
 // Helpers
 // ─────────────────────────────────────────────────────────────────
 
-const makeRequest = () => new Request('http://localhost/api/user/delete', { method: 'DELETE' })
-
 const authUser = { id: 'user1', email: 'test@test.com' }
 
 const makeRateLimitResponse = () =>

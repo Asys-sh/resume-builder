@@ -128,9 +128,6 @@ export function ScoreMeter() {
   const color = getScoreColor(score.total)
   const label = getScoreLabel(score.total)
 
-  // Gradient stops driven by score color
-  const gradientId = 'score-gradient'
-
   return (
     <div className="relative shrink-0 mt-2">
       {/* Expanded panel — floats above */}

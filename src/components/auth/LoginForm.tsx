@@ -2,7 +2,7 @@
 
 import { handleSignIn } from '@/lib/auth-client'
 import { Loader2 } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/ui/form-input'
@@ -16,7 +16,6 @@ export default function LoginForm() {
   const [errors, setErrors] = useState<{ email?: string; password?: string; server?: string }>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false)
-  const router = useRouter()
   const searchParams = useSearchParams()
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
