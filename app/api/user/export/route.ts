@@ -12,7 +12,6 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { id: userSession.id },
-      omit: { password: true },
       include: {
         resumes: {
           include: {
