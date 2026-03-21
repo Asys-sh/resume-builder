@@ -32,10 +32,8 @@ yarn-error.log*
 *.tsbuildinfo
 .gitattributes
 
-explanation.md
-PLAN.md
-PROJECT_ANALYSIS.md
-AGENTS.md
+
+temp_md/*
 .claude
 
 /designs

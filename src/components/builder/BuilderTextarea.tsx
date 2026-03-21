@@ -28,8 +28,19 @@ export const BuilderTextarea = React.forwardRef<HTMLTextAreaElement, BuilderText
       onAIClick,
       ...props
     },
-    ref,
+    forwardedRef,
   ) => {
+    const internalRef = React.useRef<HTMLTextAreaElement>(null)
+    React.useImperativeHandle(forwardedRef, () => internalRef.current!)
+
+    // Auto-grow: reset to auto then expand to full scroll height + ~2 lines of padding
+    React.useEffect(() => {
+      const el = internalRef.current
+      if (!el) return
+      el.style.height = 'auto'
+      el.style.height = `${el.scrollHeight + 40}px`
+    }, [value])
+
     return (
       <div className="flex flex-col gap-2">
         <Label htmlFor={id} className="text-base font-medium text-text-main">
@@ -38,7 +49,7 @@ export const BuilderTextarea = React.forwardRef<HTMLTextAreaElement, BuilderText
         </Label>
         <div className="relative">
           <textarea
-            ref={ref}
+            ref={internalRef}
             id={id}
             name={name}
             value={value}
@@ -47,7 +58,7 @@ export const BuilderTextarea = React.forwardRef<HTMLTextAreaElement, BuilderText
             rows={rows}
             required={required}
             className={cn(
-              'form-input w-full rounded-lg border border-border-color bg-white p-[15px]',
+              'form-input w-full rounded-lg border border-border-color bg-white p-[15px] scrollbar-none resize-none overflow-hidden',
               'text-text-main placeholder:text-text-subtle/70',
               showAIButton && 'pr-12',
               error && 'border-red-400',

@@ -23,7 +23,6 @@ import { ProfessionalSummary } from './steps/ProfessionalSummary'
 import { ProjectsExtras } from './steps/ProjectsExtras'
 import { ReviewExport } from './steps/ReviewExport'
 import { TargetJob } from './steps/TargetJob'
-import { TemplateSelection } from './steps/TemplateSelection'
 
 export default function BuilderPage() {
   const [resumeData] = useAtom(resumeDataAtom)
@@ -292,23 +291,20 @@ export default function BuilderPage() {
               </div>
             )}
 
-            {currentStep === 1 && (
-              <TemplateSelection onNext={handleNext} onPrevious={handlePrevious} />
-            )}
-            {currentStep === 2 && <ContactInfo onNext={handleNext} onPrevious={handlePrevious} />}
-            {currentStep === 3 && (
+            {currentStep === 1 && <ContactInfo onNext={handleNext} onPrevious={handlePrevious} />}
+            {currentStep === 2 && (
               <ExperienceSkills onNext={handleNext} onPrevious={handlePrevious} />
             )}
-            {currentStep === 4 && (
+            {currentStep === 3 && (
               <ProfessionalSummary onNext={handleNext} onPrevious={handlePrevious} />
             )}
-            {currentStep === 5 && <EducationStep onNext={handleNext} onPrevious={handlePrevious} />}
-            {currentStep === 6 && (
+            {currentStep === 4 && <EducationStep onNext={handleNext} onPrevious={handlePrevious} />}
+            {currentStep === 5 && (
               <ProjectsExtras onNext={handleNext} onPrevious={handlePrevious} />
             )}
-            {currentStep === 7 && <TargetJob onNext={handleNext} onBack={handlePrevious} />}
-            {currentStep === 8 && (
-              <ReviewExport onPrevious={handlePrevious} onExport={handleDownload} />
+            {currentStep === 6 && <TargetJob onNext={handleNext} onBack={handlePrevious} />}
+            {currentStep === 7 && (
+              <ReviewExport onPrevious={handlePrevious} onExport={handleDownload} resumeId={resumeId} />
             )}
           </div>
 

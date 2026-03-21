@@ -1,8 +1,7 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
-import { ExperienceCard, NavigationButtons, SkillTag, StepProgress } from '@/components/builder'
-import { Combobox } from '@/components/ui/combobox'
-import { skills } from '@/lib/arrays'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ExperienceCard, NavigationButtons, SkillsInput, StepProgress } from '@/components/builder'
 import { type Experience, resumeDataAtom, type Skill, setResumeDataAtom } from '@/stores/builder'
 
 interface ExperienceSkillsProps {
@@ -13,7 +12,7 @@ interface ExperienceSkillsProps {
 export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) {
   const [resumeData] = useAtom(resumeDataAtom)
   const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
-  const [skillInput, setSkillInput] = useState('')
+  const [skillsOpen, setSkillsOpen] = useState(true)
 
   // Experience handlers
   const handleAddExperience = () => {
@@ -57,22 +56,20 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
   }
 
   // Skills handlers
-  const handleAddSkill = (skillName?: string) => {
-    const nameToAdd = skillName || skillInput
-    if (!nameToAdd.trim()) return
-    if (resumeData.skills.some((s) => s.name.toLowerCase() === nameToAdd.trim().toLowerCase()))
+  const handleAddSkill = (skillName: string) => {
+    if (!skillName.trim()) return
+    if (resumeData.skills.some((s) => s.name.toLowerCase() === skillName.trim().toLowerCase()))
       return
 
     const newSkill: Skill = {
       id: crypto.randomUUID(),
-      name: nameToAdd.trim(),
+      name: skillName.trim(),
       level: null,
       resumeId: '',
     }
     setResumeDataPartial({
       skills: [...resumeData.skills, newSkill],
     })
-    setSkillInput('')
   }
 
   const handleRemoveSkill = (id: string) => {
@@ -83,7 +80,7 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
 
   return (
     <>
-      <StepProgress currentStep={3} totalSteps={7} stepLabel="Experience & Skills" />
+      <StepProgress currentStep={2} totalSteps={7} stepLabel="Experience & Skills" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         {/* Work Experience Section */}
         <div className="flex flex-col gap-6">
@@ -122,49 +119,39 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
 
         {/* Skills Section */}
         <div className="pt-8 border-t border-border-color/30 flex flex-col gap-6">
-          <div className="flex flex-col gap-3">
-            <h2 className="text-2xl font-bold">Skills</h2>
-            <p className="text-text-subtle text-base font-normal leading-normal">
-              Highlight your key skills.
-            </p>
-          </div>
-
-          {/* Existing Skills */}
-          {resumeData.skills.length > 0 && (
-            <div className="flex flex-wrap gap-3">
-              {resumeData.skills.map((skill) => (
-                <SkillTag
-                  key={skill.id}
-                  skill={skill}
-                  onRemove={() => handleRemoveSkill(skill.id)}
-                />
-              ))}
+          <button
+            type="button"
+            onClick={() => setSkillsOpen((v) => !v)}
+            className="flex items-center gap-2 text-left"
+            aria-expanded={skillsOpen}
+          >
+            {skillsOpen ? (
+              <ChevronUp className="h-5 w-5 text-text-subtle shrink-0" />
+            ) : (
+              <ChevronDown className="h-5 w-5 text-text-subtle shrink-0" />
+            )}
+            <div className="flex items-center gap-3">
+              <h2 className="text-2xl font-bold">Skills</h2>
+              {!skillsOpen && resumeData.skills.length > 0 && (
+                <span className="text-sm font-medium text-text-subtle bg-border-color/20 px-2 py-0.5 rounded-full">
+                  {resumeData.skills.length} skill{resumeData.skills.length !== 1 ? 's' : ''}
+                </span>
+              )}
             </div>
-          )}
+          </button>
 
-          {/* Add Skill Input */}
-          <div className="flex items-end gap-4">
-            <div className="flex-1 relative flex flex-col gap-2">
-              <span className="text-base font-medium text-text-main">Add a skill</span>
-              <Combobox
-                value={skillInput}
-                onSelect={(value) => {
-                  setSkillInput(value)
-                  handleAddSkill(value)
-                }}
-                placeholder="e.g., UI/UX Design"
-                searchPlaceholder="Search skills..."
-                staticOptions={skills}
+          {skillsOpen && (
+            <>
+              <p className="text-text-subtle text-base font-normal leading-normal -mt-3">
+                Highlight your key skills.
+              </p>
+              <SkillsInput
+                skills={resumeData.skills}
+                onAdd={handleAddSkill}
+                onRemove={handleRemoveSkill}
               />
-            </div>
-            <button
-              type="button"
-              onClick={() => handleAddSkill()}
-              className="h-10 px-6 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors"
-            >
-              Add
-            </button>
-          </div>
+            </>
+          )}
         </div>
 
         {/* Navigation Buttons */}

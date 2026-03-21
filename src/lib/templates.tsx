@@ -120,8 +120,7 @@ function BaseResumeLayout({
             {(contactInfo.phone ||
               contactInfo.email ||
               contactInfo.address ||
-              contactInfo.linkedin ||
-              contactInfo.website) && (
+              (contactInfo.links?.length ?? 0) > 0) && (
               <div>
                 <h2 className={sidebarStyles.sectionTitle}>{sidebarLabels.contact}</h2>
                 <div className="mt-3 space-y-2">
@@ -134,29 +133,19 @@ function BaseResumeLayout({
                   {contactInfo.address && (
                     <div className={sidebarStyles.contactItem}>{contactInfo.address}</div>
                   )}
-                  {contactInfo.linkedin && (
-                    <div className={sidebarStyles.contactItem}>
-                      <a
-                        href={contactInfo.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:underline break-all"
-                      >
-                        {contactInfo.linkedin}
-                      </a>
-                    </div>
-                  )}
-                  {contactInfo.website && (
-                    <div className={sidebarStyles.contactItem}>
-                      <a
-                        href={contactInfo.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:underline break-all"
-                      >
-                        {contactInfo.website}
-                      </a>
-                    </div>
+                  {contactInfo.links?.map((link, i) =>
+                    link.url ? (
+                      <div key={i} className={sidebarStyles.contactItem}>
+                        <a
+                          href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline break-all"
+                        >
+                          {link.label ? `${link.label}: ${link.url}` : link.url}
+                        </a>
+                      </div>
+                    ) : null
                   )}
                 </div>
               </div>
@@ -351,27 +340,20 @@ function BaseResumeLayout({
         </div>
 
         {/* Links Row */}
-        {(contactInfo.linkedin || contactInfo.website) && (
+        {(contactInfo.links?.length ?? 0) > 0 && (
           <div className={styles.header.linksRow}>
-            {contactInfo.linkedin && (
-              <a
-                href={contactInfo.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                {contactInfo.linkedin}
-              </a>
-            )}
-            {contactInfo.website && (
-              <a
-                href={contactInfo.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                {contactInfo.website}
-              </a>
+            {contactInfo.links?.map((link, i) =>
+              link.url ? (
+                <a
+                  key={i}
+                  href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  {link.label ? `${link.label}: ${link.url}` : link.url}
+                </a>
+              ) : null
             )}
           </div>
         )}

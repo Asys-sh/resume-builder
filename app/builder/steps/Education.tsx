@@ -43,7 +43,7 @@ export function EducationStep({ onNext, onPrevious }: EducationProps) {
 
   return (
     <>
-      <StepProgress currentStep={5} totalSteps={7} stepLabel="Education" />
+      <StepProgress currentStep={4} totalSteps={7} stepLabel="Education" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">Education</h1>

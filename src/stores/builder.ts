@@ -31,8 +31,7 @@ export interface ResumeData {
     email: string
     phone: string
     address: string
-    linkedin: string
-    website: string
+    links: Array<{ label: string; url: string }>
   }
   experiences: Experience[]
   skills: Skill[]
@@ -57,8 +56,7 @@ export const initialResumeData: ResumeData = {
     email: '',
     phone: '',
     address: '',
-    linkedin: '',
-    website: '',
+    links: [],
   },
   experiences: [],
   skills: [],
@@ -69,7 +67,7 @@ export const initialResumeData: ResumeData = {
   awards: [],
   languages: [],
   currentStep: 1,
-  selectedTemplate: '',
+  selectedTemplate: 'modern',
   coverLetter: undefined,
 }
 
@@ -88,7 +86,7 @@ export const currentStepAtom = atom((get) => get(resumeDataAtom).currentStep)
 
 /** Setter atom for currentStep. Clamps value to range [1, 7]. */
 export const setCurrentStepAtom = atom(null, (get, set, step: number) => {
-  const clampedStep = Math.max(1, Math.min(8, step))
+  const clampedStep = Math.max(1, Math.min(7, step))
   set(resumeDataAtom, {
     ...get(resumeDataAtom),
     currentStep: clampedStep,
@@ -237,11 +235,9 @@ export function validateTemplate(selectedTemplate: string | null): ValidationRes
 export function validateStep(step: number, data: ResumeData): ValidationResult {
   switch (step) {
     case 1:
-      return validateTemplate(data.selectedTemplate)
-    case 2:
       return validateContactInfo(data.contactInfo)
-    case 3: {
-      // Step 3 combines experience and skills validation
+    case 2: {
+      // Step 2 combines experience and skills validation
       const expValidation = validateExperience(data.experiences)
       const skillsValidation = validateSkills(data.skills)
 
@@ -252,16 +248,16 @@ export function validateStep(step: number, data: ResumeData): ValidationResult {
         errors: combinedErrors,
       }
     }
-    case 4:
+    case 3:
       return validateSummary(data.summary)
-    case 5:
+    case 4:
       return validateEducation(data.education)
-    case 6:
+    case 5:
       return validateProjects(data.projects)
-    case 7:
-      // Target Job & Cover Letter step - optional, but good to check if they want to generate
+    case 6:
+      // Target Job & Cover Letter step - optional
       return { isValid: true, errors: [] }
-    case 8:
+    case 7:
       // Review step doesn't need validation
       return { isValid: true, errors: [] }
     default:

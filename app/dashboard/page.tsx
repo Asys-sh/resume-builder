@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { getUserData } from '@/lib/auth-helper'
-import { getUsersResumes } from '@/lib/data'
+import { getGroupedResumes } from '@/lib/data'
 import DashboardClient from './DashboardClient'
 
 function DashboardSkeleton() {
@@ -29,13 +29,17 @@ function DashboardSkeleton() {
 
 export default async function DashboardPage() {
   const user = await getUserData()
-  if (!user) {
-    redirect('/auth?login=true')
-  }
-  const { resumes, total, hasMore } = await getUsersResumes(user.id)
+  if (!user) redirect('/auth?login=true')
+
+  const grouped = await getGroupedResumes(user.id)
+  const total =
+    grouped.bases.length +
+    grouped.orphans.length +
+    grouped.bases.reduce((acc, b) => acc + b.children.length, 0)
+
   return (
     <Suspense fallback={<DashboardSkeleton />}>
-      <DashboardClient user={user} resumes={resumes} total={total} hasMore={hasMore} />
+      <DashboardClient user={user} grouped={grouped} total={total} />
     </Suspense>
   )
 }

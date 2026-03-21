@@ -39,8 +39,10 @@ export function sanitizeResumeData(data: ResumeData): ResumeData {
       email: sanitizeText(data.contactInfo.email),
       phone: sanitizeText(data.contactInfo.phone),
       address: sanitizeText(data.contactInfo.address),
-      linkedin: sanitizeUrl(data.contactInfo.linkedin),
-      website: sanitizeUrl(data.contactInfo.website),
+      links: (data.contactInfo.links ?? []).map((link) => ({
+        label: sanitizeText(link.label),
+        url: sanitizeUrl(link.url),
+      })),
     },
     experiences: data.experiences.map((exp) => ({
       ...exp,
@@ -78,6 +80,25 @@ export function sanitizeResumeData(data: ResumeData): ResumeData {
       ...lang,
       name: sanitizeText(lang.name),
       proficiency: sanitizeText(lang.proficiency),
+    })),
+  }
+}
+
+export function sanitizePresetData(data: {
+  label?: string; fullName?: string; headline?: string
+  email?: string; phone?: string; address?: string
+  links?: Array<{ label: string; url: string }>
+}) {
+  return {
+    label:    sanitizeText(data.label),
+    fullName: sanitizeText(data.fullName ?? null) || undefined,
+    headline: sanitizeText(data.headline ?? null) || undefined,
+    email:    sanitizeText(data.email ?? null) || undefined,
+    phone:    sanitizeText(data.phone ?? null) || undefined,
+    address:  sanitizeText(data.address ?? null) || undefined,
+    links: (data.links ?? []).map((l) => ({
+      label: sanitizeText(l.label),
+      url:   sanitizeUrl(l.url),
     })),
   }
 }

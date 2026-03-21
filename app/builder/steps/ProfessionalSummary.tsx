@@ -50,7 +50,7 @@ export function ProfessionalSummary({ onNext, onPrevious }: ProfessionalSummaryP
 
   return (
     <>
-      <StepProgress currentStep={4} totalSteps={7} stepLabel="Professional Summary" />
+      <StepProgress currentStep={3} totalSteps={7} stepLabel="Professional Summary" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">

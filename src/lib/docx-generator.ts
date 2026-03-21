@@ -25,8 +25,7 @@ export const generateDocx = async (data: ResumeData) => {
             children: [
               new TextRun({ text: contactInfo.email + ' | ', break: 1 }),
               new TextRun({ text: contactInfo.phone || '' }),
-              new TextRun({ text: contactInfo.linkedin ? ' | ' + contactInfo.linkedin : '' }),
-              new TextRun({ text: contactInfo.website ? ' | ' + contactInfo.website : '' }),
+              ...(contactInfo.links ?? []).filter(l => l.url).map(l => new TextRun({ text: ' | ' + l.url })),
             ],
             alignment: AlignmentType.CENTER,
             spacing: { after: 400 },

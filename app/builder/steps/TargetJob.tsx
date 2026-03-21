@@ -3,7 +3,7 @@ import { useAtom } from 'jotai'
 import { Loader2, Wand2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
-import { NavigationButtons } from '@/components/builder'
+import { JDKeywordMatcher, NavigationButtons } from '@/components/builder'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -145,6 +145,8 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
               }
             />
           </div>
+          <JDKeywordMatcher jd={resumeData.coverLetter?.jobDescription || ''} />
+
           <Button
             onClick={handleGenerate}
             disabled={isGenerating || !resumeData.coverLetter?.jobDescription}

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 :root {
   font-family: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   color-scheme: light;

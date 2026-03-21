@@ -1,11 +1,12 @@
-import { ExportButtons, NavigationButtons, StepProgress } from '@/components/builder'
+import { ExportButtons, NavigationButtons, SharePanel, StepProgress } from '@/components/builder'
 
 interface ReviewExportProps {
   onPrevious: () => void
   onExport: (format: 'pdf' | 'word' | 'text') => void
+  resumeId: string | null
 }
 
-export function ReviewExport({ onPrevious, onExport }: ReviewExportProps) {
+export function ReviewExport({ onPrevious, onExport, resumeId }: ReviewExportProps) {
   return (
     <>
       <div className="flex items-center justify-between gap-4">
@@ -29,6 +30,17 @@ export function ReviewExport({ onPrevious, onExport }: ReviewExportProps) {
           <ExportButtons onExport={onExport} />
         </div>
 
+        {/* Share Section */}
+        <div className="flex flex-col gap-4 pt-6 border-t border-border-color/30">
+          <div>
+            <h2 className="text-2xl font-bold text-text-main">Share Your Resume</h2>
+            <p className="text-text-subtle text-sm mt-1">
+              Create a public link anyone can view — no login required.
+            </p>
+          </div>
+          <SharePanel resumeId={resumeId} />
+        </div>
+
         {/* Pro Tip */}
         <div className="bg-highlight/30 rounded-lg border border-border-color/30 p-4 flex gap-3">
           <span className="material-symbols-rounded text-primary">lightbulb</span>
@@ -40,7 +52,7 @@ export function ReviewExport({ onPrevious, onExport }: ReviewExportProps) {
 
         <NavigationButtons
           onPrevious={onPrevious}
-          onNext={() => {}} // No next step
+          onNext={() => {}}
           previousDisabled={false}
           showPrevious={true}
           showNext={false}

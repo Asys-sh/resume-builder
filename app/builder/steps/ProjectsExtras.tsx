@@ -9,7 +9,7 @@ import {
   ProjectCard,
   StepProgress,
 } from '@/components/builder'
-import { Combobox } from '@/components/ui/combobox'
+import { ItemPicker } from '@/components/ui/item-picker'
 import { languages } from '@/lib/arrays'
 import {
   type Certification,
@@ -113,7 +113,7 @@ export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
 
   return (
     <>
-      <StepProgress currentStep={6} totalSteps={7} stepLabel="Projects & Extras" />
+      <StepProgress currentStep={5} totalSteps={7} stepLabel="Projects & Extras" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
@@ -201,34 +201,42 @@ export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
               ))}
             </div>
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <Combobox
-              value={languageInput}
-              onSelect={(value) => {
-                setLanguageInput(value)
-              }}
-              placeholder="Select or type a language"
-              searchPlaceholder="Search languages..."
-              staticOptions={languages}
-            />
-            <div className="flex gap-2">
-              <BuilderSelect
-                id="languageProficiency"
-                label=""
-                className="h-10"
-                value={languageProficiency}
-                onValueChange={setLanguageProficiency}
-                options={[
-                  { value: 'Native', label: 'Native' },
-                  { value: 'Fluent', label: 'Fluent' },
-                  { value: 'Conversational', label: 'Conversational' },
-                  { value: 'Basic', label: 'Basic' },
-                ]}
+          <div className="flex flex-col gap-3">
+            {/* Language picker + selected display */}
+            <div className="flex items-center gap-3 flex-wrap">
+              <ItemPicker
+                options={languages}
+                onSelect={(value) => setLanguageInput(value)}
+                triggerLabel="Add a language"
+                searchPlaceholder="Search languages…"
               />
+              {languageInput && (
+                <span className="text-sm font-medium text-text-main bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+                  {languageInput}
+                </span>
+              )}
+            </div>
+
+            {/* Proficiency + Add */}
+            <div className="flex gap-2 items-end">
+              <div className="flex-1">
+                <BuilderSelect
+                  id="languageProficiency"
+                  label=""
+                  value={languageProficiency}
+                  onValueChange={setLanguageProficiency}
+                  options={[
+                    { value: 'Native', label: 'Native' },
+                    { value: 'Fluent', label: 'Fluent' },
+                    { value: 'Conversational', label: 'Conversational' },
+                    { value: 'Basic', label: 'Basic' },
+                  ]}
+                />
+              </div>
               <button
                 type="button"
                 onClick={handleAddLanguage}
-                className="mt-auto h-12 px-6 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors whitespace-nowrap"
+                className="h-14 px-6 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors whitespace-nowrap"
               >
                 Add
               </button>

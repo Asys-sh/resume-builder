@@ -4,11 +4,12 @@ import type { User } from '@prisma-generated/client'
 import { handleSignOut } from '@/lib/auth-client'
 import {
   Award,
+  BookUser,
+  ChevronDown,
   CreditCard,
   Edit,
   FileText,
   LayoutDashboard,
-  Loader2,
   LogOut,
   Menu,
   Plus,
@@ -17,9 +18,8 @@ import {
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { toast } from 'sonner'
 import { ResumeCard } from '@/components/dashboard/ResumeCard'
 import { SubscriptionModal } from '@/components/SubscriptionModal'
 import { UsageDisplay } from '@/components/UsageDisplay'
@@ -28,57 +28,39 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import type { ResumeWithRelations } from '@/lib/data'
+import type { GroupedResumes } from '@/lib/data'
+import { TailoredVersionRow } from '@/components/dashboard/TailoredVersionRow'
 import BillingClient from './billing/BillingClient'
 import CoverLettersView from './cover-letters/page'
+import ProfilesClient from './profiles/ProfilesClient'
 import SettingsClient from './settings/SettingsClient'
 
-type DashboardView = 'home' | 'cover-letters' | 'billing' | 'settings'
+type DashboardView = 'home' | 'cover-letters' | 'profiles' | 'billing' | 'settings'
 
 interface DashboardClientProps {
   user: User
-  resumes: ResumeWithRelations[]
+  grouped: GroupedResumes
   total: number
-  hasMore: boolean
 }
 
-export default function DashboardClient({
-  user,
-  resumes: initialResumes,
-  total,
-  hasMore: initialHasMore,
-}: DashboardClientProps) {
+export default function DashboardClient({ user, grouped, total }: DashboardClientProps) {
+  const router = useRouter()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false)
-  const [resumeList, setResumeList] = useState(initialResumes)
-  const [hasMore, setHasMore] = useState(initialHasMore)
-  const [nextPage, setNextPage] = useState(2)
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
   const searchParams = useSearchParams()
   const view = (searchParams.get('view') as DashboardView) ?? 'home'
 
-  const handleResumeDeleted = (id: string) => {
-    setResumeList((prev) => prev.filter((r) => r.id !== id))
+  const handleDuplicated = () => {
+    router.refresh()
   }
 
-  const handleLoadMore = async () => {
-    setIsLoadingMore(true)
-    try {
-      const res = await fetch(`/api/resumes?page=${nextPage}`)
-      if (!res.ok) {
-        toast.error('Failed to load more resumes')
-        return
-      }
-      const data = await res.json()
-      setResumeList((prev) => [...prev, ...data.resumes])
-      setHasMore(data.hasMore)
-      setNextPage((p) => p + 1)
-    } catch {
-      toast.error('Failed to load more resumes')
-    } finally {
-      setIsLoadingMore(false)
-    }
-  }
+  const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set())
+  const toggleCollapsed = (id: string) =>
+    setCollapsedIds((prev) => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
 
   const userInitials =
     user?.name
@@ -95,6 +77,7 @@ export default function DashboardClient({
       icon: Edit,
       href: '/dashboard?view=cover-letters',
     },
+    { id: 'profiles', label: 'Saved Profiles', icon: BookUser, href: '/dashboard?view=profiles' },
     { id: 'billing', label: 'Billing', icon: CreditCard, href: '/dashboard?view=billing' },
     { id: 'settings', label: 'Settings', icon: Settings, href: '/dashboard?view=settings' },
   ]
@@ -287,33 +270,60 @@ export default function DashboardClient({
                           <h2 className="text-2xl font-bold text-dark">Your Resumes</h2>
                           {total > 0 && <span className="text-sm text-dark/50">{total} total</span>}
                         </div>
-                        {resumeList.length > 0 ? (
-                          <>
+                        {total > 0 ? (
+                          <div className="space-y-8">
+                            {/* Base resumes with their tailored versions */}
                             <div className="flex flex-wrap gap-5">
-                              {resumeList.map((resume) => (
-                                <ResumeCard key={resume.id} resume={resume} onDeleted={handleResumeDeleted} />
+                              {grouped.bases.map((base) => (
+                                <div key={base.id} className="flex flex-col gap-2" style={{ width: '262px' }}>
+                                  <ResumeCard
+                                    resume={base}
+                                    onDeleted={() => router.refresh()}
+                                    onDuplicated={handleDuplicated}
+                                  />
+                                  {base.children.length > 0 && (
+                                    <div className="flex flex-col gap-1">
+                                      <button
+                                        type="button"
+                                        onClick={() => toggleCollapsed(base.id)}
+                                        className="flex items-center justify-between px-1 pt-1 pb-0.5 group/toggle"
+                                      >
+                                        <p className="text-[10px] font-bold text-text-subtle uppercase tracking-widest">
+                                          {base.children.length} tailored version{base.children.length !== 1 ? 's' : ''}
+                                        </p>
+                                        <ChevronDown
+                                          className={`h-3 w-3 text-text-subtle transition-transform duration-200 ${
+                                            collapsedIds.has(base.id) ? '-rotate-90' : ''
+                                          }`}
+                                        />
+                                      </button>
+                                      {!collapsedIds.has(base.id) && base.children.map((child) => (
+                                        <TailoredVersionRow
+                                          key={child.id}
+                                          resume={child}
+                                          onDeleted={() => router.refresh()}
+                                        />
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
                               ))}
                             </div>
-                            {hasMore && (
-                              <div className="flex justify-center pt-2">
-                                <Button
-                                  variant="outline"
-                                  onClick={handleLoadMore}
-                                  disabled={isLoadingMore}
-                                  className="border-yellow"
-                                >
-                                  {isLoadingMore ? (
-                                    <>
-                                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                      Loading…
-                                    </>
-                                  ) : (
-                                    'Load more resumes'
-                                  )}
-                                </Button>
+
+                            {/* Orphaned tailored resumes (parent was deleted) */}
+                            {grouped.orphans.length > 0 && (
+                              <div className="flex flex-wrap gap-5">
+                                {grouped.orphans.map((orphan) => (
+                                  <ResumeCard
+                                    key={orphan.id}
+                                    resume={orphan}
+                                    onDeleted={() => router.refresh()}
+                                    onDuplicated={handleDuplicated}
+                                  />
+                                ))}
                               </div>
                             )}
-                          </>
+                          </div>
                         ) : (
                           <Card className="py-12 bg-none border-none shadow-none">
                             <CardContent className="flex flex-col items-center justify-center text-center space-y-4">
@@ -339,6 +349,7 @@ export default function DashboardClient({
                     </div>
                   )}
 
+                  {view === 'profiles' && <ProfilesClient />}
                   {view === 'billing' && <BillingClient user={user} />}
                   {view === 'settings' && <SettingsClient />}
                   {view === 'cover-letters' && <CoverLettersView />}

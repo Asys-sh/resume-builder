@@ -35,7 +35,7 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
           className="text-text-subtle hover:text-primary transition-colors"
           aria-label={`Delete education ${index + 1}`}
         >
-          <span className="material-symbols-rounded">delete</span>
+          <span className="material-symbols-outlined">delete</span>
         </button>
       </div>
 

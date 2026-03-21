@@ -146,8 +146,9 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
         {contactInfo.email && <Text>{contactInfo.email}</Text>}
         {contactInfo.phone && <Text>{contactInfo.phone}</Text>}
         {contactInfo.address && <Text>{contactInfo.address}</Text>}
-        {contactInfo.linkedin && <Text>{contactInfo.linkedin}</Text>}
-        {contactInfo.website && <Text>{contactInfo.website}</Text>}
+        {contactInfo.links?.map((link, i) =>
+          link.url ? <Text key={i}>{link.url}</Text> : null
+        )}
       </View>
     </View>
   )

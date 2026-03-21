@@ -1,13 +1,21 @@
 'use client'
 
-import { Edit, Loader2, Trash2 } from 'lucide-react'
+import { Check, Copy, Edit, Eye, GitBranch, Globe, Link2, Loader2, Lock, Share2, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import type { ResumeWithRelations } from '@/lib/data'
 import { TEMPLATES } from '@/lib/templates'
-import { deleteResume } from '@/lib/utils'
+import { deleteResume, duplicateResume } from '@/lib/utils'
 import type { ResumeData } from '@/stores/builder'
 
 // A4 page dimensions at 96 dpi
@@ -27,8 +35,7 @@ function mapToResumeData(resume: ResumeWithRelations): ResumeData {
       email: '',
       phone: '',
       address: '',
-      linkedin: '',
-      website: '',
+      links: [],
     },
     summary: resume.summary ?? '',
     experiences: resume.experiences,
@@ -62,16 +69,83 @@ function formatDate(date: Date): string {
 interface ResumeCardProps {
   resume: ResumeWithRelations
   onDeleted?: (id: string) => void
+  onDuplicated?: () => void
+  isTailored?: boolean
 }
 
-export function ResumeCard({ resume, onDeleted }: ResumeCardProps) {
+export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: ResumeCardProps) {
   const router = useRouter()
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState(false)
+  const [tailoredForInput, setTailoredForInput] = useState('')
+  const [isDuplicating, setIsDuplicating] = useState(false)
   const template = TEMPLATES.find((t) => t.id === (resume.template ?? 'modern')) ?? TEMPLATES[0]
   const TemplateComponent = template.component
   const resumeData = mapToResumeData(resume)
 
   const contactName = (resume.contactInfo as ResumeData['contactInfo'])?.fullName
+
+  // Quick share state
+  const [isShareOpen, setIsShareOpen] = useState(false)
+  const [isPublic, setIsPublic] = useState(resume.isPublic)
+  const [publicSlug, setPublicSlug] = useState<string | null>(resume.publicSlug ?? null)
+  const [isTogglingShare, setIsTogglingShare] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
+  const shareRef = useRef<HTMLDivElement>(null)
+
+  const shareUrl =
+    publicSlug && typeof window !== 'undefined'
+      ? `${window.location.origin}/r/${publicSlug}`
+      : null
+
+  // Close share panel on outside click
+  useEffect(() => {
+    if (!isShareOpen) return
+    function handleClick(e: MouseEvent) {
+      if (shareRef.current && !shareRef.current.contains(e.target as Node)) {
+        setIsShareOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [isShareOpen])
+
+  const handleTogglePublic = async () => {
+    setIsTogglingShare(true)
+    try {
+      const res = await fetch('/api/resumes/share', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          resumeId: resume.id,
+          isPublic: !isPublic,
+          hideContactInfo: true,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.message || 'Failed to update sharing')
+        return
+      }
+      setIsPublic(!isPublic)
+      if (data.publicSlug) setPublicSlug(data.publicSlug)
+    } catch {
+      toast.error('Failed to update sharing')
+    } finally {
+      setIsTogglingShare(false)
+    }
+  }
+
+  const handleCopy = async () => {
+    if (!shareUrl) return
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      setIsCopied(true)
+      setTimeout(() => setIsCopied(false), 2000)
+    } catch {
+      toast.error('Could not copy link')
+    }
+  }
 
   const handleDelete = async () => {
     setIsDeleting(true)
@@ -90,13 +164,40 @@ export function ResumeCard({ resume, onDeleted }: ResumeCardProps) {
     }
   }
 
+  const handleDuplicate = async () => {
+    setIsDuplicating(true)
+    try {
+      const result = await duplicateResume(resume.id, tailoredForInput)
+      if (result) {
+        toast.success('Tailored copy created! Opening in builder…')
+        setIsDuplicateDialogOpen(false)
+        onDuplicated?.()
+        router.push(`/builder?resumeId=${result.resumeId}`)
+      } else {
+        toast.error('Failed to create tailored copy')
+      }
+    } catch {
+      toast.error('Failed to create tailored copy')
+    } finally {
+      setIsDuplicating(false)
+    }
+  }
+
   return (
-    <div className="group relative flex flex-col rounded-xl border border-border-color/40 overflow-hidden bg-white hover:shadow-lg hover:shadow-black/8 hover:border-primary/30 transition-all duration-200">
+    <div className="group relative flex flex-col rounded-xl border border-border-color/40 overflow-visible bg-white hover:shadow-lg hover:shadow-black/8 hover:border-primary/30 transition-all duration-200">
+      {/* Tailored badge */}
+      {isTailored && resume.tailoredFor && (
+        <div className="px-2.5 py-1 bg-primary/10 border-b border-primary/20 flex items-center gap-1.5 rounded-t-xl">
+          <GitBranch className="h-3 w-3 text-primary shrink-0" />
+          <span className="text-xs font-semibold text-primary truncate">{resume.tailoredFor}</span>
+        </div>
+      )}
+
       {/* Live scaled preview */}
       {/* biome-ignore lint/a11y/noStaticElementInteractions: handled by child buttons */}
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: handled by child buttons */}
       <div
-        className="relative overflow-hidden bg-gray-50 cursor-pointer"
+        className="relative overflow-hidden bg-gray-50 cursor-pointer rounded-t-xl"
         style={{ height: `${PREVIEW_HEIGHT}px`, width: `${PREVIEW_WIDTH}px` }}
         onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
       >
@@ -129,6 +230,12 @@ export function ResumeCard({ resume, onDeleted }: ResumeCardProps) {
             {contactName || resume.title || 'Untitled Resume'}
           </p>
           <p className="text-xs text-text-subtle mt-0.5">{formatDate(resume.updatedAt)}</p>
+          {isPublic && resume.viewCount > 0 && (
+            <p className="text-xs text-text-subtle mt-0.5 flex items-center gap-1">
+              <Eye className="h-3 w-3" />
+              {resume.viewCount} view{resume.viewCount !== 1 ? 's' : ''}
+            </p>
+          )}
         </div>
         <div className="flex gap-1 shrink-0">
           <Button
@@ -139,6 +246,94 @@ export function ResumeCard({ resume, onDeleted }: ResumeCardProps) {
             onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
           >
             <Edit className="h-3.5 w-3.5" />
+          </Button>
+          {/* Quick share button */}
+          <div className="relative" ref={shareRef}>
+            <Button
+              size="icon"
+              variant="ghost"
+              className={`h-7 w-7 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
+              aria-label="Share resume"
+              title="Share"
+              onClick={() => setIsShareOpen((v) => !v)}
+            >
+              <Share2 className="h-3.5 w-3.5" />
+            </Button>
+
+            {/* Quick share popover */}
+            {isShareOpen && (
+              <div className="absolute right-0 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
+                <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
+
+                {/* Public toggle */}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 text-sm text-text-main">
+                    {isPublic ? (
+                      <Globe className="h-3.5 w-3.5 text-primary shrink-0" />
+                    ) : (
+                      <Lock className="h-3.5 w-3.5 text-text-subtle shrink-0" />
+                    )}
+                    <span>{isPublic ? 'Public' : 'Private'}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleTogglePublic}
+                    disabled={isTogglingShare}
+                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${isPublic ? 'bg-primary' : 'bg-border-color/60'}`}
+                    role="switch"
+                    aria-checked={isPublic}
+                  >
+                    {isTogglingShare ? (
+                      <Loader2 className="absolute inset-0 m-auto h-3 w-3 animate-spin text-white" />
+                    ) : (
+                      <span
+                        className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition-transform ${isPublic ? 'translate-x-4' : 'translate-x-0'}`}
+                      />
+                    )}
+                  </button>
+                </div>
+
+                {/* URL copy row */}
+                {isPublic && shareUrl && (
+                  <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-primary/5 border border-primary/20">
+                    <Link2 className="h-3 w-3 text-primary shrink-0" />
+                    <p className="text-xs text-primary truncate flex-1">{shareUrl}</p>
+                    <button
+                      type="button"
+                      onClick={handleCopy}
+                      className="shrink-0 p-1 rounded hover:bg-primary/10 transition-colors"
+                      aria-label="Copy link"
+                    >
+                      {isCopied ? (
+                        <Check className="h-3.5 w-3.5 text-green-600" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5 text-primary" />
+                      )}
+                    </button>
+                  </div>
+                )}
+
+                {!isPublic && (
+                  <p className="text-xs text-text-subtle">
+                    Enable sharing to get a public link.
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-7 w-7 text-text-subtle hover:text-primary hover:bg-primary/10"
+            aria-label="Duplicate and tailor"
+            title="Duplicate & Tailor"
+            onClick={() => {
+              setTailoredForInput('')
+              setIsDuplicateDialogOpen(true)
+            }}
+          >
+            <GitBranch className="h-3.5 w-3.5" />
           </Button>
           <Button
             size="icon"
@@ -156,6 +351,58 @@ export function ResumeCard({ resume, onDeleted }: ResumeCardProps) {
           </Button>
         </div>
       </div>
+
+      <Dialog open={isDuplicateDialogOpen} onOpenChange={setIsDuplicateDialogOpen}>
+        <DialogContent className="bg-background-light border-border-color/50 sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-text-main">Duplicate & Tailor</DialogTitle>
+            <DialogDescription className="text-text-subtle">
+              Create a tailored copy of this resume for a specific job application.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <label className="text-sm font-medium text-text-main">
+              Job title @ Company
+              <span className="text-text-subtle font-normal ml-1">(optional)</span>
+            </label>
+            <input
+              type="text"
+              value={tailoredForInput}
+              onChange={(e) => setTailoredForInput(e.target.value)}
+              placeholder="e.g. Senior Engineer @ Google"
+              maxLength={200}
+              autoFocus
+              className="w-full h-10 px-3 rounded-lg border border-border-color/50 bg-white text-sm text-text-main placeholder:text-text-subtle/60 focus:outline-none focus:border-primary/60 transition-colors"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleDuplicate()
+              }}
+            />
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsDuplicateDialogOpen(false)}
+              disabled={isDuplicating}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDuplicate}
+              disabled={isDuplicating}
+              className="bg-primary text-white hover:bg-primary/90"
+            >
+              {isDuplicating ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Creating…
+                </>
+              ) : (
+                'Create Tailored Copy'
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

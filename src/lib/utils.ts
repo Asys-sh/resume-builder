@@ -131,3 +131,21 @@ Instructions:
 
 Generate the cover letter now:`
 }
+
+export async function duplicateResume(
+  resumeId: string,
+  tailoredFor: string,
+): Promise<{ resumeId: string } | null> {
+  try {
+    const res = await fetch('/api/resumes/duplicate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ resumeId, tailoredFor }),
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    return { resumeId: data.resumeId }
+  } catch {
+    return null
+  }
+}

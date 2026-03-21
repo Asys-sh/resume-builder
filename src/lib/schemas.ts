@@ -38,8 +38,12 @@ export const ContactInfoSchema = z.object({
   email: z.string().default(''),
   phone: z.string().default(''),
   address: z.string().default(''),
-  linkedin: z.string().default(''),
-  website: z.string().default(''),
+  links: z.array(
+    z.object({
+      label: z.string().default(''),
+      url: z.string().default(''),
+    })
+  ).default([]),
 })
 
 // ─── Resume nested items ─────────────────────────────────────────────────────
@@ -211,3 +215,33 @@ export const CheckoutSchema = z.object({
 })
 
 export type CheckoutBody = z.infer<typeof CheckoutSchema>
+
+// ─── Profile Preset ───────────────────────────────────────────────────────────
+
+export const ProfilePresetCreateSchema = z.object({
+  label:    z.string().min(1, 'Label is required').max(100),
+  fullName: z.string().max(200).optional(),
+  headline: z.string().max(200).optional(),
+  email:    z.string().email('Invalid email').max(200).optional().or(z.literal('')),
+  phone:    z.string().max(50).optional(),
+  address:  z.string().max(300).optional(),
+  links: z.array(z.object({
+    label: z.string().default(''),
+    url:   z.string().default(''),
+  })).max(10).default([]),
+})
+
+export const ProfilePresetUpdateSchema = ProfilePresetCreateSchema.partial()
+
+export type ProfilePresetCreateBody = z.infer<typeof ProfilePresetCreateSchema>
+export type ProfilePresetUpdateBody = z.infer<typeof ProfilePresetUpdateSchema>
+
+// ─── Resume Share ─────────────────────────────────────────────────────────────
+
+export const ResumeShareSchema = z.object({
+  resumeId:        z.string().min(1),
+  isPublic:        z.boolean(),
+  hideContactInfo: z.boolean().optional(),
+})
+
+export type ResumeShareBody = z.infer<typeof ResumeShareSchema>
