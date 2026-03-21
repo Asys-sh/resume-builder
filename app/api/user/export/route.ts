@@ -12,6 +12,7 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { id: userSession.id },
+      omit: { password: true },
       include: {
         resumes: {
           include: {
@@ -31,10 +32,7 @@ export async function GET() {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // Remove the password relation so the hash never reaches the client
-    const { password: _password, ...safeUser } = user
-
-    return NextResponse.json(safeUser)
+    return NextResponse.json(user)
   } catch (error) {
     console.error('Data export error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
