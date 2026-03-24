@@ -307,11 +307,15 @@ export default function CoverLettersView() {
                 <FileText className="h-8 w-8 text-dark/70" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-dark">No cover letters yet</h3>
+                <h3 className="text-lg font-semibold text-dark">Create your first cover letter</h3>
                 <p className="text-sm text-dark/70 mt-1">
-                  Click "New Cover Letter" above to get started.
+                  Generate a tailored cover letter to stand out in your job search.
                 </p>
               </div>
+              <Button className="bg-primary text-dark font-bold mt-2" onClick={() => setShowCreator(true)}>
+                <Plus className="mr-2 h-4 w-4" />
+                New Cover Letter
+              </Button>
             </CardContent>
           </Card>
         ) : (

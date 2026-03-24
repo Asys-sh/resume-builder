@@ -1,5 +1,6 @@
 'use client'
 
+import { Check } from 'lucide-react'
 import { TEMPLATES } from '@/lib/templates'
 import { cn } from '@/lib/utils'
 
@@ -32,7 +33,7 @@ export function TemplateSelector({ selectedTemplate, onSelect }: TemplateSelecto
             {/* Selected badge */}
             {isSelected && (
               <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 bg-primary text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                <span className="material-symbols-outlined !text-[13px]">check</span>
+                <Check className="size-3.5" />
                 Selected
               </div>
             )}

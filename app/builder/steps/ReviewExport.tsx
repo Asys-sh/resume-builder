@@ -1,21 +1,12 @@
-import { ExportButtons, NavigationButtons, SharePanel, StepProgress } from '@/components/builder'
+import { ExportButtons, SharePanel } from '@/components/builder'
 
 interface ReviewExportProps {
-  onPrevious: () => void
   onExport: (format: 'pdf' | 'word' | 'text') => void
   resumeId: string | null
 }
 
-export function ReviewExport({ onPrevious, onExport, resumeId }: ReviewExportProps) {
+export function ReviewExport({ onExport, resumeId }: ReviewExportProps) {
   return (
-    <>
-      <div className="flex items-center justify-between gap-4">
-        <StepProgress currentStep={7} totalSteps={7} stepLabel="Review & Export" />
-        <span className="text-primary text-base font-bold flex items-center gap-2">
-          <span className="material-symbols-outlined">check_circle</span>
-          Complete!
-        </span>
-      </div>
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">Review & Export</h1>
@@ -43,21 +34,13 @@ export function ReviewExport({ onPrevious, onExport, resumeId }: ReviewExportPro
 
         {/* Pro Tip */}
         <div className="bg-highlight/30 rounded-lg border border-border-color/30 p-4 flex gap-3">
-          <span className="material-symbols-rounded text-primary">lightbulb</span>
+          <span className="material-symbols-rounded text-primary" aria-hidden="true">lightbulb</span>
           <p className="text-sm text-text-main">
             <strong>Pro Tip:</strong> Tailor your resume for each job application by adjusting your
             summary and skills.
           </p>
         </div>
 
-        <NavigationButtons
-          onPrevious={onPrevious}
-          onNext={() => {}}
-          previousDisabled={false}
-          showPrevious={true}
-          showNext={false}
-        />
       </div>
-    </>
   )
 }

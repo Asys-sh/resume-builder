@@ -1,10 +1,11 @@
 'use client'
 
 import { useAtom } from 'jotai'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { AuthDialog } from '@/components/AuthDialog'
-import { ResumePreview } from '@/components/builder'
+import { NavigationButtons, ResumePreview, StepProgress } from '@/components/builder'
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { useDebounce } from '@/hooks/use-debounce'
 import {
   currentStepAtom,
@@ -24,6 +25,16 @@ import { ProjectsExtras } from './steps/ProjectsExtras'
 import { ReviewExport } from './steps/ReviewExport'
 import { TargetJob } from './steps/TargetJob'
 
+const STEP_LABELS = [
+  'Contact Info',
+  'Experience & Skills',
+  'Professional Summary',
+  'Education & Certifications',
+  'Projects & Languages',
+  'Target Job',
+  'Review & Export',
+]
+
 export default function BuilderPage() {
   const [resumeData] = useAtom(resumeDataAtom)
   const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
@@ -37,11 +48,39 @@ export default function BuilderPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [, setLastSaved] = useState<Date | null>(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [showPreviewSheet, setShowPreviewSheet] = useState(false)
+  const formPaneRef = useRef<HTMLDivElement>(null)
+  const [canScrollDown, setCanScrollDown] = useState(false)
   const debouncedResumeData = useDebounce(resumeData, 2000)
   // Snapshot of the last data that was successfully saved or loaded from the server.
   // Auto-save compares against this — if nothing changed, the save is skipped.
   // This is robust against React Strict Mode double-invoking effects (unlike boolean flags).
   const lastSyncedSnapshot = useRef(JSON.stringify(initialResumeData))
+
+  // Check if the form pane has more content below the fold
+  const checkScroll = useCallback(() => {
+    const el = formPaneRef.current
+    if (!el) return
+    const threshold = 8 // px tolerance
+    setCanScrollDown(el.scrollHeight - el.scrollTop - el.clientHeight > threshold)
+  }, [])
+
+  // Re-check on step change and after content settles
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — recheck when step changes
+  useEffect(() => {
+    checkScroll()
+    // Re-check after a short delay to account for content rendering
+    const timer = setTimeout(checkScroll, 150)
+    return () => clearTimeout(timer)
+  }, [currentStep, checkScroll])
+
+  // Attach scroll listener to the form pane
+  useEffect(() => {
+    const el = formPaneRef.current
+    if (!el) return
+    el.addEventListener('scroll', checkScroll, { passive: true })
+    return () => el.removeEventListener('scroll', checkScroll)
+  }, [checkScroll])
 
   // Initialize resumeId from URL on mount (single source of truth)
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional mount-only effect
@@ -91,21 +130,28 @@ export default function BuilderPage() {
   }, [resumeId, user])
 
   const handleNext = () => {
-    // Validate current step before proceeding
     const validation = validateStep(currentStep, resumeData)
 
     if (!validation.isValid) {
-      // Show validation errors and prevent step change
       setValidationErrors(validation.errors)
+      // Scroll to top so the error banner is visible
+      formPaneRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
 
-    // Clear errors and proceed to next step
     setValidationErrors([])
     setCurrentStep(currentStep + 1)
 
-    // Scroll to top for better UX
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Scroll form pane to top for better UX
+    formPaneRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+
+    // Focus the new step heading for accessibility
+    setTimeout(() => {
+      const heading = document.querySelector('h1')
+      if (heading) {
+        ;(heading as HTMLElement).focus()
+      }
+    }, 100)
   }
 
   const handlePrevious = () => {
@@ -113,8 +159,16 @@ export default function BuilderPage() {
     setValidationErrors([])
     setCurrentStep(currentStep - 1)
 
-    // Scroll to top for better UX
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Scroll form pane to top for better UX
+    formPaneRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+
+    // Focus the new step heading for accessibility
+    setTimeout(() => {
+      const heading = document.querySelector('h1')
+      if (heading) {
+        ;(heading as HTMLElement).focus()
+      }
+    }, 100)
   }
 
   const saveResume = async (silent = false) => {
@@ -212,7 +266,10 @@ export default function BuilderPage() {
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
-        link.download = `resume-${resumeData.contactInfo.fullName.replace(/\s+/g, '-').toLowerCase() || 'draft'}.pdf`
+        const pdfName = resumeData.contactInfo.fullName
+          ? `${resumeData.contactInfo.fullName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('_')}_Resume.pdf`
+          : 'Resume.pdf'
+        link.download = pdfName
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
@@ -235,7 +292,7 @@ export default function BuilderPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-background-light">
+    <div className="flex flex-col h-screen overflow-hidden bg-background-light">
       <BuilderHeader
         isSaving={isSaving}
         onSave={handleSave}
@@ -244,14 +301,44 @@ export default function BuilderPage() {
       />
       <AuthDialog open={showAuthModal} onOpenChange={setShowAuthModal} />
 
+      {/* Preview toggle for tablet (768-1279px) */}
+      <button
+        type="button"
+        className="fixed bottom-20 right-6 md:block xl:hidden hidden z-30 bg-primary text-white px-4 py-3 rounded-full shadow-lg"
+        onClick={() => setShowPreviewSheet(true)}
+      >
+        Preview
+      </button>
+
+      {/* Preview Sheet for tablet */}
+      <Sheet open={showPreviewSheet} onOpenChange={setShowPreviewSheet}>
+        <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>Resume Preview</SheetTitle>
+          </SheetHeader>
+          <div className="mt-4">
+            <ResumePreview />
+          </div>
+        </SheetContent>
+      </Sheet>
+
       {/* Main Content */}
-      <main className="flex-grow w-full max-w-screen-2xl mx-auto px-6 md:px-10 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12">
+      <section className="flex-1 min-h-0 w-full max-w-[1440px] mx-auto px-6 md:px-10 py-4 overflow-hidden">
+        <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-12 h-full overflow-hidden">
           {/* Left Column - Form */}
-          <div className="flex flex-col gap-8">
-            {/* Validation Errors Display */}
+          <div className="flex flex-col min-h-0 overflow-hidden">
+            {/* Pinned: Step Progress */}
+            <div className="shrink-0 mb-4">
+              <StepProgress
+                currentStep={currentStep}
+                totalSteps={7}
+                stepLabel={STEP_LABELS[currentStep - 1]}
+              />
+            </div>
+
+            {/* Validation Errors (above scrollable area, always visible) */}
             {validationErrors.length > 0 && (
-              <div className="bg-red-50 border-2 border-red-300 rounded-xl p-4 md:p-6">
+              <div className="shrink-0 mb-4 bg-red-50 border-2 border-red-300 rounded-xl p-4 md:p-6">
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-6 h-6 text-red-600">
                     <svg
@@ -286,29 +373,44 @@ export default function BuilderPage() {
               </div>
             )}
 
-            {currentStep === 1 && <ContactInfo onNext={handleNext} onPrevious={handlePrevious} />}
-            {currentStep === 2 && (
-              <ExperienceSkills onNext={handleNext} onPrevious={handlePrevious} />
-            )}
-            {currentStep === 3 && (
-              <ProfessionalSummary onNext={handleNext} onPrevious={handlePrevious} />
-            )}
-            {currentStep === 4 && <EducationStep onNext={handleNext} onPrevious={handlePrevious} />}
-            {currentStep === 5 && (
-              <ProjectsExtras onNext={handleNext} onPrevious={handlePrevious} />
-            )}
-            {currentStep === 6 && <TargetJob onNext={handleNext} onBack={handlePrevious} />}
-            {currentStep === 7 && (
-              <ReviewExport onPrevious={handlePrevious} onExport={handleDownload} resumeId={resumeId} />
-            )}
+            {/* Scrollable form content */}
+            <div className="relative flex-1 min-h-0">
+              <div ref={formPaneRef} className="h-full overflow-y-auto scrollbar-none">
+                {currentStep === 1 && <ContactInfo />}
+                {currentStep === 2 && <ExperienceSkills />}
+                {currentStep === 3 && <ProfessionalSummary />}
+                {currentStep === 4 && <EducationStep />}
+                {currentStep === 5 && <ProjectsExtras />}
+                {currentStep === 6 && <TargetJob />}
+                {currentStep === 7 && (
+                  <ReviewExport onExport={handleDownload} resumeId={resumeId} />
+                )}
+              </div>
+              {/* Scroll indicator fade */}
+              <div
+                className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background-light to-transparent transition-opacity duration-300"
+                style={{ opacity: canScrollDown ? 1 : 0 }}
+                aria-hidden="true"
+              />
+            </div>
+
+            {/* Pinned: Navigation Buttons */}
+            <div className="shrink-0 pt-3">
+              <NavigationButtons
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+                showPrevious={currentStep > 1}
+                showNext={currentStep < 7}
+              />
+            </div>
           </div>
 
           {/* Right Column - Preview */}
-          <div className="hidden lg:block sticky top-24 h-[calc(100vh-8rem)]">
+          <div className="hidden xl:flex xl:flex-col min-h-0 overflow-hidden">
             <ResumePreview />
           </div>
         </div>
-      </main>
+      </section>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
+import { AlertCircle } from 'lucide-react'
 import { AIAssistButton } from './AIAssistButton'
 
 export interface BuilderTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -30,6 +31,7 @@ export const BuilderTextarea = React.forwardRef<HTMLTextAreaElement, BuilderText
     },
     forwardedRef,
   ) => {
+    const fieldId = id || name || ''
     const internalRef = React.useRef<HTMLTextAreaElement>(null)
     React.useImperativeHandle(forwardedRef, () => internalRef.current!)
 
@@ -38,28 +40,32 @@ export const BuilderTextarea = React.forwardRef<HTMLTextAreaElement, BuilderText
       const el = internalRef.current
       if (!el) return
       el.style.height = 'auto'
-      el.style.height = `${el.scrollHeight + 40}px`
+      el.style.height = `${Math.min(el.scrollHeight + 40, 300)}px`
     }, [value])
 
     return (
       <div className="flex flex-col gap-2">
-        <Label htmlFor={id} className="text-base font-medium text-text-main">
+        <Label htmlFor={fieldId} className="text-base font-medium text-text-main">
           {label}
-          {required && <span className="text-red-400 ml-1">*</span>}
+          {required && <span className="text-red-500 ml-0.5">*</span>}
         </Label>
         <div className="relative">
           <textarea
             ref={internalRef}
-            id={id}
+            id={fieldId}
             name={name}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
             rows={rows}
             required={required}
+            aria-invalid={!!error}
+            aria-required={required || undefined}
+            aria-describedby={error ? fieldId + '-error' : undefined}
             className={cn(
-              'form-input w-full rounded-lg border border-border-color bg-white p-[15px] scrollbar-none resize-none overflow-hidden',
+              'form-input w-full rounded-lg border border-border-color bg-white p-[15px] scrollbar-none resize-none max-h-[300px] overflow-y-auto',
               'text-text-main placeholder:text-text-subtle/70',
+              'focus:ring-2 focus:ring-primary/30 focus:border-primary',
               showAIButton && 'pr-12',
               error && 'border-red-400',
               className,
@@ -70,7 +76,12 @@ export const BuilderTextarea = React.forwardRef<HTMLTextAreaElement, BuilderText
             <AIAssistButton onClick={onAIClick} className="absolute top-2 right-2" />
           )}
         </div>
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && (
+          <p id={fieldId + '-error'} className="flex items-center gap-1 text-sm text-red-400">
+            <AlertCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+            {error}
+          </p>
+        )}
       </div>
     )
   },

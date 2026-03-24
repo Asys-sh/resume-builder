@@ -28,7 +28,7 @@ const config: Config = {
         'text-subtle': '#6f6454',
       },
       fontFamily: {
-        display: ['Space Grotesk', 'sans-serif'],
+        display: ['var(--font-space)', 'Space Grotesk', 'sans-serif'],
       },
       borderRadius: {
         DEFAULT: '0.5rem',

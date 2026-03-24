@@ -15,8 +15,8 @@ const STEP_LABELS: Record<number, string> = {
   1: 'Contact Info',
   2: 'Experience & Skills',
   3: 'Summary',
-  4: 'Education',
-  5: 'Projects & Extras',
+  4: 'Education & Certifications',
+  5: 'Projects & Languages',
   6: 'Target Job',
   7: 'Review',
 }
@@ -224,7 +224,7 @@ export function ScoreMeter() {
 
               {score.tips.length === 0 && (
                 <p className="text-xs text-center text-text-subtle py-1">
-                  🎉 No major issues found. Great resume!
+                  No major issues found. Great resume!
                 </p>
               )}
             </div>
@@ -255,6 +255,7 @@ export function ScoreMeter() {
         <button
           type="button"
           onClick={() => setIsExpanded((v) => !v)}
+          aria-expanded={isExpanded}
           className={cn(
             'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200',
             'bg-background-light border border-border-color/50 hover:border-primary/40',

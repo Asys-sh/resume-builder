@@ -38,9 +38,9 @@ export function BuilderHeader({
             />
           </svg>
         </div>
-        <h2 className="text-lg font-bold leading-tight tracking-tight">
+        <span className="text-lg font-bold leading-tight tracking-tight">
           Robo Resume
-        </h2>
+        </span>
       </Link>
 
       {/* Right side */}
@@ -62,6 +62,7 @@ export function BuilderHeader({
           type="button"
           onClick={onSave}
           disabled={isSaving}
+          aria-label="Save"
           className="flex items-center gap-2 cursor-pointer rounded-xl h-10 px-4 bg-border-color/50 text-text-main text-sm font-semibold hover:bg-border-color/80 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Save className="h-4 w-4" />
@@ -74,11 +75,16 @@ export function BuilderHeader({
         <button
           type="button"
           onClick={() => onDownload("pdf")}
+          aria-label="Download PDF"
           className="flex items-center gap-2 cursor-pointer rounded-xl h-10 px-4 bg-primary text-white text-sm font-semibold hover:bg-primary/90 active:scale-95 transition-all"
         >
           <Download className="h-4 w-4" />
           <span className="hidden sm:inline">Download</span>
         </button>
+
+        <span aria-live="polite" className="sr-only">
+          {isSaving ? "Saving..." : ""}
+        </span>
       </div>
     </header>
   );

@@ -199,11 +199,11 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
       )}
 
       {/* Live scaled preview */}
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: handled by child buttons */}
-      {/* biome-ignore lint/a11y/useKeyWithClickEvents: handled by child buttons */}
-      <div
-        className="relative overflow-hidden bg-gray-50 cursor-pointer rounded-t-xl"
+      <button
+        type="button"
+        className="relative overflow-hidden bg-gray-50 cursor-pointer rounded-t-xl text-left w-full"
         style={{ height: `${PREVIEW_HEIGHT}px`, width: `${PREVIEW_WIDTH}px` }}
+        aria-label={`Open ${contactName || resume.title || 'Untitled Resume'} in editor`}
         onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
       >
         <div
@@ -221,32 +221,34 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
           <span className="bg-white text-primary text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm border border-primary/20 translate-y-1 group-hover:translate-y-0 transition-transform duration-200">
             Open in Editor
           </span>
         </div>
-      </div>
+      </button>
 
       {/* Footer */}
-      <div className="px-3.5 py-3 flex items-start justify-between gap-2 border-t border-border-color/20">
+      <div className="px-3.5 py-3 flex flex-col gap-2 border-t border-border-color/20">
         <div className="min-w-0">
           <p className="text-sm font-semibold text-text-main truncate">
             {contactName || resume.title || 'Untitled Resume'}
           </p>
-          <p className="text-xs text-text-subtle mt-0.5">{formatDate(resume.updatedAt)}</p>
-          {isPublic && resume.viewCount > 0 && (
-            <p className="text-xs text-text-subtle mt-0.5 flex items-center gap-1">
-              <Eye className="h-3 w-3" />
-              {resume.viewCount} view{resume.viewCount !== 1 ? 's' : ''}
-            </p>
-          )}
+          <div className="flex items-center gap-2 mt-0.5">
+            <p className="text-xs text-text-subtle whitespace-nowrap">{formatDate(resume.updatedAt)}</p>
+            {isPublic && resume.viewCount > 0 && (
+              <p className="text-xs text-text-subtle flex items-center gap-1 whitespace-nowrap">
+                <Eye className="h-3 w-3" />
+                {resume.viewCount} view{resume.viewCount !== 1 ? 's' : ''}
+              </p>
+            )}
+          </div>
         </div>
-        <div className="flex gap-1 shrink-0">
+        <div className="flex gap-1">
           <Button
             size="icon"
             variant="ghost"
-            className="h-7 w-7 text-text-subtle hover:text-primary hover:bg-primary/10"
+            className="h-9 w-9 text-text-subtle hover:text-primary hover:bg-primary/10"
             aria-label="Edit resume"
             onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
           >
@@ -257,7 +259,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
             <Button
               size="icon"
               variant="ghost"
-              className={`h-7 w-7 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
+              className={`h-9 w-9 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
               aria-label="Share resume"
               title="Share"
               onClick={() => setIsShareOpen((v) => !v)}
@@ -273,6 +275,9 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 8 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                role="dialog"
+                aria-label="Share settings"
+                onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Escape') setIsShareOpen(false) }}
                 className="absolute right-0 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
                 <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
 
@@ -293,6 +298,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
                     className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${isPublic ? 'bg-primary' : 'bg-border-color/60'}`}
                     role="switch"
                     aria-checked={isPublic}
+                    aria-label="Toggle public sharing"
                   >
                     {isTogglingShare ? (
                       <Loader2 className="absolute inset-0 m-auto h-3 w-3 animate-spin text-white" />
@@ -337,7 +343,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
           <Button
             size="icon"
             variant="ghost"
-            className="h-7 w-7 text-text-subtle hover:text-primary hover:bg-primary/10"
+            className="h-9 w-9 text-text-subtle hover:text-primary hover:bg-primary/10"
             aria-label="View analytics"
             title="Analytics"
             onClick={() => setShowAnalytics(true)}
@@ -347,8 +353,8 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
           <Button
             size="icon"
             variant="ghost"
-            className="h-7 w-7 text-text-subtle hover:text-primary hover:bg-primary/10"
-            aria-label="Duplicate and tailor"
+            className="h-9 w-9 text-text-subtle hover:text-primary hover:bg-primary/10"
+            aria-label="Duplicate resume"
             title="Duplicate & Tailor"
             onClick={() => {
               setTailoredForInput('')
@@ -360,7 +366,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
           <Button
             size="icon"
             variant="ghost"
-            className="h-7 w-7 text-text-subtle hover:text-red-500 hover:bg-red-50"
+            className="h-9 w-9 text-text-subtle hover:text-red-500 hover:bg-red-50"
             aria-label="Delete resume"
             onClick={handleDelete}
             disabled={isDeleting}

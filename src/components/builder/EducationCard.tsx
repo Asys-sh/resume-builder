@@ -1,7 +1,17 @@
 'use client'
 
 import { BuilderFormField } from '@/components/builder'
+import { Button } from '@/components/ui/button'
 import { DatePicker } from '@/components/ui/date-picker'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import type { Education } from '@/stores/builder'
 
 interface EducationCardProps {
@@ -29,14 +39,29 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-text-main">Education {index + 1}</h3>
-        <button
-          type="button"
-          onClick={onDelete}
-          className="text-text-subtle hover:text-primary transition-colors"
-          aria-label={`Delete education ${index + 1}`}
-        >
-          <span className="material-symbols-outlined">delete</span>
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              className="text-text-subtle hover:text-primary transition-colors"
+              aria-label={`Delete education ${index + 1}`}
+            >
+              <span className="material-symbols-outlined">delete</span>
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete this education?</DialogTitle>
+              <DialogDescription>This action cannot be undone.</DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogTrigger asChild>
+                <Button variant="outline">Keep</Button>
+              </DialogTrigger>
+              <Button variant="destructive" onClick={onDelete}>Delete</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Fields */}
@@ -50,6 +75,7 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
               value={education.degree}
               onChange={(e) => onUpdate('degree', e.target.value)}
               placeholder="e.g., Master of Business Administration (MBA)"
+              required
             />
           </div>
           <div className="min-w-40 flex-1">
@@ -71,6 +97,7 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
             value={education.school}
             onChange={(e) => onUpdate('school', e.target.value)}
             placeholder="e.g., Stanford University"
+            required
           />
         </div>
 

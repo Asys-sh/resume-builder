@@ -78,7 +78,7 @@ function expHasQuantifiedResult(description: string | null | undefined): boolean
 // ─── Pillar 1: Completeness (max 40) ─────────────────────────────────────────
 
 function scoreCompleteness(data: ResumeData): { score: number; breakdowns: SectionBreakdown[] } {
-  const { contactInfo, experiences, skills, summary, education, projects, certifications, awards } = data
+  const { contactInfo, experiences, skills, summary, education, projects, certifications, languages, awards } = data
   const breakdowns: SectionBreakdown[] = []
   let score = 0
 
@@ -198,22 +198,20 @@ function scoreCompleteness(data: ResumeData): { score: number; breakdowns: Secti
     step: 2,
   })
 
-  // Projects & extras — 4 pts
-  const extrasScore = (projects.length >= 1 ? 2 : 0) + (certifications.length >= 1 || awards.length >= 1 ? 2 : 0)
+  // Projects & languages — 4 pts
+  const extrasScore = (projects.length >= 1 ? 2 : 0) + (languages.length >= 1 ? 1 : 0) + (certifications.length >= 1 || awards.length >= 1 ? 1 : 0)
   score += extrasScore
   breakdowns.push({
-    label: 'Projects & Extras',
+    label: 'Projects & Languages',
     score: extrasScore,
     maxScore: 4,
     tip:
-      projects.length === 0 && certifications.length === 0 && awards.length === 0
-        ? 'Add projects, certifications, or awards to stand out'
-        : projects.length === 0
-          ? 'Add at least one project'
-          : certifications.length === 0 && awards.length === 0
-            ? 'Add a certification or award'
-            : null,
-    detail: `${projects.length} project${projects.length !== 1 ? 's' : ''}, ${certifications.length} cert${certifications.length !== 1 ? 's' : ''}`,
+      projects.length === 0
+        ? 'Add at least one project to stand out'
+        : languages.length === 0
+          ? 'Add languages you speak'
+          : null,
+    detail: `${projects.length} project${projects.length !== 1 ? 's' : ''}, ${languages.length} language${languages.length !== 1 ? 's' : ''}`,
     step: 5,
   })
 

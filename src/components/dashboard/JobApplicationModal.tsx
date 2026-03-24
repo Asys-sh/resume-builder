@@ -236,6 +236,7 @@ export function JobApplicationModal({ application, onClose, onSaved }: JobApplic
             <input
               id="jobUrl"
               name="jobUrl"
+              type="text"
               value={form.jobUrl}
               onChange={handleChange}
               placeholder="https://..."
@@ -326,7 +327,7 @@ export function JobApplicationModal({ application, onClose, onSaved }: JobApplic
               onChange={handleChange}
               placeholder="Recruiter name, interview notes, next steps..."
               rows={3}
-              className="w-full rounded-xl border border-yellow/70 bg-white px-3 py-2 text-sm text-dark placeholder:text-dark/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors resize-none"
+              className="w-full min-h-[80px] rounded-xl border border-yellow/70 bg-white px-3 py-2 text-sm text-dark placeholder:text-dark/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors resize-none"
             />
           </div>
 

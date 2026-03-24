@@ -22,15 +22,18 @@ export default function Footer() {
         <div className="flex justify-center gap-4 flex-col">
           <span>Connect with us</span>
           <a href="https://discord.gg/roborresume">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="h-6 w-6 opacity-70 hover:opacity-100"
               alt="Discord logo"
               src="https://www.liblogo.com/img-logo/sml/di392d9d5-discord-logo-discord-logo-logos-icon-free-download-on-iconfinder.webp"
+              width={24}
+              height={24}
             />
           </a>
         </div>
       </div>
-      <p className="text-sm text-dark/70">© 2025 RoboResume. All rights reserved.</p>
+      <p className="text-sm text-dark/70">&copy; 2025 RoboResume. All rights reserved.</p>
     </footer>
   )
 }

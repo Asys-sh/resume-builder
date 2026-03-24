@@ -1,16 +1,17 @@
 import { useAtom } from 'jotai'
-import { EducationCard, NavigationButtons, StepProgress } from '@/components/builder'
-import { type Education, resumeDataAtom, setResumeDataAtom } from '@/stores/builder'
+import { CertificationCard, EducationCard } from '@/components/builder'
+import {
+  type Certification,
+  type Education,
+  resumeDataAtom,
+  setResumeDataAtom,
+} from '@/stores/builder'
 
-interface EducationProps {
-  onNext: () => void
-  onPrevious: () => void
-}
-
-export function EducationStep({ onNext, onPrevious }: EducationProps) {
+export function EducationStep() {
   const [resumeData] = useAtom(resumeDataAtom)
   const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
 
+  // Education handlers
   const handleAddEducation = () => {
     const newEducation: Education = {
       id: crypto.randomUUID(),
@@ -41,50 +42,91 @@ export function EducationStep({ onNext, onPrevious }: EducationProps) {
     })
   }
 
+  // Certification handlers
+  const handleAddCertification = () => {
+    const newCert: Certification = {
+      id: crypto.randomUUID(),
+      name: '',
+      issuer: '',
+      date: '',
+      resumeId: '',
+    }
+    setResumeDataPartial({
+      certifications: [...resumeData.certifications, newCert],
+    })
+  }
+
+  const handleRemoveCertification = (id: string) => {
+    setResumeDataPartial({
+      certifications: resumeData.certifications.filter((cert) => cert.id !== id),
+    })
+  }
+
+  const handleUpdateCertification = (id: string, field: keyof Certification, value: string) => {
+    setResumeDataPartial({
+      certifications: resumeData.certifications.map((cert) =>
+        cert.id === id ? { ...cert, [field]: value } : cert,
+      ),
+    })
+  }
+
   return (
-    <>
-      <StepProgress currentStep={4} totalSteps={7} stepLabel="Education" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">Education</h1>
+          <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
+            Education & Certifications
+          </h1>
           <p className="text-text-subtle text-base font-normal leading-normal">
-            Add your educational background, including degrees, certifications, and relevant
-            coursework.
+            Add your degrees, schools, and any professional certifications.
           </p>
         </div>
 
         {/* Education Cards */}
-        <div className="flex flex-col gap-6">
-          {resumeData.education.map((education, index) => (
-            <EducationCard
-              key={education.id}
-              education={education}
-              index={index}
-              onUpdate={(field, value) => handleUpdateEducation(education.id, field, value)}
-              onDelete={() => handleRemoveEducation(education.id)}
-            />
-          ))}
-
-          {/* Add another education button */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-bold text-text-main">Education</h2>
+          <div className="flex flex-col gap-4">
+            {resumeData.education.map((education, index) => (
+              <EducationCard
+                key={education.id}
+                education={education}
+                index={index}
+                onUpdate={(field, value) => handleUpdateEducation(education.id, field, value)}
+                onDelete={() => handleRemoveEducation(education.id)}
+              />
+            ))}
+          </div>
           <button
             type="button"
             onClick={handleAddEducation}
-            className="flex items-center justify-center gap-2 p-6 border-2 border-dashed border-border-color bg-border-color/20 hover:bg-border-color/40 rounded-lg transition-colors"
+            className="flex items-center justify-center p-4 border-2 border-dashed border-border-color/50 bg-white/30 rounded-lg text-text-subtle hover:border-primary hover:text-primary transition-colors"
           >
-            <span className="material-symbols-rounded">add</span>
-            <span className="text-base font-bold text-text-main">Add another education</span>
+            <span className="material-symbols-rounded" aria-hidden="true">add</span>
           </button>
         </div>
 
-        {/* Navigation Buttons */}
-        <NavigationButtons
-          onPrevious={onPrevious}
-          onNext={onNext}
-          previousDisabled={false}
-          showPrevious={true}
-          showNext={true}
-        />
+        {/* Certifications */}
+        <div className="flex flex-col gap-4 pt-6 border-t border-border-color/30">
+          <h2 className="text-2xl font-bold text-text-main">Certifications</h2>
+          <div className="flex flex-col gap-4">
+            {resumeData.certifications.map((cert, index) => (
+              <CertificationCard
+                key={cert.id}
+                certification={cert}
+                index={index}
+                onUpdate={(field, value) => handleUpdateCertification(cert.id, field, value)}
+                onDelete={() => handleRemoveCertification(cert.id)}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={handleAddCertification}
+            className="flex items-center justify-center p-4 border-2 border-dashed border-border-color/50 bg-white/30 rounded-lg text-text-subtle hover:border-primary hover:text-primary transition-colors"
+          >
+            <span className="material-symbols-rounded" aria-hidden="true">add</span>
+          </button>
+        </div>
+
       </div>
-    </>
   )
 }

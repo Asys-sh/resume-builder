@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Roboto_Flex } from 'next/font/google'
+import { Roboto_Flex, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
 import CookieBanner from '@/components/CookieBanner'
@@ -12,6 +12,12 @@ const robotoFlex = Roboto_Flex({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-display',
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-space',
 })
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://resume.asys.sh'
@@ -40,14 +46,14 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const user = await getUserData()
   return (
-    <html lang="en">
+    <html lang="en" className={`${spaceGrotesk.variable} ${robotoFlex.variable}`}>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
           rel="stylesheet"
         />
       </head>
-      <body className={`${robotoFlex.className} font-display antialiased`}>
+      <body className="font-display antialiased">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md focus:font-semibold"
@@ -63,19 +69,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </JotaiProvider>
         <CookieBanner />
         <Toaster
-          position="top-center"
+          position="bottom-center"
           richColors
           closeButton
           toastOptions={{
             style: {
-              fontFamily: 'var(--font-display)',
+              fontFamily: 'var(--font-space, var(--font-display))',
               fontSize: '14px',
               fontWeight: 500,
               padding: '14px 18px',
               borderRadius: '12px',
               boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)',
             },
-            duration: 3500,
+            duration: 3000,
           }}
         />
       </body>

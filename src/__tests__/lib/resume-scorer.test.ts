@@ -281,14 +281,15 @@ describe('scoreResume', () => {
       expect(bd?.score).toBe(0)
     })
 
-    it('gives max extras score when both projects and certifications are present', () => {
+    it('gives max extras score when projects, languages, and certifications are present', () => {
       const resume: ResumeData = {
         ...initialResumeData,
         projects: [makeProject()],
         certifications: [makeCert('Cert A')],
+        languages: [{ id: '1', name: 'French', proficiency: 'Fluent', resumeId: '' }],
       }
       const r = scoreResume(resume)
-      const bd = r.breakdowns.find((b) => b.label === 'Projects & Extras')
+      const bd = r.breakdowns.find((b) => b.label === 'Projects & Languages')
       expect(bd?.score).toBe(4)
     })
   })

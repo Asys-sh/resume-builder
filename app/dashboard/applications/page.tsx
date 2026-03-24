@@ -172,12 +172,12 @@ export default function ApplicationsView() {
           <div>
             <p className="font-semibold text-dark">
               {filter === 'All'
-                ? 'No applications yet.'
+                ? 'Start tracking your job search'
                 : `No ${STATUS_LABELS[filter]} applications.`}
             </p>
             <p className="text-sm text-dark/60 mt-1">
               {filter === 'All'
-                ? 'Start tracking your job search!'
+                ? 'Keep all your applications organized in one place.'
                 : 'Try a different filter.'}
             </p>
           </div>

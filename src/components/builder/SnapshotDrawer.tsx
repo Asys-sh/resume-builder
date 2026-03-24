@@ -148,6 +148,7 @@ export function SnapshotDrawer({ resumeId }: SnapshotDrawerProps) {
               type="text"
               value={labelValue}
               onChange={(e) => setLabelValue(e.target.value)}
+              aria-label="Checkpoint label"
               placeholder="Optional label (e.g. Before interview)"
               maxLength={80}
               className="flex-1 h-9 px-3 rounded-lg border border-border-color/50 bg-background text-sm text-text-main placeholder:text-text-subtle/60 focus:outline-none focus:border-primary/60 transition-colors"

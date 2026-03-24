@@ -98,7 +98,7 @@ export default function LoginForm() {
         <FormInput
           ref={emailRef}
           id="email"
-          label="Email"
+          label="Email *"
           type="email"
           placeholder="you@example.com"
           value={formData.email}
@@ -111,7 +111,7 @@ export default function LoginForm() {
         <FormInput
           ref={passwordRef}
           id="password"
-          label="Password"
+          label="Password *"
           type="password"
           placeholder="Enter your password"
           value={formData.password}

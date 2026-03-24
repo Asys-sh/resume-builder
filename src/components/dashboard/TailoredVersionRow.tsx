@@ -111,12 +111,14 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
   }
 
   return (
-    <div
-      className="group relative flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border border-border-color/30 bg-white hover:border-primary/30 hover:bg-primary/[0.02] transition-all cursor-pointer"
-      onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
-    >
-      {/* Left: icon + labels */}
-      <div className="flex items-center gap-2.5 min-w-0">
+    <div className="group relative flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border border-border-color/30 bg-white hover:border-primary/30 hover:bg-primary/[0.02] transition-all">
+      {/* Left: icon + labels — clickable */}
+      <button
+        type="button"
+        className="flex items-center gap-2.5 min-w-0 text-left w-full cursor-pointer bg-transparent border-none p-0"
+        aria-label={`Open ${resume.tailoredFor || contactName || 'Tailored version'} in editor`}
+        onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
+      >
         <GitBranch className="h-3.5 w-3.5 text-primary shrink-0" />
         <div className="min-w-0">
           <p className="text-sm font-semibold text-text-main truncate">
@@ -124,18 +126,15 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
           </p>
           <p className="text-xs text-text-subtle">{formatDate(resume.updatedAt)}</p>
         </div>
-      </div>
+      </button>
 
       {/* Right: actions */}
-      <div
-        className="flex gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="flex gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
         <Button
           size="icon"
           variant="ghost"
-          className="h-7 w-7 text-text-subtle hover:text-primary hover:bg-primary/10"
-          aria-label="Edit"
+          className="h-9 w-9 text-text-subtle hover:text-primary hover:bg-primary/10"
+          aria-label="Edit resume"
           onClick={() => router.push(`/builder?resumeId=${resume.id}`)}
         >
           <Edit className="h-3.5 w-3.5" />
@@ -146,8 +145,8 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
           <Button
             size="icon"
             variant="ghost"
-            className={`h-7 w-7 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
-            aria-label="Share"
+            className={`h-9 w-9 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
+            aria-label="Share resume"
             title="Share"
             onClick={() => setIsShareOpen((v) => !v)}
           >
@@ -161,6 +160,9 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 8 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                role="dialog"
+                aria-label="Share settings"
+                onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Escape') setIsShareOpen(false) }}
                 className="absolute right-0 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5"
               >
                 <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
@@ -181,6 +183,7 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
                     className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${isPublic ? 'bg-primary' : 'bg-border-color/60'}`}
                     role="switch"
                     aria-checked={isPublic}
+                    aria-label="Toggle public sharing"
                   >
                     {isTogglingShare ? (
                       <Loader2 className="absolute inset-0 m-auto h-3 w-3 animate-spin text-white" />
@@ -222,8 +225,8 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
         <Button
           size="icon"
           variant="ghost"
-          className="h-7 w-7 text-text-subtle hover:text-red-500 hover:bg-red-50"
-          aria-label="Delete"
+          className="h-9 w-9 text-text-subtle hover:text-red-500 hover:bg-red-50"
+          aria-label="Delete resume"
           onClick={handleDelete}
           disabled={isDeleting}
         >

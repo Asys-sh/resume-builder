@@ -13,6 +13,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  PenTool,
   Plus,
   Settings,
   TrendingUp,
@@ -102,12 +103,12 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
       </div>
       <Separator />
 
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-1 px-3 py-4" aria-label="Main navigation">
         {navItems.map(({ id, label, icon: Icon, href }) => (
           <Link key={id} href={href} onClick={() => setIsSidebarOpen(false)}>
             <Button
               variant="ghost"
-              className={`w-full justify-start gap-2 text-dark ${view === id ? 'bg-yellow' : 'hover:bg-yellow/50'}`}
+              className={`w-full justify-start gap-2 text-dark ${view === id ? 'bg-primary/10 border-l-3 border-primary text-primary font-semibold' : 'hover:bg-primary/5'}`}
               aria-current={view === id ? 'page' : undefined}
             >
               <Icon className="h-4 w-4" />
@@ -118,7 +119,7 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
         <Link href="/builder" onClick={() => setIsSidebarOpen(false)}>
           <Button
             variant="ghost"
-            className="w-full justify-start gap-2 text-dark hover:bg-yellow/50"
+            className="w-full justify-start gap-2 text-dark hover:bg-primary/5"
           >
             <FileText className="h-4 w-4" />
             Resume Builder
@@ -339,9 +340,9 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
                                 <FileText className="h-8 w-8 text-dark/70" />
                               </div>
                               <div>
-                                <h3 className="text-lg font-semibold text-dark">No resumes yet</h3>
+                                <h3 className="text-lg font-semibold text-dark">Start building your resume</h3>
                                 <p className="text-sm text-dark/70 mt-1">
-                                  Create your first resume to get started
+                                  Create your first resume and land your next opportunity.
                                 </p>
                               </div>
                               <Link href="/builder">
@@ -368,6 +369,31 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
           </main>
         </motion.div>
       </div>
+      {/* Mobile bottom navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border h-14 flex items-center justify-around md:hidden" aria-label="Mobile navigation">
+        {([
+          { id: 'home' as DashboardView, label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
+          { id: 'cover-letters' as DashboardView, label: 'Cover Letters', icon: FileText, href: '/dashboard?view=cover-letters' },
+          { id: 'applications' as DashboardView, label: 'Applications', icon: Briefcase, href: '/dashboard?view=applications' },
+        ] as const).map(({ id, label, icon: Icon, href }) => (
+          <Link
+            key={id}
+            href={href}
+            className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full text-xs ${view === id ? 'text-primary font-semibold' : 'text-dark/50'}`}
+          >
+            <Icon className="h-5 w-5" />
+            <span>{label}</span>
+          </Link>
+        ))}
+        <Link
+          href="/builder"
+          className="flex flex-col items-center justify-center gap-0.5 flex-1 h-full text-xs text-dark/50"
+        >
+          <PenTool className="h-5 w-5" />
+          <span>Builder</span>
+        </Link>
+      </nav>
+
       <SubscriptionModal
         open={isSubscriptionModalOpen}
         onOpenChange={setIsSubscriptionModalOpen}

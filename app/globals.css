@@ -12,7 +12,7 @@
 }
 
 :root {
-  font-family: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-space), "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   color-scheme: light;
 }
 
@@ -28,12 +28,12 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  * {
-    @apply outline-none;
+  *:focus:not(:focus-visible) {
+    outline: none;
   }
 
   *:focus-visible {
-    @apply outline outline-2 outline-offset-2 outline-primary/80;
+    @apply outline outline-[3px] outline-offset-2 outline-primary/80;
   }
 
   button,
@@ -44,9 +44,9 @@
     @apply transition-colors duration-200 ease-in-out;
   }
 
-  .form-input:focus {
+  .form-input:focus-visible {
     @apply border-primary;
-    box-shadow: 0 0 0 2px theme("colors.highlight");
+    box-shadow: 0 0 0 3px theme("colors.highlight");
     outline: none;
   }
 
@@ -149,5 +149,54 @@
     --chart-3: 40 20% 88%;
     --chart-4: 30 15% 25%;
     --chart-5: 40 30% 96%;
+  }
+}
+
+/* ─── Print stylesheet ───────────────────────────────────────────────────── */
+
+@media print {
+  nav, aside, header, footer,
+  .sidebar, .toolbar, .toast,
+  .edit-controls, .template-picker,
+  [role="dialog"], [role="alert"],
+  .cookie-banner, .skip-link {
+    display: none !important;
+  }
+
+  body {
+    color: #000;
+    background: #fff;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .experience-item, .education-item, .project-item,
+  .resume-entry, section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+@page {
+  size: letter;
+  margin: 0.5in;
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

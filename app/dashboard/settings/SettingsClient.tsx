@@ -325,7 +325,7 @@ export default function SettingsClient() {
                 </DialogTrigger>
                 <DialogContent className="bg-beige border-yellow">
                   <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogTitle>Delete your account permanently?</DialogTitle>
                     <DialogDescription>
                       This action cannot be undone. This will permanently delete your account and
                       remove your data from our servers.
@@ -333,7 +333,7 @@ export default function SettingsClient() {
                   </DialogHeader>
                   <DialogFooter>
                     <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
-                      Cancel
+                      Keep My Account
                     </Button>
                     <Button
                       variant="destructive"

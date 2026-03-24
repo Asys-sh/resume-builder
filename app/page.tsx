@@ -1,6 +1,7 @@
 'use client'
 
 import { useAtom } from 'jotai'
+import { Download, Layers, Shield, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
@@ -54,12 +55,7 @@ export default function HomePage() {
                 variants={cardVariants}
                 className="flex flex-1 flex-col gap-3 rounded-lg border border-yellow bg-yellow p-6"
               >
-                <span
-                  className="material-symbols-outlined text-secondary-accent"
-                  style={{ fontSize: '32px' }}
-                >
-                  auto_awesome
-                </span>
+                <Sparkles className="size-8 text-secondary-accent" />
                 <div className="flex flex-col gap-1">
                   <h3 className="text-lg font-bold text-dark">AI-Powered Suggestions</h3>
                   <p className="text-sm font-normal text-dark/70">
@@ -72,12 +68,7 @@ export default function HomePage() {
                 variants={cardVariants}
                 className="flex flex-1 flex-col gap-3 rounded-lg border border-yellow bg-yellow p-6"
               >
-                <span
-                  className="material-symbols-outlined text-secondary-accent"
-                  style={{ fontSize: '32px' }}
-                >
-                  layers
-                </span>
+                <Layers className="size-8 text-secondary-accent" />
                 <div className="flex flex-col gap-1">
                   <h3 className="text-lg font-bold text-dark">Professional Templates</h3>
                   <p className="text-sm font-normal text-dark/70">
@@ -90,12 +81,7 @@ export default function HomePage() {
                 variants={cardVariants}
                 className="flex flex-1 flex-col gap-3 rounded-lg border border-yellow bg-yellow p-6"
               >
-                <span
-                  className="material-symbols-outlined text-secondary-accent"
-                  style={{ fontSize: '32px' }}
-                >
-                  download
-                </span>
+                <Download className="size-8 text-secondary-accent" />
                 <div className="flex flex-col gap-1">
                   <h3 className="text-lg font-bold text-dark">Easy PDF Export</h3>
                   <p className="text-sm font-normal text-dark/70">
@@ -108,12 +94,7 @@ export default function HomePage() {
                 variants={cardVariants}
                 className="flex flex-1 flex-col gap-3 rounded-lg border border-yellow bg-yellow p-6"
               >
-                <span
-                  className="material-symbols-outlined text-secondary-accent"
-                  style={{ fontSize: '32px' }}
-                >
-                  shield
-                </span>
+                <Shield className="size-8 text-secondary-accent" />
                 <div className="flex flex-col gap-1">
                   <h3 className="text-lg font-bold text-dark">Secure &amp; Private</h3>
                   <p className="text-sm font-normal text-dark/70">

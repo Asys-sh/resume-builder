@@ -1,17 +1,12 @@
 'use client'
 
 import { useAtom } from 'jotai'
-import { Plus, Trash2 } from 'lucide-react'
+import { Lock, Plus, Trash2 } from 'lucide-react'
 import { useState } from 'react'
-import { BuilderFormField, NavigationButtons, PresetPicker, StepProgress } from '@/components/builder'
+import { BuilderFormField, PresetPicker } from '@/components/builder'
 import { PhotoUpload } from '@/components/builder/PhotoUpload'
 import { resumeDataAtom, setResumeDataAtom } from '@/stores/builder'
 import { cn } from '@/lib/utils'
-
-interface ContactInfoProps {
-  onNext: () => void
-  onPrevious: () => void
-}
 
 const LINK_TYPES = [
   { value: 'LinkedIn', placeholder: 'linkedin.com/in/yourname' },
@@ -34,7 +29,7 @@ function isValidUrl(value: string): boolean {
   }
 }
 
-export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
+export function ContactInfo() {
   const [resumeData] = useAtom(resumeDataAtom)
   const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
   const [urlErrors, setUrlErrors] = useState<Record<number, string>>({})
@@ -94,8 +89,6 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
     LINK_TYPES.find((t) => t.value === label)?.placeholder ?? 'yourlink.com'
 
   return (
-    <>
-      <StepProgress currentStep={1} totalSteps={7} stepLabel="Contact Info" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
@@ -104,6 +97,7 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
           <p className="text-text-subtle text-base font-normal leading-normal">
             Let's start with the basics. Enter your contact information below.
           </p>
+          <p className="text-xs text-text-subtle mt-1 flex items-center gap-1.5"><Lock className="h-3 w-3" /> Your data is encrypted and never shared with third parties.</p>
         </div>
 
         {/* Apply saved profile */}
@@ -134,6 +128,8 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
                 placeholder="John Doe"
                 value={resumeData.contactInfo.fullName}
                 onChange={(e) => handleContactChange('fullName', e.target.value)}
+                required
+                autoComplete="name"
               />
             </div>
             <div className="flex-1 min-w-40">
@@ -160,6 +156,8 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
                 placeholder="john@example.com"
                 value={resumeData.contactInfo.email}
                 onChange={(e) => handleContactChange('email', e.target.value)}
+                required
+                autoComplete="email"
               />
             </div>
             <div className="flex-1 min-w-40">
@@ -171,6 +169,7 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
                 placeholder="+1 (555) 123-4567"
                 value={resumeData.contactInfo.phone}
                 onChange={(e) => handleContactChange('phone', e.target.value)}
+                autoComplete="tel"
               />
             </div>
           </div>
@@ -185,6 +184,7 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
               placeholder="City, State, Country"
               value={resumeData.contactInfo.address}
               onChange={(e) => handleContactChange('address', e.target.value)}
+              autoComplete="street-address"
             />
           </div>
 
@@ -228,6 +228,7 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
                     <select
                       value={link.label}
                       onChange={(e) => handleLinkChange(i, 'label', e.target.value)}
+                      aria-label="Link type"
                       className="shrink-0 h-10 px-2 rounded-lg border border-border-color/50 bg-background-light text-xs font-semibold text-text-main focus:outline-none focus:border-primary/60 transition-colors"
                     >
                       {LINK_TYPES.map((t) => (
@@ -245,6 +246,9 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
                         onChange={(e) => handleLinkChange(i, 'url', e.target.value)}
                         onBlur={(e) => handleUrlBlur(i, e.target.value)}
                         placeholder={placeholder(link.label)}
+                        aria-label="Link URL"
+                        aria-invalid={!!urlErrors[i]}
+                        aria-describedby={urlErrors[i] ? `link-error-${i}` : undefined}
                         className={cn(
                           'w-full h-10 px-3 rounded-lg border text-sm bg-background-light text-text-main placeholder:text-text-subtle/60 focus:outline-none transition-colors',
                           urlErrors[i]
@@ -253,7 +257,7 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
                         )}
                       />
                       {urlErrors[i] && (
-                        <p className="text-xs text-red-500 mt-1">{urlErrors[i]}</p>
+                        <p id={`link-error-${i}`} className="text-xs text-red-500 mt-1">{urlErrors[i]}</p>
                       )}
                     </div>
 
@@ -273,15 +277,6 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
           </div>
         </div>
 
-        {/* Navigation Buttons */}
-        <NavigationButtons
-          onPrevious={onPrevious}
-          onNext={onNext}
-          previousDisabled={false}
-          showPrevious={true}
-          showNext={true}
-        />
       </div>
-    </>
   )
 }

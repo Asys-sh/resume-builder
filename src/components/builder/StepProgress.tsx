@@ -34,6 +34,7 @@ export const StepProgress: React.FC<StepProgressProps> = ({
         </span>
       </div>
       <Progress
+        aria-label="Resume builder progress"
         value={progressPercentage}
         className="h-1.5 rounded-full bg-border-color/30"
         indicatorClassName="bg-primary rounded-full transition-all duration-500"

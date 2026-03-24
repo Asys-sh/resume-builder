@@ -3,6 +3,7 @@
 import { forwardRef, type ReactNode, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { AlertCircle } from 'lucide-react'
 
 interface FormInputProps {
   id: string
@@ -44,11 +45,6 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
     return (
       <div className="space-y-2">
-        {error && (
-          <p id={`${id}-error`} role="alert" className="text-red-400 text-sm text-destructive">
-            {error}
-          </p>
-        )}
         <div className="flex items-center justify-between">
           <Label htmlFor={id}>{label}</Label>
           {rightLabel}
@@ -72,7 +68,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             className={`h-14 ${icon ? 'pl-11' : 'pl-4'} ${type === 'password' ? 'pr-11' : 'pr-4'} border-secondary-accent bg-beige focus:ring-2 focus:ring-primary/50 ${
               error ? 'border-red-400' : ''
             } ${className || ''}`}
-            aria-invalid={error ? 'true' : 'false'}
+            aria-invalid={!!error}
             aria-describedby={error ? `${id}-error` : undefined}
           />
           {type === 'password' && (
@@ -86,6 +82,12 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             </button>
           )}
         </div>
+        {error && (
+          <p id={`${id}-error`} role="alert" className="flex items-center gap-1 text-red-400 text-sm text-destructive">
+            <AlertCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+            {error}
+          </p>
+        )}
       </div>
     )
   },

@@ -6,6 +6,16 @@ import { toast } from 'sonner'
 import { BulletAnalyzer, BulletLibrary, BuilderFormField, BuilderTextarea } from '@/components/builder'
 import { AutocompleteInput } from '@/components/ui/autocomplete-input'
 import { DatePicker } from '@/components/ui/date-picker'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 import { jobs_title } from '@/lib/arrays'
 import type { Experience } from '@/stores/builder'
 
@@ -76,14 +86,29 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
             {isCollapsed ? collapseLabel : `Experience ${index + 1}`}
           </h3>
         </button>
-        <button
-          type="button"
-          onClick={onDelete}
-          className="ml-3 text-text-subtle hover:text-primary transition-colors shrink-0"
-          aria-label={`Delete experience ${index + 1}`}
-        >
-          <span className="material-symbols-outlined">delete</span>
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              className="ml-3 text-text-subtle hover:text-primary transition-colors shrink-0"
+              aria-label={`Delete experience ${index + 1}`}
+            >
+              <span className="material-symbols-outlined">delete</span>
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete this experience?</DialogTitle>
+              <DialogDescription>This action cannot be undone.</DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogTrigger asChild>
+                <Button variant="outline">Keep</Button>
+              </DialogTrigger>
+              <Button variant="destructive" onClick={onDelete}>Delete</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Collapsible body */}
@@ -107,6 +132,7 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
                 value={experience.company}
                 onChange={(e) => onUpdate('company', e.target.value)}
                 placeholder="e.g., Google"
+                required
               />
             </div>
           </div>

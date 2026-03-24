@@ -3,19 +3,14 @@ import { useAtom } from 'jotai'
 import { Loader2, Wand2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
-import { JDKeywordMatcher, NavigationButtons } from '@/components/builder'
+import { JDKeywordMatcher } from '@/components/builder'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { resumeDataAtom } from '@/stores/builder'
 
-interface TargetJobProps {
-  onNext: () => void
-  onBack: () => void
-}
-
-export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
+export const TargetJob: React.FC = () => {
   const [resumeData, setResumeData] = useAtom(resumeDataAtom)
   const [isGenerating, setIsGenerating] = useState(false)
 
@@ -183,13 +178,6 @@ export const TargetJob: React.FC<TargetJobProps> = ({ onNext, onBack }) => {
         </div>
       </div>
 
-      <NavigationButtons
-        onPrevious={onBack}
-        onNext={onNext}
-        showPrevious={true}
-        showNext={true}
-        nextLabel="Next: Review & Export"
-      />
     </div>
   )
 }

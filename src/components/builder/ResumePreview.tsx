@@ -1,7 +1,9 @@
 'use client'
 
 import { useAtom } from 'jotai'
-import { useEffect } from 'react'
+import { Maximize2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { TEMPLATES } from '@/lib/templates'
 import { resumeDataAtom, setResumeDataAtom } from '@/stores/builder'
 import { cn } from '@/lib/utils'
@@ -17,6 +19,7 @@ import { ATSReport } from './ATSReport'
 export function ResumePreview() {
   const [resumeData, setResumeData] = useAtom(resumeDataAtom)
   const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
+  const [expanded, setExpanded] = useState(false)
   const { selectedTemplate } = resumeData
 
   const template = TEMPLATES.find((t) => t.id === selectedTemplate)
@@ -46,7 +49,7 @@ export function ResumePreview() {
   }
 
   return (
-    <div className="flex flex-col h-full gap-2">
+    <div className="flex flex-col gap-2 h-full min-h-0">
       {/* Template strip */}
       <div className="shrink-0 flex items-center gap-2">
         <span className="text-[10px] font-bold text-text-subtle uppercase tracking-widest shrink-0">
@@ -81,18 +84,43 @@ export function ResumePreview() {
         </div>
       </div>
 
-      {/* Live preview */}
-      <div className="flex-1 min-h-0 bg-white p-2 rounded-xl shadow-lg border border-border-color/20">
-        <div className="h-full w-full overflow-hidden" style={{ aspectRatio: '8.5/11', maxHeight: '100%' }}>
+      {/* Live preview — fills remaining space, shrinks to fit */}
+      <div className="relative flex-1 min-h-0 bg-white p-2 rounded-xl shadow-lg border border-border-color/20 group/preview overflow-hidden">
+        {/* Expand button */}
+        <button
+          type="button"
+          onClick={() => setExpanded(true)}
+          className="absolute top-3 left-3 z-10 p-1.5 rounded-lg bg-black/50 text-white opacity-0 group-hover/preview:opacity-100 hover:bg-black/70 transition-all duration-200"
+          aria-label="Expand preview"
+        >
+          <Maximize2 className="h-3.5 w-3.5" />
+        </button>
+        <div className="h-full w-full overflow-hidden">
           <TemplateComponent resumeData={resumeData} />
         </div>
       </div>
 
+      {/* Expanded preview modal */}
+      <Dialog open={expanded} onOpenChange={setExpanded}>
+        <DialogContent className="max-w-3xl w-[90vw] h-[90vh] p-0 overflow-hidden bg-white border-none rounded-2xl">
+          <DialogTitle className="sr-only">Resume Preview</DialogTitle>
+          <div className="h-full w-full overflow-y-auto p-6">
+            <div className="w-full" style={{ aspectRatio: '8.5/11' }}>
+              <TemplateComponent resumeData={resumeData} />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Score meter */}
-      <ScoreMeter />
+      <div className="shrink-0">
+        <ScoreMeter />
+      </div>
 
       {/* ATS compatibility report */}
-      <ATSReport resumeData={resumeData} />
+      <div className="shrink-0">
+        <ATSReport resumeData={resumeData} />
+      </div>
     </div>
   )
 }

@@ -1,37 +1,19 @@
 import { useAtom } from 'jotai'
-import { useState } from 'react'
 import {
-  BuilderFormField,
-  BuilderSelect,
-  CertificationTag,
-  LanguageTag,
-  NavigationButtons,
+  LanguageInput,
   ProjectCard,
-  StepProgress,
 } from '@/components/builder'
-import { ItemPicker } from '@/components/ui/item-picker'
-import { languages } from '@/lib/arrays'
 import {
-  type Certification,
   type Language,
   type Project,
   resumeDataAtom,
   setResumeDataAtom,
 } from '@/stores/builder'
 
-interface ProjectsExtrasProps {
-  onNext: () => void
-  onPrevious: () => void
-}
-
-export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
+export function ProjectsExtras() {
   const [resumeData] = useAtom(resumeDataAtom)
   const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
-  const [certificationInput, setCertificationInput] = useState('')
-  const [languageInput, setLanguageInput] = useState('')
-  const [languageProficiency, setLanguageProficiency] = useState('Native')
 
-  // Project handlers
   // Project handlers
   const handleAddProject = () => {
     const newProject: Project = {
@@ -63,46 +45,17 @@ export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
     })
   }
 
-  // Certification handlers
-  const handleAddCertification = () => {
-    if (!certificationInput.trim()) return
-
-    const newCertification: Certification = {
-      id: crypto.randomUUID(),
-      name: certificationInput.trim(),
-      issuer: '',
-      date: '',
-      resumeId: '',
-    }
-    setResumeDataPartial({
-      certifications: [...resumeData.certifications, newCertification],
-    })
-    setCertificationInput('')
-  }
-
-  const handleRemoveCertification = (id: string) => {
-    setResumeDataPartial({
-      certifications: resumeData.certifications.filter((cert) => cert.id !== id),
-    })
-  }
-
   // Language handlers
-  const handleAddLanguage = () => {
-    const nameToAdd = languageInput.trim()
-    if (!nameToAdd) return
-    if (resumeData.languages.some((l) => l.name.toLowerCase() === nameToAdd.toLowerCase())) return
-
+  const handleAddLanguage = (name: string, proficiency: string) => {
     const newLanguage: Language = {
       id: crypto.randomUUID(),
-      name: nameToAdd,
-      proficiency: languageProficiency,
+      name,
+      proficiency,
       resumeId: '',
     }
     setResumeDataPartial({
       languages: [...resumeData.languages, newLanguage],
     })
-    setLanguageInput('')
-    setLanguageProficiency('Native')
   }
 
   const handleRemoveLanguage = (id: string) => {
@@ -111,16 +64,22 @@ export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
     })
   }
 
+  const handleUpdateProficiency = (id: string, proficiency: string) => {
+    setResumeDataPartial({
+      languages: resumeData.languages.map((lang) =>
+        lang.id === id ? { ...lang, proficiency } : lang,
+      ),
+    })
+  }
+
   return (
-    <>
-      <StepProgress currentStep={5} totalSteps={7} stepLabel="Projects & Extras" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
-            Projects & Extras
+            Projects & Languages
           </h1>
           <p className="text-text-subtle text-base font-normal leading-normal">
-            Showcase your projects, certifications, and languages to stand out from the crowd.
+            Showcase side projects and the languages you speak.
           </p>
         </div>
 
@@ -141,118 +100,23 @@ export function ProjectsExtras({ onNext, onPrevious }: ProjectsExtrasProps) {
           <button
             type="button"
             onClick={handleAddProject}
-            className="flex items-center justify-center gap-2 p-4 bg-white/30 border-2 border-dashed border-border-color/50 rounded-lg text-text-subtle hover:border-primary hover:text-primary transition-colors"
+            className="flex items-center justify-center p-4 bg-white/30 border-2 border-dashed border-border-color/50 rounded-lg text-text-subtle hover:border-primary hover:text-primary transition-colors"
           >
-            <span className="material-symbols-outlined">add</span>
-            <span>Add another project</span>
+            <span className="material-symbols-outlined" aria-hidden="true">add</span>
           </button>
-        </div>
-
-        {/* Certifications Section */}
-        <div className="flex flex-col gap-4 pt-6 border-t border-border-color/30">
-          <h2 className="text-2xl font-bold text-text-main">Certifications</h2>
-          {resumeData.certifications.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {resumeData.certifications.map((cert) => (
-                <CertificationTag
-                  key={cert.id}
-                  certification={cert}
-                  onRemove={() => handleRemoveCertification(cert.id)}
-                />
-              ))}
-            </div>
-          )}
-          <div className="flex gap-2">
-            <BuilderFormField
-              id="certificationInput"
-              name="certificationInput"
-              label=""
-              value={certificationInput}
-              onChange={(e) => setCertificationInput(e.target.value)}
-              placeholder="E.g., AWS Certified Solutions Architect"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault()
-                  handleAddCertification()
-                }
-              }}
-            />
-            <button
-              type="button"
-              onClick={handleAddCertification}
-              className="mt-auto h-12 px-6 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-            >
-              Add
-            </button>
-          </div>
         </div>
 
         {/* Languages Section */}
         <div className="flex flex-col gap-4 pt-6 border-t border-border-color/30">
           <h2 className="text-2xl font-bold text-text-main">Languages</h2>
-          {resumeData.languages.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {resumeData.languages.map((lang) => (
-                <LanguageTag
-                  key={lang.id}
-                  language={lang}
-                  onRemove={() => handleRemoveLanguage(lang.id)}
-                />
-              ))}
-            </div>
-          )}
-          <div className="flex flex-col gap-3">
-            {/* Language picker + selected display */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <ItemPicker
-                options={languages}
-                onSelect={(value) => setLanguageInput(value)}
-                triggerLabel="Add a language"
-                searchPlaceholder="Search languages…"
-              />
-              {languageInput && (
-                <span className="text-sm font-medium text-text-main bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
-                  {languageInput}
-                </span>
-              )}
-            </div>
-
-            {/* Proficiency + Add */}
-            <div className="flex gap-2 items-end">
-              <div className="flex-1">
-                <BuilderSelect
-                  id="languageProficiency"
-                  label=""
-                  value={languageProficiency}
-                  onValueChange={setLanguageProficiency}
-                  options={[
-                    { value: 'Native', label: 'Native' },
-                    { value: 'Fluent', label: 'Fluent' },
-                    { value: 'Conversational', label: 'Conversational' },
-                    { value: 'Basic', label: 'Basic' },
-                  ]}
-                />
-              </div>
-              <button
-                type="button"
-                onClick={handleAddLanguage}
-                className="h-14 px-6 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors whitespace-nowrap"
-              >
-                Add
-              </button>
-            </div>
-          </div>
+          <LanguageInput
+            languages={resumeData.languages}
+            onAdd={handleAddLanguage}
+            onRemove={handleRemoveLanguage}
+            onUpdateProficiency={handleUpdateProficiency}
+          />
         </div>
 
-        {/* Navigation Buttons */}
-        <NavigationButtons
-          onPrevious={onPrevious}
-          onNext={onNext}
-          previousDisabled={false}
-          showPrevious={true}
-          showNext={true}
-        />
       </div>
-    </>
   )
 }

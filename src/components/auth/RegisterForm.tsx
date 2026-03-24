@@ -174,7 +174,7 @@ export default function RegisterForm() {
         <FormInput
           ref={nameRef}
           id="name"
-          label="Full Name"
+          label="Full Name *"
           type="text"
           placeholder="John Doe"
           value={formData.name}
@@ -187,7 +187,7 @@ export default function RegisterForm() {
         <FormInput
           ref={emailRef}
           id="email"
-          label="Email"
+          label="Email *"
           type="email"
           placeholder="you@example.com"
           value={formData.email}
@@ -201,7 +201,7 @@ export default function RegisterForm() {
           <FormInput
             ref={passwordRef}
             id="password"
-            label="Password"
+            label="Password *"
             type="password"
             placeholder="Create a password"
             value={formData.password}
@@ -216,7 +216,7 @@ export default function RegisterForm() {
         <FormInput
           ref={confirmPasswordRef}
           id="confirmPassword"
-          label="Confirm Password"
+          label="Confirm Password *"
           type="password"
           placeholder="Confirm your password"
           value={formData.confirmPassword}

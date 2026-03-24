@@ -1,15 +1,10 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import { ExperienceCard, NavigationButtons, SkillsInput, StepProgress } from '@/components/builder'
+import { ExperienceCard, SkillsInput } from '@/components/builder'
 import { type Experience, resumeDataAtom, type Skill, setResumeDataAtom } from '@/stores/builder'
 
-interface ExperienceSkillsProps {
-  onNext: () => void
-  onPrevious: () => void
-}
-
-export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) {
+export function ExperienceSkills() {
   const [resumeData] = useAtom(resumeDataAtom)
   const [, setResumeDataPartial] = useAtom(setResumeDataAtom)
   const [skillsOpen, setSkillsOpen] = useState(true)
@@ -79,8 +74,6 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
   }
 
   return (
-    <>
-      <StepProgress currentStep={2} totalSteps={7} stepLabel="Experience & Skills" />
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         {/* Work Experience Section */}
         <div className="flex flex-col gap-6">
@@ -109,10 +102,9 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
             <button
               type="button"
               onClick={handleAddExperience}
-              className="flex items-center justify-center gap-2 p-5 border-2 border-dashed border-border-color/50 rounded-xl text-text-subtle hover:border-primary hover:text-primary hover:bg-primary/5 active:scale-[0.99] transition-all"
+              className="flex items-center justify-center p-4 border-2 border-dashed border-border-color/50 rounded-xl text-text-subtle hover:border-primary hover:text-primary hover:bg-primary/5 active:scale-[0.99] transition-all"
             >
-              <span className="material-symbols-outlined !text-xl">add_circle</span>
-              <span className="font-semibold text-sm">Add another experience</span>
+              <span className="material-symbols-outlined !text-xl" aria-hidden="true">add</span>
             </button>
           </div>
         </div>
@@ -154,15 +146,6 @@ export function ExperienceSkills({ onNext, onPrevious }: ExperienceSkillsProps) 
           )}
         </div>
 
-        {/* Navigation Buttons */}
-        <NavigationButtons
-          onPrevious={onPrevious}
-          onNext={onNext}
-          previousDisabled={false}
-          showPrevious={true}
-          showNext={true}
-        />
       </div>
-    </>
   )
 }

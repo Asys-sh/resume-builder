@@ -1,6 +1,16 @@
 'use client'
 
 import type { Project } from '@/stores/builder'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { BuilderFormField } from './BuilderFormField'
 import { BuilderTextarea } from './BuilderTextarea'
 
@@ -17,14 +27,29 @@ export function ProjectCard({ project, onUpdate, onDelete, index }: ProjectCardP
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-text-main">Project {index + 1}</h3>
-        <button
-          type="button"
-          onClick={onDelete}
-          className="text-text-subtle hover:text-red-500 transition-colors"
-          aria-label="Delete project"
-        >
-          <span className="material-symbols-outlined">delete</span>
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              className="text-text-subtle hover:text-red-500 transition-colors"
+              aria-label="Delete project"
+            >
+              <span className="material-symbols-outlined">delete</span>
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete this project?</DialogTitle>
+              <DialogDescription>This action cannot be undone.</DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogTrigger asChild>
+                <Button variant="outline">Keep</Button>
+              </DialogTrigger>
+              <Button variant="destructive" onClick={onDelete}>Delete</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Form Fields */}

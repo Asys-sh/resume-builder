@@ -95,6 +95,7 @@ export function ATSReport({ resumeData, jd }: ATSReportProps) {
       <button
         type="button"
         onClick={() => setIsExpanded((v) => !v)}
+        aria-expanded={isExpanded}
         className={cn(
           'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200',
           'bg-background-light border border-border-color/50 hover:border-primary/40',
