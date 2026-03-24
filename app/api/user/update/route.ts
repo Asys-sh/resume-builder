@@ -4,6 +4,7 @@ import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { UserUpdateSchema, parseBody } from '@/lib/schemas'
+import { sanitizeText } from '@/lib/sanitize'
 
 export async function POST(request: Request) {
   try {
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
 
     const userUpdateData: { name?: string; email?: string; emailVerified?: null } = {}
 
-    if (name) userUpdateData.name = name
+    if (name) userUpdateData.name = sanitizeText(name)
     if (email && email !== user.email) {
       const taken = await prisma.user.findUnique({ where: { email }, select: { id: true } })
       if (taken) {

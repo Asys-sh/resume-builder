@@ -240,6 +240,7 @@ export default function BuilderPage() {
         isSaving={isSaving}
         onSave={handleSave}
         onDownload={handleDownload}
+        resumeId={resumeId}
       />
       <AuthDialog open={showAuthModal} onOpenChange={setShowAuthModal} />
 

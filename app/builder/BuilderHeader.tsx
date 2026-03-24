@@ -2,17 +2,20 @@
 
 import { Download, LayoutDashboard, Save } from "lucide-react";
 import Link from "next/link";
+import { SnapshotDrawer } from "@/components/builder/SnapshotDrawer";
 
 interface BuilderHeaderProps {
   isSaving: boolean;
   onSave: () => void;
   onDownload: (format: "pdf" | "word" | "text") => void;
+  resumeId?: string | null;
 }
 
 export function BuilderHeader({
   isSaving,
   onSave,
   onDownload,
+  resumeId,
 }: BuilderHeaderProps) {
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-color/50 px-6 md:px-10 py-3 bg-background-light sticky top-0 z-20">
@@ -50,6 +53,9 @@ export function BuilderHeader({
           <LayoutDashboard className="h-4 w-4" />
           Dashboard
         </Link>
+
+        {/* History button */}
+        {resumeId && <SnapshotDrawer resumeId={resumeId} />}
 
         {/* Save button */}
         <button

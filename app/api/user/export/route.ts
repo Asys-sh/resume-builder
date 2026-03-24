@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function GET() {
   try {
@@ -10,17 +11,93 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const limited = checkRateLimit('export:' + userSession.id, 5, 3600000)
+    if (limited) return limited
+
     const user = await prisma.user.findUnique({
       where: { id: userSession.id },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        emailVerified: true,
+        createdAt: true,
+        updatedAt: true,
+        subscriptionStatus: true,
+        usageCount: true,
+        usageLimit: true,
         resumes: {
-          include: {
-            experiences: true,
-            skills: true,
-            education: true,
-            projects: true,
-            certifications: true,
-            languages: true,
+          select: {
+            id: true,
+            createdAt: true,
+            updatedAt: true,
+            title: true,
+            summary: true,
+            contactInfo: true,
+            template: true,
+            parentResumeId: true,
+            tailoredFor: true,
+            isPublic: true,
+            publicSlug: true,
+            hideContactInfo: true,
+            viewCount: true,
+            experiences: {
+              select: {
+                id: true,
+                createdAt: true,
+                updatedAt: true,
+                company: true,
+                role: true,
+                startDate: true,
+                endDate: true,
+                description: true,
+                location: true,
+              },
+            },
+            skills: {
+              select: {
+                id: true,
+                name: true,
+                level: true,
+              },
+            },
+            education: {
+              select: {
+                id: true,
+                school: true,
+                degree: true,
+                fieldOfStudy: true,
+                startDate: true,
+                endDate: true,
+                gpa: true,
+              },
+            },
+            projects: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                link: true,
+                technologies: true,
+                startDate: true,
+                endDate: true,
+              },
+            },
+            certifications: {
+              select: {
+                id: true,
+                name: true,
+                issuer: true,
+                date: true,
+              },
+            },
+            languages: {
+              select: {
+                id: true,
+                name: true,
+                proficiency: true,
+              },
+            },
           },
         },
         coverLetters: true,

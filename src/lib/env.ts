@@ -28,6 +28,15 @@ const envSchema = z.object({
 
   // OpenAI
   OPENAI_API_KEY: z.string().startsWith('sk-', 'OPENAI_API_KEY must start with sk-'),
+
+  // Google OAuth
+  AUTH_GOOGLE_ID: z.string().min(1, 'AUTH_GOOGLE_ID is required').optional(),
+  AUTH_GOOGLE_SECRET: z.string().min(1, 'AUTH_GOOGLE_SECRET is required').optional(),
+
+  // Cloudinary
+  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string().min(1, 'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is required').optional(),
+  CLOUDINARY_API_KEY: z.string().min(1, 'CLOUDINARY_API_KEY is required').optional(),
+  CLOUDINARY_API_SECRET: z.string().min(1, 'CLOUDINARY_API_SECRET is required').optional(),
 })
 
 export type Env = z.infer<typeof envSchema>

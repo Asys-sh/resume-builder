@@ -33,36 +33,37 @@ export async function parseBody<T>(
 // ─── Contact Info ────────────────────────────────────────────────────────────
 
 export const ContactInfoSchema = z.object({
-  fullName: z.string().default(''),
-  headline: z.string().default(''),
-  email: z.string().default(''),
-  phone: z.string().default(''),
-  address: z.string().default(''),
+  fullName: z.string().max(200).default(''),
+  headline: z.string().max(200).default(''),
+  email: z.string().max(254).default(''),
+  phone: z.string().max(50).default(''),
+  address: z.string().max(300).default(''),
   links: z.array(
     z.object({
-      label: z.string().default(''),
-      url: z.string().default(''),
+      label: z.string().max(100).default(''),
+      url: z.string().max(2000).default(''),
     })
   ).default([]),
+  photo: z.string().url().optional(),
 })
 
 // ─── Resume nested items ─────────────────────────────────────────────────────
 
 export const ExperienceItemSchema = z.object({
   id: z.string().optional(),
-  company: z.string(),
-  role: z.string(),
+  company: z.string().max(200),
+  role: z.string().max(200),
   startDate: z.string(),
   endDate: z.string().optional().nullable(),
-  description: z.string().optional().nullable(),
-  location: z.string().optional().nullable(),
+  description: z.string().max(5000).optional().nullable(),
+  location: z.string().max(200).optional().nullable(),
 })
 
 export const EducationItemSchema = z.object({
   id: z.string().optional(),
-  school: z.string(),
-  degree: z.string(),
-  fieldOfStudy: z.string().optional().nullable(),
+  school: z.string().max(200),
+  degree: z.string().max(200),
+  fieldOfStudy: z.string().max(200).optional().nullable(),
   startDate: z.string(),
   endDate: z.string().optional().nullable(),
   gpa: z.string().optional().nullable(),
@@ -70,15 +71,15 @@ export const EducationItemSchema = z.object({
 
 export const SkillItemSchema = z.object({
   id: z.string().optional(),
-  name: z.string(),
-  level: z.string().optional().nullable(),
+  name: z.string().max(100),
+  level: z.string().max(50).optional().nullable(),
 })
 
 export const ProjectItemSchema = z.object({
   id: z.string().optional(),
-  title: z.string(),
-  description: z.string().optional().nullable(),
-  link: z.string().optional().nullable(),
+  title: z.string().max(200),
+  description: z.string().max(3000).optional().nullable(),
+  link: z.string().max(2000).optional().nullable(),
   technologies: z.string().optional().nullable(),
   startDate: z.string().optional().nullable(),
   endDate: z.string().optional().nullable(),
@@ -86,21 +87,21 @@ export const ProjectItemSchema = z.object({
 
 export const CertificationItemSchema = z.object({
   id: z.string().optional(),
-  name: z.string(),
-  issuer: z.string(),
+  name: z.string().max(200),
+  issuer: z.string().max(200),
   date: z.string().optional().nullable(),
 })
 
 export const LanguageItemSchema = z.object({
   id: z.string().optional(),
-  name: z.string(),
-  proficiency: z.string(),
+  name: z.string().max(100),
+  proficiency: z.string().max(50),
 })
 
 export const AwardItemSchema = z.object({
   id: z.string().optional(),
-  name: z.string(),
-  issuer: z.string(),
+  name: z.string().max(200),
+  issuer: z.string().max(200),
   date: z.string().optional(),
 })
 
@@ -113,12 +114,12 @@ export const ResumeBodySchema = z.object({
     summary: z.string().max(5000, 'Summary too long (max 5000 characters)').optional(),
     selectedTemplate: z.string().optional(),
     contactInfo: ContactInfoSchema,
-    experiences: z.array(ExperienceItemSchema).default([]),
-    skills: z.array(SkillItemSchema).default([]),
-    education: z.array(EducationItemSchema).default([]),
-    projects: z.array(ProjectItemSchema).default([]),
-    certifications: z.array(CertificationItemSchema).default([]),
-    languages: z.array(LanguageItemSchema).default([]),
+    experiences: z.array(ExperienceItemSchema).max(30).default([]),
+    skills: z.array(SkillItemSchema).max(30).default([]),
+    education: z.array(EducationItemSchema).max(20).default([]),
+    projects: z.array(ProjectItemSchema).max(30).default([]),
+    certifications: z.array(CertificationItemSchema).max(30).default([]),
+    languages: z.array(LanguageItemSchema).max(20).default([]),
     awards: z.array(AwardItemSchema).default([]),
   }),
 })
@@ -137,7 +138,7 @@ export const CoverLetterCreateSchema = z.object({
     .max(10000, 'Job description too long (max 10000 characters)')
     .optional(),
   resumeId: z.string().optional(),
-  status: z.string().optional(),
+  status: z.enum(['draft', 'sent', 'final']).optional(),
 })
 
 export type CoverLetterCreateBody = z.infer<typeof CoverLetterCreateSchema>
@@ -151,7 +152,7 @@ export const CoverLetterUpdateSchema = z.object({
     .string()
     .max(10000, 'Job description too long (max 10000 characters)')
     .optional(),
-  status: z.string().optional(),
+  status: z.enum(['draft', 'sent', 'final']).optional(),
 })
 
 export type CoverLetterUpdateBody = z.infer<typeof CoverLetterUpdateSchema>
@@ -162,7 +163,7 @@ export const UserUpdateSchema = z.object({
   name: z.string().optional(),
   email: z.string().email('Invalid email address').optional(),
   currentPassword: z.string().optional(),
-  newPassword: z.string().optional(),
+  newPassword: z.string().min(8).optional(),
 })
 
 export type UserUpdateBody = z.infer<typeof UserUpdateSchema>
@@ -211,7 +212,7 @@ export type AIImproveBody = z.infer<typeof AIImproveSchema>
 export const CheckoutSchema = z.object({
   priceId: z.string().min(1, 'Price ID is required'),
   quantity: z.number().int().positive().optional().default(1),
-  mode: z.string().optional().default('subscription'),
+  mode: z.enum(['payment', 'subscription', 'setup']).optional().default('subscription'),
 })
 
 export type CheckoutBody = z.infer<typeof CheckoutSchema>

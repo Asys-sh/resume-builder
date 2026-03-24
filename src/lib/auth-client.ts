@@ -40,6 +40,10 @@ export async function handleSignIn(
   return { ok: false, error: 'CredentialsSignin' }
 }
 
+export function handleGoogleSignIn(callbackUrl = '/dashboard'): void {
+  window.location.href = `/api/auth/signin/google?callbackUrl=${encodeURIComponent(callbackUrl)}`
+}
+
 export async function handleSignOut(): Promise<void> {
   const csrfToken = await getCsrfToken()
 

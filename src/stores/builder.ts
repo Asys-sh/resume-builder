@@ -32,6 +32,7 @@ export interface ResumeData {
     phone: string
     address: string
     links: Array<{ label: string; url: string }>
+    photo?: string
   }
   experiences: Experience[]
   skills: Skill[]

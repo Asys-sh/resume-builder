@@ -4,6 +4,7 @@ import { useAtom } from 'jotai'
 import { Plus, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { BuilderFormField, NavigationButtons, PresetPicker, StepProgress } from '@/components/builder'
+import { PhotoUpload } from '@/components/builder/PhotoUpload'
 import { resumeDataAtom, setResumeDataAtom } from '@/stores/builder'
 import { cn } from '@/lib/utils'
 
@@ -110,6 +111,16 @@ export function ContactInfo({ onNext, onPrevious }: ContactInfoProps) {
           <p className="text-sm text-text-subtle">Quickly fill from a saved profile</p>
           <PresetPicker />
         </div>
+
+        {/* Photo upload */}
+        <PhotoUpload
+          value={resumeData.contactInfo.photo}
+          onChange={(url) =>
+            setResumeDataPartial({
+              contactInfo: { ...resumeData.contactInfo, photo: url },
+            })
+          }
+        />
 
         <div className="flex flex-col gap-6">
           {/* Row 1: Full Name and Headline */}

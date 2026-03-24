@@ -157,11 +157,11 @@ export function TailoredVersionRow({ resume, onDeleted }: TailoredVersionRowProp
           <AnimatePresence>
             {isShareOpen && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.92, y: 6 }}
+                initial={{ opacity: 0, scale: 0.9, y: 8 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.92, y: 6 }}
-                transition={{ duration: 0.15, ease: 'easeOut' }}
-                className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5"
+                exit={{ opacity: 0, scale: 0.9, y: 8 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                className="absolute right-0 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5"
               >
                 <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
 

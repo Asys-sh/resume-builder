@@ -13,7 +13,7 @@ const ACTION_VERBS = new Set([
 ])
 
 const QUANTIFIED_RE =
-  /\b\d+\s*[%xX×]\b|\$\s*\d+|\b\d+[kKmMbB]\b|\b\d+\s*(percent|users|customers|engineers|employees|hours|days|months|years|requests|transactions|features?|services?|clients?|products?|repos?)\b/i
+  /\b\d+\s*[%xX×]|\$\s*\d+|\b\d+[kKmMbB]\b|\b\d+\s*(percent|users|customers|engineers|employees|hours|days|months|years|requests|transactions|features?|services?|clients?|products?|repos?)\b/i
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

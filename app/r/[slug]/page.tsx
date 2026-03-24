@@ -48,12 +48,17 @@ export default async function PublicResumePage({ params }: Props) {
         links:    Array.isArray(rawContact.links) ? rawContact.links : [],
       }
 
-  // ── Fire-and-forget view counter ──────────────────────────────────────────
+  // ── Fire-and-forget view counter + analytics record ───────────────────────
   // Non-blocking — never delays page render
-  prisma.resume.update({
-    where: { id: resume.id },
-    data: { viewCount: { increment: 1 } },
-  }).catch(() => {})
+  prisma.$transaction([
+    prisma.resume.update({
+      where: { id: resume.id },
+      data: { viewCount: { increment: 1 } },
+    }),
+    prisma.resumeView.create({
+      data: { resumeId: resume.id },
+    }),
+  ]).catch((err) => console.error('[view-recording]', err))
 
   // ── Build ResumeData for the template component ───────────────────────────
   const resumeData: ResumeData = {

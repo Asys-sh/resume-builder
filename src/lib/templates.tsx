@@ -109,6 +109,14 @@ function BaseResumeLayout({
         <div className={sidebarStyles.container}>
           {/* Contact Info */}
           <div className="mb-6">
+            {contactInfo.photo && (
+              // biome-ignore lint/performance/noImgElement: templates render to HTML, next/image not applicable here
+              <img
+                src={contactInfo.photo}
+                alt="Profile"
+                className="w-20 h-20 rounded-full object-cover mb-3 border-2 border-white/20"
+              />
+            )}
             <h1 className={styles.header.name}>{contactInfo.fullName || 'Your Name'}</h1>
             {contactInfo.headline && (
               <p className={styles.header.headline}>{contactInfo.headline}</p>
@@ -327,36 +335,51 @@ function BaseResumeLayout({
     <div className="bg-white p-12">
       {/* Header Section */}
       <header className={styles.header.container}>
-        <h1 className={styles.header.name}>{contactInfo.fullName || 'Your Name'}</h1>
-        {contactInfo.headline && <p className={styles.header.headline}>{contactInfo.headline}</p>}
+        <div className={contactInfo.photo ? 'flex items-start gap-6' : undefined}>
+          {/* Text content */}
+          <div className="flex-1">
+            <h1 className={styles.header.name}>{contactInfo.fullName || 'Your Name'}</h1>
+            {contactInfo.headline && <p className={styles.header.headline}>{contactInfo.headline}</p>}
 
-        {/* Contact Info Row */}
-        <div className={styles.header.contactRow}>
-          {contactInfo.phone && <span>{contactInfo.phone}</span>}
-          {contactInfo.phone && contactInfo.email && <span>|</span>}
-          {contactInfo.email && <span>{contactInfo.email}</span>}
-          {contactInfo.email && contactInfo.address && <span>|</span>}
-          {contactInfo.address && <span>{contactInfo.address}</span>}
-        </div>
+            {/* Contact Info Row */}
+            <div className={styles.header.contactRow}>
+              {contactInfo.phone && <span>{contactInfo.phone}</span>}
+              {contactInfo.phone && contactInfo.email && <span>|</span>}
+              {contactInfo.email && <span>{contactInfo.email}</span>}
+              {contactInfo.email && contactInfo.address && <span>|</span>}
+              {contactInfo.address && <span>{contactInfo.address}</span>}
+            </div>
 
-        {/* Links Row */}
-        {(contactInfo.links?.length ?? 0) > 0 && (
-          <div className={styles.header.linksRow}>
-            {contactInfo.links?.map((link, i) =>
-              link.url ? (
-                <a
-                  key={i}
-                  href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  {link.label ? `${link.label}: ${link.url}` : link.url}
-                </a>
-              ) : null
+            {/* Links Row */}
+            {(contactInfo.links?.length ?? 0) > 0 && (
+              <div className={styles.header.linksRow}>
+                {contactInfo.links?.map((link, i) =>
+                  link.url ? (
+                    <a
+                      key={i}
+                      href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      {link.label ? `${link.label}: ${link.url}` : link.url}
+                    </a>
+                  ) : null
+                )}
+              </div>
             )}
           </div>
-        )}
+
+          {/* Profile photo (top-right) */}
+          {contactInfo.photo && (
+            // biome-ignore lint/performance/noImgElement: templates render to HTML, next/image not applicable here
+            <img
+              src={contactInfo.photo}
+              alt="Profile"
+              className="w-20 h-20 rounded-full object-cover shrink-0 border-2 border-border-color/20"
+            />
+          )}
+        </div>
       </header>
 
       {/* Summary Section */}

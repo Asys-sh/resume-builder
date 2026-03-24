@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { AIImproveSchema, parseBody } from '@/lib/schemas'
 import { handleTrialExpiry, tryConsumeAICredit } from '@/lib/subscription'
+import { sanitizeText } from '@/lib/sanitize'
 import { buildResumeContext, buildResumeImprovementPrompt } from '@/lib/utils'
 
 export async function POST(request: NextRequest) {
@@ -54,7 +55,8 @@ export async function POST(request: NextRequest) {
     const { data, error } = await parseBody(request, AIImproveSchema)
     if (error) return error
 
-    const { resumeId, jobDescription } = data
+    const { resumeId } = data
+    const jobDescription = sanitizeText(data.jobDescription)
 
     const resume = await prisma.resume.findUnique({
       where: { id: resumeId, userId: user.id },

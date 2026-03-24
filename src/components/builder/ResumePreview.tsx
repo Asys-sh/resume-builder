@@ -6,6 +6,7 @@ import { TEMPLATES } from '@/lib/templates'
 import { resumeDataAtom, setResumeDataAtom } from '@/stores/builder'
 import { cn } from '@/lib/utils'
 import { ScoreMeter } from './ScoreMeter'
+import { ATSReport } from './ATSReport'
 
 /**
  * ResumePreview Component
@@ -89,6 +90,9 @@ export function ResumePreview() {
 
       {/* Score meter */}
       <ScoreMeter />
+
+      {/* ATS compatibility report */}
+      <ATSReport resumeData={resumeData} />
     </div>
   )
 }

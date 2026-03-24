@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { sanitizeText } from '@/lib/sanitize'
 import { z } from 'zod'
 import { parseBody } from '@/lib/schemas'
@@ -16,6 +17,9 @@ export async function POST(req: NextRequest) {
     if (!user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+
+    const limited = checkRateLimit('resume-duplicate:' + user.id, 10, 3_600_000)
+    if (limited) return limited
 
     const { data: body, error } = await parseBody(req, DuplicateResumeSchema)
     if (error) return error
@@ -59,25 +63,43 @@ export async function POST(req: NextRequest) {
         },
       })
 
-      // Deep-copy relations (strip id and resumeId so new records are created)
+      // Deep-copy relations with explicit field allowlists
       await Promise.all([
-        ...source.experiences.map(({ id: _id, resumeId: _rid, ...rest }) =>
-          tx.experience.create({ data: { ...rest, resumeId: created.id } }),
+        ...source.experiences.map((e) =>
+          tx.experience.create({ data: {
+            resumeId: created.id, company: e.company, role: e.role,
+            startDate: e.startDate, endDate: e.endDate,
+            description: e.description, location: e.location,
+          } }),
         ),
-        ...source.skills.map(({ id: _id, resumeId: _rid, ...rest }) =>
-          tx.skill.create({ data: { ...rest, resumeId: created.id } }),
+        ...source.skills.map((s) =>
+          tx.skill.create({ data: {
+            resumeId: created.id, name: s.name, level: s.level,
+          } }),
         ),
-        ...source.education.map(({ id: _id, resumeId: _rid, ...rest }) =>
-          tx.education.create({ data: { ...rest, resumeId: created.id } }),
+        ...source.education.map((ed) =>
+          tx.education.create({ data: {
+            resumeId: created.id, school: ed.school, degree: ed.degree,
+            fieldOfStudy: ed.fieldOfStudy, startDate: ed.startDate,
+            endDate: ed.endDate, gpa: ed.gpa,
+          } }),
         ),
-        ...source.projects.map(({ id: _id, resumeId: _rid, ...rest }) =>
-          tx.project.create({ data: { ...rest, resumeId: created.id } }),
+        ...source.projects.map((p) =>
+          tx.project.create({ data: {
+            resumeId: created.id, title: p.title, description: p.description,
+            link: p.link, technologies: p.technologies,
+            startDate: p.startDate, endDate: p.endDate,
+          } }),
         ),
-        ...source.certifications.map(({ id: _id, resumeId: _rid, ...rest }) =>
-          tx.certification.create({ data: { ...rest, resumeId: created.id } }),
+        ...source.certifications.map((c) =>
+          tx.certification.create({ data: {
+            resumeId: created.id, name: c.name, issuer: c.issuer, date: c.date,
+          } }),
         ),
-        ...source.languages.map(({ id: _id, resumeId: _rid, ...rest }) =>
-          tx.language.create({ data: { ...rest, resumeId: created.id } }),
+        ...source.languages.map((l) =>
+          tx.language.create({ data: {
+            resumeId: created.id, name: l.name, proficiency: l.proficiency,
+          } }),
         ),
       ])
 

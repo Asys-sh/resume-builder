@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { CoverLetterCreateSchema, parseBody } from '@/lib/schemas'
 import { sanitizeText } from '@/lib/sanitize'
 
@@ -30,6 +31,9 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+
+    const limited = checkRateLimit('cover-letter-create:' + user.id, 10, 3_600_000)
+    if (limited) return limited
 
     const { data, error } = await parseBody(request, CoverLetterCreateSchema)
     if (error) return error

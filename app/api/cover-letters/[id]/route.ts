@@ -15,7 +15,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
 
     const coverLetter = await prisma.coverLetter.findUnique({
       where: { id },
-      include: { resume: true },
+      include: { resume: { select: { id: true, title: true } } },
     })
 
     if (!coverLetter) {

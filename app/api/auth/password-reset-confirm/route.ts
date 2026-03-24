@@ -1,9 +1,14 @@
 import { hash } from '@node-rs/argon2'
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
+    const limited = checkRateLimit('password-reset-confirm:' + ip, 10, 900000)
+    if (limited) return limited
+
     const { token, password } = await req.json()
 
     if (!token || !password) {

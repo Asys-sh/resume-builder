@@ -14,7 +14,7 @@ const robotoFlex = Roboto_Flex({
   variable: '--font-display',
 })
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://resume.dev'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://resume.asys.sh'
 
 export const metadata: Metadata = {
   title: 'RoboResume - AI-Powered Resume Builder',

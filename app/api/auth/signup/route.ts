@@ -3,9 +3,15 @@ import { NextResponse } from 'next/server'
 import { nanoid } from 'nanoid'
 import { prisma } from '@/lib/prisma'
 import { sendVerificationEmail } from '@/lib/email'
+import { checkRateLimit } from '@/lib/rate-limit'
+import { sanitizeText } from '@/lib/sanitize'
 
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
+    const limited = checkRateLimit('signup:' + ip, 5, 3600000)
+    if (limited) return limited
+
     const body = await req.json()
     const { email, name, password } = body
 
@@ -44,7 +50,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.create({
       data: {
         email,
-        name: name || null,
+        name: name ? sanitizeText(name) : null,
       },
     })
 

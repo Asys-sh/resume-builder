@@ -5,6 +5,7 @@ import { handleSignOut } from '@/lib/auth-client'
 import {
   Award,
   BookUser,
+  Briefcase,
   ChevronDown,
   CreditCard,
   Edit,
@@ -31,11 +32,12 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import type { GroupedResumes } from '@/lib/data'
 import { TailoredVersionRow } from '@/components/dashboard/TailoredVersionRow'
 import BillingClient from './billing/BillingClient'
+import ApplicationsView from './applications/page'
 import CoverLettersView from './cover-letters/page'
 import ProfilesClient from './profiles/ProfilesClient'
 import SettingsClient from './settings/SettingsClient'
 
-type DashboardView = 'home' | 'cover-letters' | 'profiles' | 'billing' | 'settings'
+type DashboardView = 'home' | 'cover-letters' | 'profiles' | 'billing' | 'settings' | 'applications'
 
 interface DashboardClientProps {
   user: User
@@ -76,6 +78,12 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
       label: 'Cover Letters',
       icon: Edit,
       href: '/dashboard?view=cover-letters',
+    },
+    {
+      id: 'applications',
+      label: 'Applications',
+      icon: Briefcase,
+      href: '/dashboard?view=applications',
     },
     { id: 'profiles', label: 'Saved Profiles', icon: BookUser, href: '/dashboard?view=profiles' },
     { id: 'billing', label: 'Billing', icon: CreditCard, href: '/dashboard?view=billing' },
@@ -353,6 +361,7 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
                   {view === 'billing' && <BillingClient user={user} />}
                   {view === 'settings' && <SettingsClient />}
                   {view === 'cover-letters' && <CoverLettersView />}
+                  {view === 'applications' && <ApplicationsView />}
                 </motion.div>
               </AnimatePresence>
             </div>

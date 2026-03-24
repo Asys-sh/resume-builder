@@ -23,6 +23,7 @@ model User {
   resumes            Resume[]
   coverLetters       CoverLetter[]
   profilePresets     ProfilePreset[]
+  jobApplications    JobApplication[]
   subscriptionStatus SubscriptionStatus @default(INACTIVE)
   usageCount         Int                @default(0)
   usageLimit         Int                @default(5)
@@ -143,6 +144,11 @@ model Resume {
   hideContactInfo Boolean @default(false)
   viewCount       Int     @default(0)
 
+  // Analytics, version history, job tracking
+  views           ResumeView[]
+  snapshots       ResumeSnapshot[]
+  jobApplications JobApplication[]
+
   @@index([userId])
   @@index([userId, parentResumeId])
   @@index([parentResumeId])
@@ -259,11 +265,71 @@ model CoverLetter {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String
-  resume   Resume? @relation(fields: [resumeId], references: [id], onDelete: SetNull)
-  resumeId String?
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+  resume          Resume?          @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+  resumeId        String?
+  jobApplications JobApplication[]
 
   @@index([userId])
   @@index([resumeId])
+}
+
+// ─── Resume Analytics ─────────────────────────────────────────────────────────
+
+model ResumeView {
+  id       String   @id @default(cuid())
+  resumeId String
+  viewedAt DateTime @default(now())
+  resume   Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId, viewedAt])
+}
+
+// ─── Job Tracker ──────────────────────────────────────────────────────────────
+
+enum JobStatus {
+  APPLIED
+  SCREENING
+  INTERVIEW
+  OFFER
+  REJECTED
+  WITHDRAWN
+}
+
+model JobApplication {
+  id            String      @id @default(cuid())
+  userId        String
+  company       String
+  role          String
+  status        JobStatus   @default(APPLIED)
+  appliedAt     DateTime    @default(now())
+  jobUrl        String?
+  notes         String?     @db.Text
+  salary        String?
+  location      String?
+  resumeId      String?
+  coverLetterId String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume      Resume?      @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+  coverLetter CoverLetter? @relation(fields: [coverLetterId], references: [id], onDelete: SetNull)
+
+  @@index([userId, status])
+  @@index([userId, appliedAt])
+}
+
+// ─── Version History ──────────────────────────────────────────────────────────
+
+model ResumeSnapshot {
+  id        String   @id @default(cuid())
+  resumeId  String
+  data      Json
+  label     String?
+  createdAt DateTime @default(now())
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId, createdAt])
 }

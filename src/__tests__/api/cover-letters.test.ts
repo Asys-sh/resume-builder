@@ -14,6 +14,10 @@ vi.mock('@/lib/auth-helper', () => ({
   getServerUser: mockGetServerUser,
 }))
 
+vi.mock('@/lib/rate-limit', () => ({
+  checkRateLimit: vi.fn(() => null),
+}))
+
 vi.mock('@/lib/prisma', () => ({
   prisma: {
     coverLetter: {

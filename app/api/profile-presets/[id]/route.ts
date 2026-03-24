@@ -5,9 +5,8 @@ import { ProfilePresetUpdateSchema, parseBody } from '@/lib/schemas'
 import { sanitizePresetData } from '@/lib/sanitize'
 
 async function getOwnedPreset(presetId: string, userId: string) {
-  const preset = await prisma.profilePreset.findUnique({ where: { id: presetId } })
+  const preset = await prisma.profilePreset.findUnique({ where: { id: presetId, userId } })
   if (!preset) return { preset: null, error: NextResponse.json({ error: 'Not found' }, { status: 404 }) }
-  if (preset.userId !== userId) return { preset: null, error: NextResponse.json({ error: 'Forbidden' }, { status: 403 }) }
   return { preset, error: null }
 }
 
@@ -39,7 +38,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     const { data: body, error: parseError } = await parseBody(req, ProfilePresetUpdateSchema)
     if (parseError) return parseError
 
-    const clean = sanitizePresetData(body as any)
+    const clean = sanitizePresetData(body)
 
     const updated = await prisma.profilePreset.update({
       where: { id: preset!.id },

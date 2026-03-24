@@ -1,8 +1,19 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { ResumeBodySchema, parseBody } from '@/lib/schemas'
 import { sanitizeResumeData } from '@/lib/sanitize'
+import type { ResumeData } from '@/stores/builder'
+import type { Certification, Education, Experience, Language, Project, Skill } from '@prisma-generated/client'
+
+/** Minimal interface for Prisma delegate methods used by syncRelated */
+interface SyncDelegate {
+  findMany(args: { where: Record<string, string>; select: { id: true } }): Promise<{ id: string }[]>
+  deleteMany(args: { where: { id: { in: string[] } } }): Promise<unknown>
+  update(args: { where: { id: string }; data: Record<string, unknown> }): Promise<unknown>
+  create(args: { data: Record<string, unknown> }): Promise<unknown>
+}
 
 export async function DELETE(req: NextRequest) {
   try {
@@ -93,11 +104,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const limited = checkRateLimit('resume-create:' + user.id, 10, 3_600_000)
+    if (limited) return limited
+
     const { data: body, error } = await parseBody(req, ResumeBodySchema)
     if (error) return error
 
     const { resumeId, title } = body
-    const data = body.data ? sanitizeResumeData(body.data as any) : null
+    const data = body.data ? sanitizeResumeData(body.data as unknown as ResumeData) : null
 
     if (!data) {
       return NextResponse.json({ error: 'Missing resume data' }, { status: 400 })
@@ -113,7 +127,7 @@ export async function POST(req: NextRequest) {
           data: {
             title: title || undefined,
             summary: data.summary,
-            contactInfo: data.contactInfo as any,
+            contactInfo: data.contactInfo as ResumeData['contactInfo'],
             template: data.selectedTemplate,
           },
         })
@@ -125,22 +139,41 @@ export async function POST(req: NextRequest) {
             },
             title: title || data.contactInfo.fullName || 'Untitled Resume',
             summary: data.summary,
-            contactInfo: data.contactInfo as any,
+            contactInfo: data.contactInfo as ResumeData['contactInfo'],
             template: data.selectedTemplate,
           },
         })
 
     const newResumeId = resume.id
 
+    // Field allowlists per relation — prevents mass assignment
+    const pickExperience = (e: Experience) => ({
+      company: e.company, role: e.role, startDate: e.startDate,
+      endDate: e.endDate, description: e.description, location: e.location,
+    })
+    const pickSkill = (s: Skill) => ({ name: s.name, level: s.level })
+    const pickEducation = (ed: Education) => ({
+      school: ed.school, degree: ed.degree, fieldOfStudy: ed.fieldOfStudy,
+      startDate: ed.startDate, endDate: ed.endDate, gpa: ed.gpa,
+    })
+    const pickProject = (p: Project) => ({
+      title: p.title, description: p.description, link: p.link,
+      technologies: p.technologies, startDate: p.startDate, endDate: p.endDate,
+    })
+    const pickCertification = (c: Certification) => ({ name: c.name, issuer: c.issuer, date: c.date })
+    const pickLanguage = (l: Language) => ({ name: l.name, proficiency: l.proficiency })
+
     // Helper for Smart Sync — must run inside a transaction (receives tx client)
-    const syncRelated = async (model: any, items: any[], foreignKey: string) => {
+    const syncRelated = async <T extends { id: string }>(
+      model: SyncDelegate, items: T[], foreignKey: string, pick: (item: T) => Record<string, unknown>,
+    ) => {
       const existingItems = await model.findMany({
         where: { [foreignKey]: newResumeId },
         select: { id: true },
       })
-      const existingIds = new Set(existingItems.map((i: any) => i.id))
+      const existingIds = new Set(existingItems.map((i) => i.id))
       const incomingIds = new Set(
-        items.map((i) => i.id).filter((id: string) => id && existingIds.has(id)),
+        items.map((i) => i.id).filter((id) => id && existingIds.has(id)),
       )
 
       const toDelete = [...existingIds].filter((id) => !incomingIds.has(id))
@@ -149,11 +182,11 @@ export async function POST(req: NextRequest) {
       }
 
       for (const item of items) {
-        const { id, ...rest } = item
-        if (id && existingIds.has(id)) {
-          await model.update({ where: { id }, data: rest })
+        const fields = pick(item)
+        if (item.id && existingIds.has(item.id)) {
+          await model.update({ where: { id: item.id }, data: fields })
         } else {
-          await model.create({ data: { ...rest, [foreignKey]: newResumeId } })
+          await model.create({ data: { ...fields, [foreignKey]: newResumeId } })
         }
       }
     }
@@ -162,12 +195,12 @@ export async function POST(req: NextRequest) {
     // entire operation rolls back, preventing partial/corrupt resume state.
     await prisma.$transaction(async (tx) => {
       await Promise.all([
-        syncRelated(tx.experience, data.experiences, 'resumeId'),
-        syncRelated(tx.education, data.education, 'resumeId'),
-        syncRelated(tx.skill, data.skills, 'resumeId'),
-        syncRelated(tx.project, data.projects, 'resumeId'),
-        syncRelated(tx.certification, data.certifications, 'resumeId'),
-        syncRelated(tx.language, data.languages, 'resumeId'),
+        syncRelated(tx.experience, data.experiences, 'resumeId', pickExperience),
+        syncRelated(tx.education, data.education, 'resumeId', pickEducation),
+        syncRelated(tx.skill, data.skills, 'resumeId', pickSkill),
+        syncRelated(tx.project, data.projects, 'resumeId', pickProject),
+        syncRelated(tx.certification, data.certifications, 'resumeId', pickCertification),
+        syncRelated(tx.language, data.languages, 'resumeId', pickLanguage),
       ])
     })
 

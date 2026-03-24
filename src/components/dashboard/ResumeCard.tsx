@@ -1,6 +1,6 @@
 'use client'
 
-import { Check, Copy, Edit, Eye, GitBranch, Globe, Link2, Loader2, Lock, Share2, Trash2 } from 'lucide-react'
+import { BarChart2, Check, Copy, Edit, Eye, GitBranch, Globe, Link2, Loader2, Lock, Share2, Trash2 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -18,6 +18,7 @@ import type { ResumeWithRelations } from '@/lib/data'
 import { TEMPLATES } from '@/lib/templates'
 import { deleteResume, duplicateResume } from '@/lib/utils'
 import type { ResumeData } from '@/stores/builder'
+import { AnalyticsModal } from '@/components/dashboard/AnalyticsModal'
 
 // A4 page dimensions at 96 dpi
 const PAGE_WIDTH = 794
@@ -85,6 +86,9 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
   const resumeData = mapToResumeData(resume)
 
   const contactName = (resume.contactInfo as ResumeData['contactInfo'])?.fullName
+
+  // Analytics state
+  const [showAnalytics, setShowAnalytics] = useState(false)
 
   // Quick share state
   const [isShareOpen, setIsShareOpen] = useState(false)
@@ -265,11 +269,11 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
             <AnimatePresence>
             {isShareOpen && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.92, y: 6 }}
+                initial={{ opacity: 0, scale: 0.9, y: 8 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.92, y: 6 }}
-                transition={{ duration: 0.15, ease: 'easeOut' }}
-                className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
+                exit={{ opacity: 0, scale: 0.9, y: 8 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                className="absolute right-0 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
                 <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
 
                 {/* Public toggle */}
@@ -334,6 +338,16 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
             size="icon"
             variant="ghost"
             className="h-7 w-7 text-text-subtle hover:text-primary hover:bg-primary/10"
+            aria-label="View analytics"
+            title="Analytics"
+            onClick={() => setShowAnalytics(true)}
+          >
+            <BarChart2 className="h-3.5 w-3.5" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-7 w-7 text-text-subtle hover:text-primary hover:bg-primary/10"
             aria-label="Duplicate and tailor"
             title="Duplicate & Tailor"
             onClick={() => {
@@ -359,6 +373,13 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
           </Button>
         </div>
       </div>
+
+      <AnalyticsModal
+        resumeId={resume.id}
+        resumeTitle={resume.title || 'Resume'}
+        isOpen={showAnalytics}
+        onClose={() => setShowAnalytics(false)}
+      />
 
       <Dialog open={isDuplicateDialogOpen} onOpenChange={setIsDuplicateDialogOpen}>
         <DialogContent className="bg-background-light border-border-color/50 sm:max-w-sm">
