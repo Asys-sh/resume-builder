@@ -4,7 +4,8 @@ import { handleSignOut } from '@/lib/auth-client'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import Image from 'next/image'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 interface NavbarProps {
   isAuthenticated?: boolean
@@ -75,16 +76,21 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
               <span className="truncate">Create a Resume</span>
             </Link>
             <div className="group relative">
-              <div
-                role="img"
-                className="h-10 w-10 cursor-pointer rounded-full bg-cover bg-center bg-no-repeat"
-                aria-label="User profile avatar"
-                style={{
-                  backgroundImage: user?.image
-                    ? `url("${user.image}")`
-                    : 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAkWZNtW9GGxfYSYMO-v5vVEi6aCMP4ToPr3JsiPSZbk-0pgQHyYEGykJg4neRGyjrlsnhb_9eHC097X30RNhdPStEeNj_pGtQUqMww6JDVCDivCw0SOPaN4JJqauMG62869tBKny38su70YSr71Ic6inhIsXS8IV7vOZYAdq3Ysln35JZYVRKVsAlwQZKpZllacdZvLaHrZxoLTYj5TjL_ZCbFivgTs9gveWylMvKhH3BNcz2cUOBX4b4u-BpDbl0jAvp1yeMgncP")',
-                }}
-              />
+              <Avatar className="h-10 w-10 cursor-pointer">
+                {user?.image ? (
+                  <Image
+                    src={user.image}
+                    alt="Profile"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <AvatarFallback className="bg-primary text-dark text-sm font-bold">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : '?'}
+                  </AvatarFallback>
+                )}
+              </Avatar>
               <div className="absolute right-0 top-full mt-2 w-48 origin-top-right scale-95 transform-gpu rounded-lg bg-white p-2 opacity-0 shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-150 ease-in-out group-hover:scale-100 group-hover:opacity-100">
                 <Link
                   href="/dashboard/settings"
