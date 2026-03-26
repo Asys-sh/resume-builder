@@ -1,9 +1,8 @@
 'use client'
 
 import { BarChart2, Check, Copy, Edit, Eye, GitBranch, Globe, Link2, Loader2, Lock, Share2, Trash2 } from 'lucide-react'
-import { AnimatePresence, motion } from 'motion/react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
@@ -96,24 +95,10 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
   const [publicSlug, setPublicSlug] = useState<string | null>(resume.publicSlug ?? null)
   const [isTogglingShare, setIsTogglingShare] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
-  const shareRef = useRef<HTMLDivElement>(null)
-
   const shareUrl =
     publicSlug && typeof window !== 'undefined'
       ? `${window.location.origin}/r/${publicSlug}`
       : null
-
-  // Close share panel on outside click
-  useEffect(() => {
-    if (!isShareOpen) return
-    function handleClick(e: MouseEvent) {
-      if (shareRef.current && !shareRef.current.contains(e.target as Node)) {
-        setIsShareOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [isShareOpen])
 
   const handleTogglePublic = async () => {
     setIsTogglingShare(true)
@@ -255,32 +240,24 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
             <Edit className="h-3.5 w-3.5" />
           </Button>
           {/* Quick share button */}
-          <div className="relative" ref={shareRef}>
-            <Button
-              size="icon"
-              variant="ghost"
-              className={`h-9 w-9 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
-              aria-label="Share resume"
-              title="Share"
-              onClick={() => setIsShareOpen((v) => !v)}
-            >
-              <Share2 className="h-3.5 w-3.5" />
-            </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className={`h-9 w-9 hover:bg-primary/10 transition-colors ${isPublic ? 'text-primary' : 'text-text-subtle hover:text-primary'}`}
+            aria-label="Share resume"
+            title="Share"
+            onClick={() => setIsShareOpen(true)}
+          >
+            <Share2 className="h-3.5 w-3.5" />
+          </Button>
 
-            {/* Quick share popover */}
-            <AnimatePresence>
-            {isShareOpen && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 8 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 8 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-                role="dialog"
-                aria-label="Share settings"
-                onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Escape') setIsShareOpen(false) }}
-                className="absolute right-0 bottom-full mb-2 z-50 w-64 max-w-[calc(100vw-1rem)] bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
-                <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
-
+          {/* Share dialog */}
+          <Dialog open={isShareOpen} onOpenChange={setIsShareOpen}>
+            <DialogContent className="w-[calc(100vw-2rem)] max-w-xs bg-white border-border-color/50">
+              <DialogHeader>
+                <DialogTitle className="text-text-main">Share Resume</DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col gap-3">
                 {/* Public toggle */}
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5 text-sm text-text-main">
@@ -289,7 +266,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
                     ) : (
                       <Lock className="h-3.5 w-3.5 text-text-subtle shrink-0" />
                     )}
-                    <span>{isPublic ? 'Public' : 'Private'}</span>
+                    <span>{isPublic ? 'Public link' : 'Private'}</span>
                   </div>
                   <button
                     type="button"
@@ -312,7 +289,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
 
                 {/* URL copy row */}
                 {isPublic && shareUrl && (
-                  <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-primary/5 border border-primary/20">
+                  <div className="flex items-center gap-1.5 p-2 rounded-lg bg-primary/5 border border-primary/20">
                     <Link2 className="h-3 w-3 text-primary shrink-0" />
                     <p className="text-xs text-primary truncate flex-1">{shareUrl}</p>
                     <button
@@ -331,14 +308,11 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
                 )}
 
                 {!isPublic && (
-                  <p className="text-xs text-text-subtle">
-                    Enable sharing to get a public link.
-                  </p>
+                  <p className="text-xs text-text-subtle">Toggle on to generate a public link.</p>
                 )}
-              </motion.div>
-            )}
-            </AnimatePresence>
-          </div>
+              </div>
+            </DialogContent>
+          </Dialog>
 
           <Button
             size="icon"
@@ -388,52 +362,40 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
       />
 
       <Dialog open={isDuplicateDialogOpen} onOpenChange={setIsDuplicateDialogOpen}>
-        <DialogContent className="bg-background-light border-border-color/50 w-[calc(100vw-2rem)] sm:w-auto max-w-sm">
-          <DialogHeader>
-            <DialogTitle className="text-text-main">Duplicate & Tailor</DialogTitle>
-            <DialogDescription className="text-text-subtle">
-              Create a tailored copy of this resume for a specific job application.
+        <DialogContent className="bg-background-light border-border-color/50 w-[calc(100vw-2rem)] max-w-xs">
+          <DialogHeader className="pb-1">
+            <DialogTitle className="text-text-main text-base">Fork Resume</DialogTitle>
+            <DialogDescription className="text-text-subtle text-xs">
+              Optional: name this tailored copy.
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-3 py-2">
-            <label className="text-sm font-medium text-text-main">
-              Job title @ Company
-              <span className="text-text-subtle font-normal ml-1">(optional)</span>
-            </label>
-            <input
-              type="text"
-              value={tailoredForInput}
-              onChange={(e) => setTailoredForInput(e.target.value)}
-              placeholder="e.g. Senior Engineer @ Google"
-              maxLength={200}
-              autoFocus
-              className="w-full h-10 px-3 rounded-lg border border-border-color/50 bg-white text-sm text-text-main placeholder:text-text-subtle/60 focus:outline-none focus:border-primary/60 transition-colors"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleDuplicate()
-              }}
-            />
-          </div>
-          <DialogFooter>
+          <input
+            type="text"
+            value={tailoredForInput}
+            onChange={(e) => setTailoredForInput(e.target.value)}
+            placeholder="e.g. Senior Engineer @ Google"
+            maxLength={200}
+            autoFocus
+            className="w-full h-9 px-3 rounded-lg border border-border-color/50 bg-white text-sm text-text-main placeholder:text-text-subtle/60 focus:outline-none focus:border-primary/60 transition-colors"
+            onKeyDown={(e) => { if (e.key === 'Enter') handleDuplicate() }}
+          />
+          <DialogFooter className="flex-row gap-2 pt-1">
             <Button
               variant="outline"
+              size="sm"
               onClick={() => setIsDuplicateDialogOpen(false)}
               disabled={isDuplicating}
+              className="flex-1"
             >
               Cancel
             </Button>
             <Button
+              size="sm"
               onClick={handleDuplicate}
               disabled={isDuplicating}
-              className="bg-primary text-white hover:bg-primary/90"
+              className="flex-1 bg-primary text-white hover:bg-primary/90"
             >
-              {isDuplicating ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Creating…
-                </>
-              ) : (
-                'Create Tailored Copy'
-              )}
+              {isDuplicating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Create Copy'}
             </Button>
           </DialogFooter>
         </DialogContent>

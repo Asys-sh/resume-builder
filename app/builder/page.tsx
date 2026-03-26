@@ -301,22 +301,22 @@ export default function BuilderPage() {
       />
       <AuthDialog open={showAuthModal} onOpenChange={setShowAuthModal} />
 
-      {/* Preview toggle for tablet (768-1279px) */}
+      {/* Preview toggle for tablet/mobile (below xl) */}
       <button
         type="button"
-        className="fixed bottom-24 sm:bottom-20 right-6 block xl:hidden z-30 bg-primary text-white px-4 py-3 rounded-full shadow-lg"
+        className="fixed bottom-24 sm:bottom-20 right-6 block xl:hidden z-30 bg-primary text-white px-5 py-3 rounded-full shadow-lg font-semibold text-sm"
         onClick={() => setShowPreviewSheet(true)}
       >
         Preview
       </button>
 
-      {/* Preview Sheet for tablet */}
+      {/* Preview Sheet for tablet/mobile */}
       <Sheet open={showPreviewSheet} onOpenChange={setShowPreviewSheet}>
-        <SheetContent side="right" className="w-full max-w-full sm:max-w-full flex flex-col p-0">
-          <SheetHeader className="px-4 pt-4 pb-2 shrink-0 border-b border-border-color/30">
-            <SheetTitle>Resume Preview</SheetTitle>
+        <SheetContent side="bottom" className="h-[92vh] rounded-t-2xl flex flex-col p-0 bg-background-light">
+          <SheetHeader className="px-4 pt-4 pb-3 shrink-0 border-b border-border-color/30">
+            <SheetTitle className="text-base font-semibold pr-10">Preview</SheetTitle>
           </SheetHeader>
-          <div className="flex-1 min-h-0 overflow-y-auto p-4">
+          <div className="flex-1 min-h-0 overflow-y-auto px-4 py-4">
             <ResumePreview />
           </div>
         </SheetContent>

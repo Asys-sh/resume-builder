@@ -27,7 +27,7 @@ import { UsageDisplay } from '@/components/UsageDisplay'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import type { GroupedResumes } from '@/lib/data'
 import { TailoredVersionRow } from '@/components/dashboard/TailoredVersionRow'
 import BillingClient from './billing/BillingClient'
@@ -168,25 +168,24 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
             <SidebarContent />
           </aside>
 
-          {/* Mobile Sidebar */}
-          <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden relative top-4 left-4 z-50"
-                aria-label="Open menu"
-              >
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-64 p-0 bg-beige">
-              <SidebarContent />
-            </SheetContent>
-          </Sheet>
+          {/* Mobile Top Bar */}
+          <div className="md:hidden flex items-center px-3 py-2 bg-beige border-b border-yellow sticky top-0 z-40">
+            <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Open menu">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-64 p-0 bg-beige">
+                <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+                <SidebarContent />
+              </SheetContent>
+            </Sheet>
+            <span className="ml-2 text-sm font-semibold text-dark">RoboResume</span>
+          </div>
 
           {/* Main Content Area */}
-          <main className="flex-1 md:ml-64 p-6 md:p-8">
+          <main className="flex-1 md:ml-64 p-4 md:p-8">
             <div className="max-w-6xl mx-auto">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -197,11 +196,11 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
                   transition={{ duration: 0.2 }}
                 >
                   {view === 'home' && (
-                    <div className="space-y-10">
+                    <div className="space-y-8">
                       {/* Header */}
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-center justify-between gap-4">
                         <div>
-                          <h1 className="text-3xl font-bold tracking-tight text-dark">
+                          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-dark">
                             Hey, {firstName} 👋
                           </h1>
                           <p className="mt-1 text-dark/50 text-sm">
@@ -210,7 +209,7 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
                               : `You have ${total} resume${total !== 1 ? 's' : ''}.`}
                           </p>
                         </div>
-                        <Link href="/builder">
+                        <Link href="/builder" className="hidden md:block">
                           <Button className="gap-2 shrink-0">
                             <Plus className="h-4 w-4" />
                             New Resume
@@ -308,12 +307,34 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
 
       {/* Mobile bottom navigation */}
       <nav
-        className="fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border h-14 flex items-center justify-around md:hidden"
+        className="fixed bottom-0 left-0 right-0 z-40 bg-beige border-t border-yellow h-14 flex items-center justify-around md:hidden"
         aria-label="Mobile navigation"
       >
         {([
           { id: 'home' as DashboardView, label: 'Home', icon: Home, href: '/dashboard' },
           { id: 'cover-letters' as DashboardView, label: 'Letters', icon: FileText, href: '/dashboard?view=cover-letters' },
+        ] as const).map(({ id, label, icon: Icon, href }) => (
+          <Link
+            key={id}
+            href={href}
+            className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full text-xs ${view === id ? 'text-primary font-semibold' : 'text-dark/50'}`}
+          >
+            <Icon className="h-5 w-5" />
+            <span>{label}</span>
+          </Link>
+        ))}
+
+        {/* Raised center + button */}
+        <Link href="/builder" className="flex items-center justify-center -mt-5">
+          <div className="relative flex items-center justify-center">
+            <span className="absolute h-14 w-14 rounded-full border-2 border-primary/30 animate-pulse" />
+            <div className="relative h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg border-4 border-beige">
+              <Plus className="h-6 w-6" />
+            </div>
+          </div>
+        </Link>
+
+        {([
           { id: 'applications' as DashboardView, label: 'Applications', icon: Briefcase, href: '/dashboard?view=applications' },
         ] as const).map(({ id, label, icon: Icon, href }) => (
           <Link

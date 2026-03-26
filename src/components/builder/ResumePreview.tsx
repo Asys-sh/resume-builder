@@ -88,21 +88,23 @@ export function ResumePreview() {
         </div>
       </div>
 
-      {/* Live preview — fills remaining space, shrinks to fit */}
-      <div className="relative flex-1 min-h-0 bg-white p-2 rounded-xl shadow-lg border border-border-color/20 group/preview overflow-hidden">
-        {/* Expand button */}
-        <button
-          type="button"
-          onClick={() => setExpanded(true)}
-          className="absolute top-3 left-3 z-10 p-1.5 rounded-lg bg-black/50 text-white opacity-0 group-hover/preview:opacity-100 hover:bg-black/70 transition-all duration-200"
-          aria-label="Expand preview"
-        >
-          <Maximize2 className="h-3.5 w-3.5" />
-        </button>
-        <div className="h-full w-full overflow-hidden">
+      {/* Live preview — scrollable */}
+      <div className="relative flex-1 min-h-0 bg-white p-2 rounded-xl shadow-lg border border-border-color/20 overflow-y-auto">
+        <div className="w-full">
           <TemplateComponent resumeData={resumeData} />
         </div>
       </div>
+
+      {/* Fullscreen button */}
+      <button
+        type="button"
+        onClick={() => setExpanded(true)}
+        className="shrink-0 flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-primary/10 text-primary text-sm font-semibold hover:bg-primary/20 transition-colors"
+        aria-label="View fullscreen"
+      >
+        <Maximize2 className="h-4 w-4" />
+        Fullscreen
+      </button>
 
       {/* Expanded preview modal */}
       <Dialog open={expanded} onOpenChange={setExpanded}>
