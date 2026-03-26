@@ -71,7 +71,7 @@ export function ATSReport({ resumeData, jd }: ATSReportProps) {
     <div className="relative shrink-0 mt-1">
       {/* Expanded panel — floats above */}
       {isExpanded && (
-        <div className="absolute bottom-full left-0 right-0 mb-2 z-10 bg-background-light border border-border-color/50 rounded-xl shadow-xl overflow-hidden">
+        <div className="absolute bottom-full left-0 right-0 mb-2 z-10 bg-background-light border border-border-color/50 rounded-xl shadow-xl max-h-[60vh] overflow-y-auto">
           <div className="p-4">
             <p className="text-[10px] font-bold text-text-subtle uppercase tracking-widest mb-3">
               ATS Issues

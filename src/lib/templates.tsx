@@ -104,7 +104,7 @@ function BaseResumeLayout({
   if (styles.layout === 'sidebar' && styles.sidebar && styles.mainContent) {
     const sidebarStyles = styles.sidebar
     return (
-      <div className="bg-white grid grid-cols-3 gap-0 min-h-full">
+      <div className="bg-white grid grid-cols-3 gap-0 min-h-full overflow-hidden break-words">
         {/* Sidebar (Left Column) */}
         <div className={sidebarStyles.container}>
           {/* Contact Info */}
@@ -332,7 +332,7 @@ function BaseResumeLayout({
 
   // Single-column layout rendering (existing implementation)
   return (
-    <div className="bg-white p-12">
+    <div className="bg-white p-12 overflow-hidden break-words">
       {/* Header Section */}
       <header className={styles.header.container}>
         <div className={contactInfo.photo ? 'flex items-start gap-6' : undefined}>

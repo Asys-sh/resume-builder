@@ -74,7 +74,7 @@ export function EducationStep() {
   return (
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
             Education & Certifications
           </h1>
           <p className="text-text-subtle text-base font-normal leading-normal">
@@ -84,7 +84,7 @@ export function EducationStep() {
 
         {/* Education Cards */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-bold text-text-main">Education</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main">Education</h2>
           <div className="flex flex-col gap-4">
             {resumeData.education.map((education, index) => (
               <EducationCard
@@ -107,7 +107,7 @@ export function EducationStep() {
 
         {/* Certifications */}
         <div className="flex flex-col gap-4 pt-6 border-t border-border-color/30">
-          <h2 className="text-2xl font-bold text-text-main">Certifications</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main">Certifications</h2>
           <div className="flex flex-col gap-4">
             {resumeData.certifications.map((cert, index) => (
               <CertificationCard

@@ -82,7 +82,7 @@ export default async function PublicResumePage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
-      <div className="mx-auto" style={{ maxWidth: '794px' }}>
+      <div className="mx-auto overflow-hidden" style={{ maxWidth: '794px' }}>
         <TemplateComponent resumeData={resumeData} />
       </div>
       <div className="text-center mt-6 pb-8">

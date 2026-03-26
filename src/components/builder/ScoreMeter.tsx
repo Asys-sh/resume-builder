@@ -138,7 +138,7 @@ export function ScoreMeter() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute bottom-full left-0 right-0 mb-2 z-10 bg-background-light border border-border-color/50 rounded-xl shadow-xl overflow-hidden"
+            className="absolute bottom-full left-0 right-0 mb-2 z-10 bg-background-light border border-border-color/50 rounded-xl shadow-xl max-h-[60vh] overflow-y-auto"
           >
             <div className="p-4 space-y-4">
               {/* Header with arc + score */}

@@ -46,7 +46,7 @@ export function ProfessionalSummary() {
   return (
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
             Professional Summary
           </h1>
           <p className="text-text-subtle text-base font-normal leading-normal">

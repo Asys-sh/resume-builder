@@ -304,7 +304,7 @@ export default function BuilderPage() {
       {/* Preview toggle for tablet (768-1279px) */}
       <button
         type="button"
-        className="fixed bottom-20 right-6 md:block xl:hidden hidden z-30 bg-primary text-white px-4 py-3 rounded-full shadow-lg"
+        className="fixed bottom-24 sm:bottom-20 right-6 block xl:hidden z-30 bg-primary text-white px-4 py-3 rounded-full shadow-lg"
         onClick={() => setShowPreviewSheet(true)}
       >
         Preview
@@ -323,7 +323,7 @@ export default function BuilderPage() {
       </Sheet>
 
       {/* Main Content */}
-      <section className="flex-1 min-h-0 w-full max-w-[1440px] mx-auto px-6 md:px-10 py-4 overflow-hidden">
+      <section className="flex-1 min-h-0 w-full max-w-[1440px] mx-auto px-4 sm:px-6 md:px-10 py-4 overflow-hidden">
         <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-12 h-full overflow-hidden">
           {/* Left Column - Form */}
           <div className="flex flex-col min-h-0 overflow-hidden">

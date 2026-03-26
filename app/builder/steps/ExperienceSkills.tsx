@@ -79,7 +79,7 @@ export function ExperienceSkills() {
         {/* Work Experience Section */}
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
-            <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
               Work Experience
             </h1>
             <p className="text-text-subtle text-base font-normal leading-normal">
@@ -124,7 +124,7 @@ export function ExperienceSkills() {
               <ChevronDown className="h-5 w-5 text-text-subtle shrink-0" />
             )}
             <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold">Skills</h2>
+              <h2 className="text-xl sm:text-2xl font-bold">Skills</h2>
               {!skillsOpen && resumeData.skills.length > 0 && (
                 <span className="text-sm font-medium text-text-subtle bg-border-color/20 px-2 py-0.5 rounded-full">
                   {resumeData.skills.length} skill{resumeData.skills.length !== 1 ? 's' : ''}

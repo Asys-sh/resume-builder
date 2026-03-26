@@ -76,7 +76,7 @@ export function ProjectsExtras() {
   return (
       <div className="flex flex-col gap-8 bg-secondary-bg/50 p-6 md:p-8 rounded-xl border border-border-color/30">
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-black leading-tight tracking-[-0.033em]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
             Projects & Languages
           </h1>
           <p className="text-text-subtle text-base font-normal leading-normal">
@@ -86,7 +86,7 @@ export function ProjectsExtras() {
 
         {/* Projects Section */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-bold text-text-main">Projects</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main">Projects</h2>
           <div className="space-y-4">
             {resumeData.projects.map((project, index) => (
               <ProjectCard
@@ -109,7 +109,7 @@ export function ProjectsExtras() {
 
         {/* Languages Section */}
         <div className="flex flex-col gap-4 pt-6 border-t border-border-color/30">
-          <h2 className="text-2xl font-bold text-text-main">Languages</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main">Languages</h2>
           <LanguageInput
             languages={resumeData.languages}
             onAdd={handleAddLanguage}
