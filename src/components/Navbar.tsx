@@ -4,10 +4,11 @@ import { handleSignOut } from '@/lib/auth-client'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface NavbarProps {
   isAuthenticated?: boolean
-  user?: { id: string; image?: string | null } | null
+  user?: { id: string; name?: string | null; image?: string | null } | null
 }
 
 export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
