@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { COVER_LETTERS_LIST_LIMIT, RATE_LIMIT_COVER_LETTER } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { CoverLetterCreateSchema, parseBody } from '@/lib/schemas'
 import { sanitizeText } from '@/lib/sanitize'
@@ -15,7 +16,7 @@ export async function GET() {
     const coverLetters = await prisma.coverLetter.findMany({
       where: { userId: user.id },
       orderBy: { updatedAt: 'desc' },
-      take: 50,
+      take: COVER_LETTERS_LIST_LIMIT,
     })
 
     return NextResponse.json({ coverLetters })
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const limited = checkRateLimit('cover-letter-create:' + user.id, 10, 3_600_000)
+    const limited = checkRateLimit('cover-letter-create:' + user.id, RATE_LIMIT_COVER_LETTER.max, RATE_LIMIT_COVER_LETTER.window)
     if (limited) return limited
 
     const { data, error } = await parseBody(request, CoverLetterCreateSchema)

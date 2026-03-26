@@ -1,6 +1,7 @@
 import { getToken } from '@auth/core/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import { RATE_LIMIT_AUTH } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 const COOKIE_NAME = 'authjs.session-token'
@@ -36,7 +37,7 @@ export async function proxy(request: NextRequest) {
       request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
       request.headers.get('x-real-ip') ??
       'unknown'
-    const limited = checkRateLimit(`auth:${ip}`, 10, 15 * 60 * 1_000)
+    const limited = checkRateLimit(`auth:${ip}`, RATE_LIMIT_AUTH.max, RATE_LIMIT_AUTH.window)
     if (limited) return limited as unknown as NextResponse
   }
 

@@ -1,12 +1,13 @@
 import { hash } from '@node-rs/argon2'
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { RATE_LIMIT_PASSWORD_RESET_CONFIRM } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
-    const limited = checkRateLimit('password-reset-confirm:' + ip, 10, 900000)
+    const limited = checkRateLimit('password-reset-confirm:' + ip, RATE_LIMIT_PASSWORD_RESET_CONFIRM.max, RATE_LIMIT_PASSWORD_RESET_CONFIRM.window)
     if (limited) return limited
 
     const { token, password } = await req.json()

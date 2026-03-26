@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
 import { ProfilePresetCreateSchema, parseBody } from '@/lib/schemas'
+import { PROFILE_PRESETS_MAX } from '@/lib/constants'
 import { sanitizePresetData } from '@/lib/sanitize'
 
 export async function GET() {
@@ -30,10 +31,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Enforce max 20 presets per user
     const count = await prisma.profilePreset.count({ where: { userId: user.id } })
-    if (count >= 20) {
-      return NextResponse.json({ error: 'Maximum of 20 saved profiles reached' }, { status: 400 })
+    if (count >= PROFILE_PRESETS_MAX) {
+      return NextResponse.json({ error: `Maximum of ${PROFILE_PRESETS_MAX} saved profiles reached` }, { status: 400 })
     }
 
     const { data: body, error } = await parseBody(req, ProfilePresetCreateSchema)

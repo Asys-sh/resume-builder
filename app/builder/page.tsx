@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import { AuthDialog } from '@/components/AuthDialog'
 import { NavigationButtons, ResumePreview, StepProgress } from '@/components/builder'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import { AUTOSAVE_DEBOUNCE_MS, SAVED_TOAST_DURATION_MS } from '@/lib/constants'
 import { useDebounce } from '@/hooks/use-debounce'
 import {
   currentStepAtom,
@@ -51,7 +52,7 @@ export default function BuilderPage() {
   const [showPreviewSheet, setShowPreviewSheet] = useState(false)
   const formPaneRef = useRef<HTMLDivElement>(null)
   const [canScrollDown, setCanScrollDown] = useState(false)
-  const debouncedResumeData = useDebounce(resumeData, 2000)
+  const debouncedResumeData = useDebounce(resumeData, AUTOSAVE_DEBOUNCE_MS)
   // Snapshot of the last data that was successfully saved or loaded from the server.
   // Auto-save compares against this — if nothing changed, the save is skipped.
   // This is robust against React Strict Mode double-invoking effects (unlike boolean flags).
@@ -152,6 +153,21 @@ export default function BuilderPage() {
         ;(heading as HTMLElement).focus()
       }
     }, 100)
+
+    // Save then snapshot the completed step (fire-and-forget)
+    if (user && resumeIdRef.current) {
+      const stepLabel = STEP_LABELS[currentStep - 1]
+      saveResume(true).then(() => {
+        const id = resumeIdRef.current
+        if (id) {
+          fetch(`/api/resumes/${id}/snapshots`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ label: stepLabel }),
+          }).catch(() => {})
+        }
+      })
+    }
   }
 
   const handlePrevious = () => {
@@ -213,7 +229,7 @@ export default function BuilderPage() {
         lastSyncedSnapshot.current = JSON.stringify(resumeData)
         if (silent) {
           toast('Saved', {
-            duration: 1500,
+            duration: SAVED_TOAST_DURATION_MS,
             icon: '✓',
             style: {
               background: '#f0fdf4',
@@ -240,15 +256,10 @@ export default function BuilderPage() {
     saveResume(false)
   }
 
-  // Auto-save effect — fires 2s after the user stops typing
+  // Auto-save effect — fires 5s after the user stops typing
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — stable refs excluded
   useEffect(() => {
     if (!user) return
-    // Only save if something actually changed since the last save/load.
-    // JSON.stringify on the debounced value is stable — it won't change unless
-    // the user genuinely edited something. This is also immune to React Strict
-    // Mode double-invoking the effect, because the snapshot comparison is
-    // idempotent no matter how many times it runs.
     const snapshot = JSON.stringify(debouncedResumeData)
     if (snapshot === lastSyncedSnapshot.current) return
     saveResume(true)

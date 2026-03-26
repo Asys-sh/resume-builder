@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { openai } from '@/lib/openai'
 import { prisma } from '@/lib/prisma'
+import { AI_MAX_TOKENS_IMPROVE, RATE_LIMIT_AI_IMPROVE } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { AIImproveSchema, parseBody } from '@/lib/schemas'
 import { handleTrialExpiry, tryConsumeAICredit } from '@/lib/subscription'
@@ -15,8 +16,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // 30 AI requests per hour per user
-    const rateLimitResponse = checkRateLimit(`ai:${userSession.id}`, 30, 60 * 60 * 1000)
+    const rateLimitResponse = checkRateLimit(`ai:${userSession.id}`, RATE_LIMIT_AI_IMPROVE.max, RATE_LIMIT_AI_IMPROVE.window)
     if (rateLimitResponse) return rateLimitResponse
 
     const user = await prisma.user.findUnique({
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
       model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.6,
-      max_tokens: 800,
+      max_tokens: AI_MAX_TOKENS_IMPROVE,
     })
 
     const suggestions = completion.choices[0]?.message?.content ?? ''

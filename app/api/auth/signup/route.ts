@@ -3,13 +3,14 @@ import { NextResponse } from 'next/server'
 import { nanoid } from 'nanoid'
 import { prisma } from '@/lib/prisma'
 import { sendVerificationEmail } from '@/lib/email'
+import { RATE_LIMIT_SIGNUP } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { sanitizeText } from '@/lib/sanitize'
 
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
-    const limited = checkRateLimit('signup:' + ip, 5, 3600000)
+    const limited = checkRateLimit('signup:' + ip, RATE_LIMIT_SIGNUP.max, RATE_LIMIT_SIGNUP.window)
     if (limited) return limited
 
     const body = await req.json()

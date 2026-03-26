@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { JOB_NOTES_MAX_LENGTH, JOB_SALARY_MAX_LENGTH, RATE_LIMIT_JOB_APPLICATION } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { parseBody } from '@/lib/schemas'
 import { sanitizeText, sanitizeUrl } from '@/lib/sanitize'
@@ -11,8 +12,8 @@ const JobApplicationCreateSchema = z.object({
   role: z.string().min(1).max(100),
   status: z.enum(['APPLIED', 'SCREENING', 'INTERVIEW', 'OFFER', 'REJECTED', 'WITHDRAWN']).optional(),
   jobUrl: z.string().url().optional().or(z.literal('')),
-  notes: z.string().max(5000).optional(),
-  salary: z.string().max(50).optional(),
+  notes: z.string().max(JOB_NOTES_MAX_LENGTH).optional(),
+  salary: z.string().max(JOB_SALARY_MAX_LENGTH).optional(),
   location: z.string().max(100).optional(),
   resumeId: z.string().optional(),
   coverLetterId: z.string().optional(),
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const limited = checkRateLimit('job-applications:' + user.id, 20, 60 * 60 * 1000)
+    const limited = checkRateLimit('job-applications:' + user.id, RATE_LIMIT_JOB_APPLICATION.max, RATE_LIMIT_JOB_APPLICATION.window)
     if (limited) return limited
 
     const { data: body, error } = await parseBody(req, JobApplicationCreateSchema)

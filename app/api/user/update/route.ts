@@ -2,6 +2,7 @@ import { hash, verify } from '@node-rs/argon2'
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { RATE_LIMIT_USER_UPDATE } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { UserUpdateSchema, parseBody } from '@/lib/schemas'
 import { sanitizeText } from '@/lib/sanitize'
@@ -14,8 +15,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // 10 profile update attempts per hour per user
-    const rateLimitResponse = checkRateLimit(`user-update:${userSession.id}`, 10, 60 * 60 * 1000)
+    const rateLimitResponse = checkRateLimit(`user-update:${userSession.id}`, RATE_LIMIT_USER_UPDATE.max, RATE_LIMIT_USER_UPDATE.window)
     if (rateLimitResponse) return rateLimitResponse
 
     const { data, error } = await parseBody(request, UserUpdateSchema)

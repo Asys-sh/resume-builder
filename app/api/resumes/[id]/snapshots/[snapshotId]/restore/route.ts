@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
+import { RATE_LIMIT_SNAPSHOT_RESTORE, SNAPSHOT_MAX_PER_RESUME } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { sanitizeText, sanitizeUrl } from '@/lib/sanitize'
@@ -48,7 +49,7 @@ export async function POST(
       return NextResponse.json({ error: 'Not found' }, { status: 404 })
     }
 
-    const limited = checkRateLimit('snapshot-restore:' + user.id, 10, 3_600_000)
+    const limited = checkRateLimit('snapshot-restore:' + user.id, RATE_LIMIT_SNAPSHOT_RESTORE.max, RATE_LIMIT_SNAPSHOT_RESTORE.window)
     if (limited) return limited
 
     const snap = snapshot.data as SnapshotData
@@ -83,9 +84,8 @@ export async function POST(
           languages: currentResume.languages.map(({ name, proficiency }) => ({ name, proficiency })),
         }
 
-        // Enforce 20-snapshot limit, excluding the snapshot being restored
         const count = await tx.resumeSnapshot.count({ where: { resumeId: id } })
-        if (count >= 20) {
+        if (count >= SNAPSHOT_MAX_PER_RESUME) {
           const oldest = await tx.resumeSnapshot.findFirst({
             where: { resumeId: id, id: { not: snapshotId } },
             orderBy: { createdAt: 'asc' },

@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
+import { RATE_LIMIT_RESUME_DUPLICATE } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { sanitizeText } from '@/lib/sanitize'
@@ -18,7 +19,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const limited = checkRateLimit('resume-duplicate:' + user.id, 10, 3_600_000)
+    const limited = checkRateLimit('resume-duplicate:' + user.id, RATE_LIMIT_RESUME_DUPLICATE.max, RATE_LIMIT_RESUME_DUPLICATE.window)
     if (limited) return limited
 
     const { data: body, error } = await parseBody(req, DuplicateResumeSchema)

@@ -1,6 +1,7 @@
 import crypto from 'node:crypto'
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
+import { RATE_LIMIT_UPLOAD_SIGN } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST() {
@@ -10,7 +11,7 @@ export async function POST() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const limited = checkRateLimit('upload-sign:' + user.id, 20, 60 * 60 * 1000)
+    const limited = checkRateLimit('upload-sign:' + user.id, RATE_LIMIT_UPLOAD_SIGN.max, RATE_LIMIT_UPLOAD_SIGN.window)
     if (limited) return limited
 
     const apiSecret = process.env.CLOUDINARY_API_SECRET

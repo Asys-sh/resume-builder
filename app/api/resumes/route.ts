@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
+import { RATE_LIMIT_RESUME_SAVE, RESUMES_PER_PAGE } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { ResumeBodySchema, parseBody } from '@/lib/schemas'
@@ -62,8 +63,7 @@ export async function GET(req: NextRequest) {
     // No resumeId = paginated list mode
     if (!resumeId) {
       const page = Math.max(1, parseInt(url.searchParams.get('page') ?? '1', 10))
-      const limit = 12
-      const skip = (page - 1) * limit
+      const skip = (page - 1) * RESUMES_PER_PAGE
 
       const [resumes, total] = await Promise.all([
         prisma.resume.findMany({
@@ -71,7 +71,7 @@ export async function GET(req: NextRequest) {
           select: { id: true, title: true, updatedAt: true, template: true, contactInfo: true },
           orderBy: { updatedAt: 'desc' },
           skip,
-          take: limit,
+          take: RESUMES_PER_PAGE,
         }),
         prisma.resume.count({ where: { userId: user.id } }),
       ])
@@ -84,13 +84,23 @@ export async function GET(req: NextRequest) {
         id: resumeId,
         userId: user.id,
       },
+      include: {
+        experiences: true,
+        skills: true,
+        education: true,
+        projects: true,
+        certifications: true,
+        languages: true,
+      },
     })
 
     if (!resume) {
       return NextResponse.json({ error: 'Resume not found' }, { status: 404 })
     }
 
-    return NextResponse.json(resume)
+    // Map `template` → `selectedTemplate` so the builder store key matches
+    const { template, ...rest } = resume
+    return NextResponse.json({ ...rest, selectedTemplate: template })
   } catch (error) {
     console.error('Error fetching resume:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
@@ -104,7 +114,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const limited = checkRateLimit('resume-create:' + user.id, 10, 3_600_000)
+    const limited = checkRateLimit('resume-create:' + user.id, RATE_LIMIT_RESUME_SAVE.max, RATE_LIMIT_RESUME_SAVE.window)
     if (limited) return limited
 
     const { data: body, error } = await parseBody(req, ResumeBodySchema)

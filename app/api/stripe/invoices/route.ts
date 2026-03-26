@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { getServerUser } from '@/lib/auth-helper'
+import { INVOICES_PER_PAGE } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
@@ -24,7 +25,7 @@ export async function GET() {
 
     const invoices = await stripe.invoices.list({
       customer: user.stripeCustomerId,
-      limit: 10,
+      limit: INVOICES_PER_PAGE,
     })
 
     const formatted = invoices.data.map((inv) => ({

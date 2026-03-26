@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma-generated/client'
+import { RESUMES_GROUP_FETCH_MAX, RESUMES_PER_PAGE } from './constants'
 import { prisma } from './prisma'
 
 export type ResumeWithRelations = Prisma.ResumeGetPayload<{
@@ -12,7 +13,6 @@ export type ResumeWithRelations = Prisma.ResumeGetPayload<{
   }
 }>
 
-const RESUMES_PER_PAGE = 12
 
 export async function getUsersResumes(
   userId: string,
@@ -75,7 +75,7 @@ export async function getGroupedResumes(userId: string): Promise<GroupedResumes>
       languages: true,
     },
     orderBy: { updatedAt: 'desc' },
-    take: 200,
+    take: RESUMES_GROUP_FETCH_MAX,
   })
 
   const baseMap = new Map<string, GroupedResume>()

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { openai } from '@/lib/openai'
 import { prisma } from '@/lib/prisma'
+import { AI_MAX_TOKENS_ASSIST, RATE_LIMIT_AI_ASSIST } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { AIAssistSchema, parseBody } from '@/lib/schemas'
 import { sanitizeText } from '@/lib/sanitize'
@@ -14,7 +15,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const rateLimitResponse = checkRateLimit(`ai-assist:${userSession.id}`, 20, 60 * 60 * 1000)
+    const rateLimitResponse = checkRateLimit(`ai-assist:${userSession.id}`, RATE_LIMIT_AI_ASSIST.max, RATE_LIMIT_AI_ASSIST.window)
     if (rateLimitResponse) return rateLimitResponse
 
     const user = await prisma.user.findUnique({
@@ -83,7 +84,7 @@ export async function POST(request: Request) {
       model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.7,
-      max_tokens: 400,
+      max_tokens: AI_MAX_TOKENS_ASSIST,
     })
 
     const result = completion.choices[0]?.message?.content ?? ''

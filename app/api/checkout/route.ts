@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { RATE_LIMIT_CHECKOUT } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { CheckoutSchema, parseBody } from '@/lib/schemas'
 
@@ -17,8 +18,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
     }
 
-    // 10 checkout attempts per hour per user
-    const rateLimitResponse = checkRateLimit(`checkout:${userSession.id}`, 10, 60 * 60 * 1000)
+    const rateLimitResponse = checkRateLimit(`checkout:${userSession.id}`, RATE_LIMIT_CHECKOUT.max, RATE_LIMIT_CHECKOUT.window)
     if (rateLimitResponse) return rateLimitResponse
 
     const { data, error } = await parseBody(request, CheckoutSchema)

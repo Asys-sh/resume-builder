@@ -1,13 +1,18 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getServerUser } from '@/lib/auth-helper'
+import {
+  RATE_LIMIT_SNAPSHOT_CREATE,
+  SNAPSHOT_LABEL_MAX_LENGTH,
+  SNAPSHOT_MAX_PER_RESUME,
+} from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { parseBody } from '@/lib/schemas'
 import { sanitizeText } from '@/lib/sanitize'
 
 const SnapshotCreateSchema = z.object({
-  label: z.string().max(80).optional(),
+  label: z.string().max(SNAPSHOT_LABEL_MAX_LENGTH).optional(),
 })
 
 async function getOwnedResume(resumeId: string, userId: string) {
@@ -58,7 +63,7 @@ export async function POST(
     const { error: ownershipError } = await getOwnedResume(id, user.id)
     if (ownershipError) return ownershipError
 
-    const limited = checkRateLimit('snapshot-create:' + user.id, 20, 3_600_000)
+    const limited = checkRateLimit('snapshot-create:' + user.id, RATE_LIMIT_SNAPSHOT_CREATE.max, RATE_LIMIT_SNAPSHOT_CREATE.window)
     if (limited) return limited
 
     const { data: body, error: parseError } = await parseBody(req, SnapshotCreateSchema)
@@ -96,10 +101,9 @@ export async function POST(
       languages: resume.languages.map(({ name, proficiency }) => ({ name, proficiency })),
     }
 
-    // Enforce 20-snapshot limit inside a transaction to prevent race conditions
     const snapshot = await prisma.$transaction(async (tx) => {
       const count = await tx.resumeSnapshot.count({ where: { resumeId: id } })
-      if (count >= 20) {
+      if (count >= SNAPSHOT_MAX_PER_RESUME) {
         const oldest = await tx.resumeSnapshot.findFirst({
           where: { resumeId: id },
           orderBy: { createdAt: 'asc' },

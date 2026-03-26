@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerUser } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
+import { RATE_LIMIT_USER_DELETE } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function DELETE() {
@@ -11,8 +12,7 @@ export async function DELETE() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // 3 deletion attempts per hour — destructive action, strict limit
-    const rateLimitResponse = checkRateLimit(`user-delete:${userSession.id}`, 3, 60 * 60 * 1000)
+    const rateLimitResponse = checkRateLimit(`user-delete:${userSession.id}`, RATE_LIMIT_USER_DELETE.max, RATE_LIMIT_USER_DELETE.window)
     if (rateLimitResponse) return rateLimitResponse
 
     await prisma.user.delete({

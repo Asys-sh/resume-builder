@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth-helper";
 import { openai } from "@/lib/openai";
 import { prisma } from "@/lib/prisma";
+import { AI_MAX_TOKENS_COVER_LETTER, RATE_LIMIT_AI_COVER_LETTER } from "@/lib/constants";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { AICoverLetterSchema, parseBody } from "@/lib/schemas";
 import { sanitizeText } from "@/lib/sanitize";
@@ -15,11 +16,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 20 AI requests per hour per user
     const rateLimitResponse = checkRateLimit(
       `ai-cover-letter:${userSession.id}`,
-      20,
-      60 * 60 * 1000,
+      RATE_LIMIT_AI_COVER_LETTER.max,
+      RATE_LIMIT_AI_COVER_LETTER.window,
     );
     if (rateLimitResponse) return rateLimitResponse;
 
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
-      max_tokens: 1000,
+      max_tokens: AI_MAX_TOKENS_COVER_LETTER,
     });
 
     const generatedContent = completion.choices[0]?.message?.content ?? "";

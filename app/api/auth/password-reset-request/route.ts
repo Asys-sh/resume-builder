@@ -2,12 +2,13 @@ import { NextResponse } from 'next/server'
 import { nanoid } from 'nanoid'
 import { prisma } from '@/lib/prisma'
 import { sendPasswordResetEmail } from '@/lib/email'
+import { RATE_LIMIT_PASSWORD_RESET_REQUEST } from '@/lib/constants'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
-    const limited = checkRateLimit('password-reset-request:' + ip, 5, 900000)
+    const limited = checkRateLimit('password-reset-request:' + ip, RATE_LIMIT_PASSWORD_RESET_REQUEST.max, RATE_LIMIT_PASSWORD_RESET_REQUEST.window)
     if (limited) return limited
 
     const { email } = await req.json()
