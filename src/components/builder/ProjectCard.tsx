@@ -1,5 +1,6 @@
 'use client'
 
+import { Trash2 } from 'lucide-react'
 import type { Project } from '@/stores/builder'
 import { Button } from '@/components/ui/button'
 import {
@@ -34,7 +35,7 @@ export function ProjectCard({ project, onUpdate, onDelete, index }: ProjectCardP
               className="text-text-subtle hover:text-red-500 transition-colors"
               aria-label="Delete project"
             >
-              <span className="material-symbols-outlined">delete</span>
+              <Trash2 className="h-5 w-5" />
             </button>
           </DialogTrigger>
           <DialogContent>

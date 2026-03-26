@@ -3,7 +3,13 @@
 import { forwardRef, type ReactNode, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Eye, EyeOff, Lock, Mail, User } from 'lucide-react'
+
+const ICON_MAP: Record<string, React.FC<{ className?: string }>> = {
+  person: User,
+  mail: Mail,
+  lock: Lock,
+}
 
 interface FormInputProps {
   id: string
@@ -50,10 +56,11 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           {rightLabel}
         </div>
         <div className="relative">
-          {icon && (
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-              {icon}
-            </span>
+          {icon && ICON_MAP[icon] && (
+            (() => {
+              const IconComponent = ICON_MAP[icon]
+              return <IconComponent className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            })()
           )}
           <Input
             ref={ref}
@@ -76,9 +83,9 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               aria-label="Toggle password visibility"
-              className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-slate-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-slate-600"
             >
-              {showPassword ? 'visibility' : 'visibility_off'}
+              {showPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
             </button>
           )}
         </div>

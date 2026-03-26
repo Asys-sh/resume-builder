@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { BulletAnalyzer, BulletLibrary, BuilderFormField, BuilderTextarea } from '@/components/builder'
 import { AutocompleteInput } from '@/components/ui/autocomplete-input'
@@ -93,7 +93,7 @@ export function ExperienceCard({ experience, onUpdate, onDelete, index }: Experi
               className="ml-3 text-text-subtle hover:text-primary transition-colors shrink-0"
               aria-label={`Delete experience ${index + 1}`}
             >
-              <span className="material-symbols-outlined">delete</span>
+              <Trash2 className="h-5 w-5" />
             </button>
           </DialogTrigger>
           <DialogContent>

@@ -1,5 +1,6 @@
 'use client'
 
+import { X } from 'lucide-react'
 import type { Skill } from '@/stores/builder'
 
 interface SkillTagProps {
@@ -17,7 +18,7 @@ export function SkillTag({ skill, onRemove }: SkillTagProps) {
         className="text-text-subtle hover:text-text-main transition-colors"
         aria-label={`Remove ${skill.name}`}
       >
-        <span className="material-symbols-outlined !text-base">close</span>
+        <X className="h-3.5 w-3.5" />
       </button>
     </div>
   )

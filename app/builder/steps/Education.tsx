@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai'
+import { Plus } from 'lucide-react'
 import { CertificationCard, EducationCard } from '@/components/builder'
 import {
   type Certification,
@@ -100,7 +101,7 @@ export function EducationStep() {
             onClick={handleAddEducation}
             className="flex items-center justify-center p-4 border-2 border-dashed border-border-color/50 bg-white/30 rounded-lg text-text-subtle hover:border-primary hover:text-primary transition-colors"
           >
-            <span className="material-symbols-rounded" aria-hidden="true">add</span>
+            <Plus className="h-5 w-5" />
           </button>
         </div>
 
@@ -123,7 +124,7 @@ export function EducationStep() {
             onClick={handleAddCertification}
             className="flex items-center justify-center p-4 border-2 border-dashed border-border-color/50 bg-white/30 rounded-lg text-text-subtle hover:border-primary hover:text-primary transition-colors"
           >
-            <span className="material-symbols-rounded" aria-hidden="true">add</span>
+            <Plus className="h-5 w-5" />
           </button>
         </div>
 

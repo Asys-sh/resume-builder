@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, ChevronDown } from 'lucide-react'
 
 export interface SelectOption {
   value: string
@@ -89,9 +89,7 @@ export const BuilderSelect = React.forwardRef<HTMLSelectElement, BuilderSelectPr
               </option>
             ))}
           </select>
-          <span className="material-symbols-outlined absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none text-text-subtle">
-            expand_more
-          </span>
+          <ChevronDown className="h-4 w-4 absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none text-text-subtle" />
         </div>
         {error && (
           <p id={fieldId + '-error'} className="flex items-center gap-1 text-sm text-red-400">

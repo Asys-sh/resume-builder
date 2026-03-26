@@ -1,3 +1,4 @@
+import { Sparkles } from 'lucide-react'
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 
@@ -26,7 +27,7 @@ export const AIAssistButton = React.forwardRef<HTMLButtonElement, AIAssistButton
         )}
         {...props}
       >
-        <span className="material-symbols-outlined !text-[18px]">auto_awesome</span>
+        <Sparkles className="h-[18px] w-[18px]" />
       </button>
     )
   },

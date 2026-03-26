@@ -1,5 +1,6 @@
 'use client'
 
+import { CheckCircle } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
@@ -83,9 +84,7 @@ export default function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswo
           {success ? (
             // Success state
             <div className="text-center py-8">
-              <span className="material-symbols-outlined text-6xl text-[#d4a373] mb-4 block">
-                check_circle
-              </span>
+              <CheckCircle className="h-16 w-16 text-[#d4a373] mb-4 mx-auto" />
               <h2 className="text-2xl font-black text-slate-800 mb-4">Check Your Email</h2>
               <p className="text-base text-slate-600">
                 If an account with that email exists, a password reset link has been sent.

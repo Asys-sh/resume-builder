@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai'
+import { Plus } from 'lucide-react'
 import {
   LanguageInput,
   ProjectCard,
@@ -102,7 +103,7 @@ export function ProjectsExtras() {
             onClick={handleAddProject}
             className="flex items-center justify-center p-4 bg-white/30 border-2 border-dashed border-border-color/50 rounded-lg text-text-subtle hover:border-primary hover:text-primary transition-colors"
           >
-            <span className="material-symbols-outlined" aria-hidden="true">add</span>
+            <Plus className="h-5 w-5" />
           </button>
         </div>
 

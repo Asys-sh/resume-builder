@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { ExperienceCard, SkillsInput } from '@/components/builder'
 import { type Experience, resumeDataAtom, type Skill, setResumeDataAtom } from '@/stores/builder'
 
@@ -104,7 +105,7 @@ export function ExperienceSkills() {
               onClick={handleAddExperience}
               className="flex items-center justify-center p-4 border-2 border-dashed border-border-color/50 rounded-xl text-text-subtle hover:border-primary hover:text-primary hover:bg-primary/5 active:scale-[0.99] transition-all"
             >
-              <span className="material-symbols-outlined !text-xl" aria-hidden="true">add</span>
+              <Plus className="h-5 w-5" />
             </button>
           </div>
         </div>

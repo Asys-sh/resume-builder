@@ -1,5 +1,6 @@
 'use client'
 
+import { X } from 'lucide-react'
 import type { Language } from '@/stores/builder'
 
 interface LanguageTagProps {
@@ -17,7 +18,7 @@ export function LanguageTag({ language, onRemove }: LanguageTagProps) {
         className="hover:text-red-500 transition-colors"
         aria-label="Remove language"
       >
-        <span className="material-symbols-outlined !text-base">close</span>
+        <X className="h-3.5 w-3.5" />
       </button>
     </span>
   )

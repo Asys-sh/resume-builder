@@ -1,5 +1,6 @@
 'use client'
 
+import { X } from 'lucide-react'
 import type { Certification } from '@/stores/builder'
 
 interface CertificationTagProps {
@@ -17,7 +18,7 @@ export function CertificationTag({ certification, onRemove }: CertificationTagPr
         className="hover:text-red-500 transition-colors"
         aria-label="Remove certification"
       >
-        <span className="material-symbols-outlined !text-base">close</span>
+        <X className="h-3.5 w-3.5" />
       </button>
     </span>
   )

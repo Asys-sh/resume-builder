@@ -1,5 +1,6 @@
 'use client'
 
+import { Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -32,7 +33,7 @@ export function CertificationCard({ certification, onUpdate, onDelete, index }: 
               className="text-text-subtle hover:text-primary transition-colors"
               aria-label={`Delete certification ${index + 1}`}
             >
-              <span className="material-symbols-outlined">delete</span>
+              <Trash2 className="h-5 w-5" />
             </button>
           </DialogTrigger>
           <DialogContent>

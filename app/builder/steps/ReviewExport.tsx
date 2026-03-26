@@ -1,3 +1,4 @@
+import { Lightbulb } from 'lucide-react'
 import { ExportButtons, SharePanel } from '@/components/builder'
 
 interface ReviewExportProps {
@@ -34,7 +35,7 @@ export function ReviewExport({ onExport, resumeId }: ReviewExportProps) {
 
         {/* Pro Tip */}
         <div className="bg-highlight/30 rounded-lg border border-border-color/30 p-4 flex gap-3">
-          <span className="material-symbols-rounded text-primary" aria-hidden="true">lightbulb</span>
+          <Lightbulb className="h-5 w-5 text-primary shrink-0" />
           <p className="text-sm text-text-main">
             <strong>Pro Tip:</strong> Tailor your resume for each job application by adjusting your
             summary and skills.

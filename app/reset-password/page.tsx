@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
@@ -74,9 +74,7 @@ function ResetPasswordContent() {
   if (success) {
     return (
       <div className="text-center bg-white p-8 rounded-xl shadow-lg">
-        <span className="material-symbols-outlined text-6xl text-green-500 mb-4 block">
-          check_circle
-        </span>
+        <CheckCircle className="h-16 w-16 text-green-500 mb-4 mx-auto" />
         <h1 className="text-2xl font-bold text-slate-800">Password Reset Successful!</h1>
         <p className="mt-2 text-slate-600">You can now log in with your new password.</p>
         <p className="mt-4 text-sm text-slate-500">Redirecting to login...</p>

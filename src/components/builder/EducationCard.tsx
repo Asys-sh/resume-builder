@@ -1,5 +1,6 @@
 'use client'
 
+import { Trash2 } from 'lucide-react'
 import { BuilderFormField } from '@/components/builder'
 import { Button } from '@/components/ui/button'
 import { DatePicker } from '@/components/ui/date-picker'
@@ -46,7 +47,7 @@ export function EducationCard({ education, onUpdate, onDelete, index }: Educatio
               className="text-text-subtle hover:text-primary transition-colors"
               aria-label={`Delete education ${index + 1}`}
             >
-              <span className="material-symbols-outlined">delete</span>
+              <Trash2 className="h-5 w-5" />
             </button>
           </DialogTrigger>
           <DialogContent>
