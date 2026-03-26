@@ -5,6 +5,7 @@ import { Toaster } from 'sonner'
 import CookieBanner from '@/components/CookieBanner'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { JotaiProvider } from '@/components/JotaiProvider'
+import SessionProviderWrapper from '@/components/SessionProviderWrapper'
 import { getUserData } from '@/lib/auth-helper'
 import '@/lib/env' // validates env vars on server startup — throws if invalid
 
@@ -60,13 +61,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         >
           Skip to content
         </a>
-        <JotaiProvider initialUser={user}>
-          <ErrorBoundary>
-            <main id="main-content" className="min-h-screen">
-              {children}
-            </main>
-          </ErrorBoundary>
-        </JotaiProvider>
+        <SessionProviderWrapper>
+          <JotaiProvider initialUser={user}>
+            <ErrorBoundary>
+              <main id="main-content" className="min-h-screen">
+                {children}
+              </main>
+            </ErrorBoundary>
+          </JotaiProvider>
+        </SessionProviderWrapper>
         <CookieBanner />
         <Toaster
           position="bottom-center"

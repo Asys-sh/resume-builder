@@ -51,36 +51,40 @@ export function ResumePreview() {
   return (
     <div className="flex flex-col gap-2 h-full min-h-0">
       {/* Template strip */}
-      <div className="shrink-0 flex items-center gap-2">
-        <span className="text-[10px] font-bold text-text-subtle uppercase tracking-widest shrink-0">
+      <div className="shrink-0 flex flex-col gap-1">
+        <span className="text-[10px] font-bold text-text-subtle uppercase tracking-widest">
           Template
         </span>
-        <div className="flex gap-1.5 overflow-x-auto pb-0.5 scrollbar-none">
-          {TEMPLATES.map((t) => {
-            const isSelected = selectedTemplate === t.id
-            return (
-              <div key={t.id} className="relative group shrink-0">
-                {/* Hover thumbnail preview */}
-                {!isSelected && (
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-28 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150 z-20 shadow-lg rounded-lg overflow-hidden border border-border-color/40 bg-white">
-                    {t.previewComponent}
-                  </div>
-                )}
-                <button
-                  type="button"
-                  onClick={() => setResumeDataPartial({ selectedTemplate: t.id })}
-                  className={cn(
-                    'px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 border',
-                    isSelected
-                      ? 'bg-primary text-white border-primary shadow-sm'
-                      : 'bg-background-light text-text-subtle border-border-color/50 hover:border-primary/50 hover:text-text-main',
+        <div className="relative">
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0.5 w-6 bg-gradient-to-r from-background-light to-transparent z-10" aria-hidden="true" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0.5 w-6 bg-gradient-to-l from-background-light to-transparent z-10" aria-hidden="true" />
+          <div className="flex gap-1.5 overflow-x-auto pb-0.5 scrollbar-none">
+            {TEMPLATES.map((t) => {
+              const isSelected = selectedTemplate === t.id
+              return (
+                <div key={t.id} className="relative group shrink-0">
+                  {/* Hover thumbnail preview */}
+                  {!isSelected && (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-28 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150 z-20 rounded-lg overflow-hidden border border-border-color/40 bg-white drop-shadow-md">
+                      {t.previewComponent}
+                    </div>
                   )}
-                >
-                  {t.name}
-                </button>
-              </div>
-            )
-          })}
+                  <button
+                    type="button"
+                    onClick={() => setResumeDataPartial({ selectedTemplate: t.id })}
+                    className={cn(
+                      'px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 border',
+                      isSelected
+                        ? 'bg-primary text-white border-primary shadow-sm'
+                        : 'bg-white text-text-main border-border-color hover:border-primary/60 hover:bg-primary/5',
+                    )}
+                  >
+                    {t.name}
+                  </button>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
 

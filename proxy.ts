@@ -28,7 +28,10 @@ export async function proxy(request: NextRequest) {
 
   // Rate-limit auth API endpoints — 10 attempts per 15 minutes per IP.
   // Protects sign-in and sign-up from brute-force and credential-stuffing.
-  if (pathname.startsWith('/api/auth/')) {
+  // Exclude read-only polling endpoints (/session, /csrf) from rate limiting.
+  const isReadOnlyAuthEndpoint =
+    pathname === '/api/auth/session' || pathname === '/api/auth/csrf'
+  if (pathname.startsWith('/api/auth/') && !isReadOnlyAuthEndpoint) {
     const ip =
       request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
       request.headers.get('x-real-ip') ??

@@ -312,11 +312,11 @@ export default function BuilderPage() {
 
       {/* Preview Sheet for tablet */}
       <Sheet open={showPreviewSheet} onOpenChange={setShowPreviewSheet}>
-        <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto">
-          <SheetHeader>
+        <SheetContent side="right" className="w-full max-w-full sm:max-w-full flex flex-col p-0">
+          <SheetHeader className="px-4 pt-4 pb-2 shrink-0 border-b border-border-color/30">
             <SheetTitle>Resume Preview</SheetTitle>
           </SheetHeader>
-          <div className="mt-4">
+          <div className="flex-1 min-h-0 overflow-y-auto p-4">
             <ResumePreview />
           </div>
         </SheetContent>

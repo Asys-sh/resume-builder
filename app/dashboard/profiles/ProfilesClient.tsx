@@ -214,7 +214,7 @@ export default function ProfilesClient() {
           }
         }}
       >
-        <DialogContent className="bg-beige border-yellow sm:max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-beige border-yellow w-[calc(100vw-2rem)] sm:w-auto sm:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editingPreset ? 'Edit Profile' : 'Add Saved Profile'}</DialogTitle>
             <DialogDescription>

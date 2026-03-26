@@ -278,7 +278,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
                 role="dialog"
                 aria-label="Share settings"
                 onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Escape') setIsShareOpen(false) }}
-                className="absolute right-0 bottom-full mb-2 z-50 w-64 bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
+                className="absolute right-0 bottom-full mb-2 z-50 w-64 max-w-[calc(100vw-1rem)] bg-white border border-border-color/50 rounded-xl shadow-xl p-3 flex flex-col gap-2.5">
                 <p className="text-xs font-bold text-text-main uppercase tracking-widest">Share</p>
 
                 {/* Public toggle */}
@@ -388,7 +388,7 @@ export function ResumeCard({ resume, onDeleted, onDuplicated, isTailored }: Resu
       />
 
       <Dialog open={isDuplicateDialogOpen} onOpenChange={setIsDuplicateDialogOpen}>
-        <DialogContent className="bg-background-light border-border-color/50 sm:max-w-sm">
+        <DialogContent className="bg-background-light border-border-color/50 w-[calc(100vw-2rem)] sm:w-auto max-w-sm">
           <DialogHeader>
             <DialogTitle className="text-text-main">Duplicate & Tailor</DialogTitle>
             <DialogDescription className="text-text-subtle">

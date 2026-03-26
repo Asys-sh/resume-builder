@@ -25,7 +25,7 @@ export function TemplateSelector({ selectedTemplate, onSelect }: TemplateSelecto
             type="button"
             onClick={() => onSelect(template.id)}
             className={cn(
-              'group relative flex flex-col rounded-xl border-2 overflow-hidden transition-all duration-200 text-left',
+              'group relative flex flex-col rounded-xl border-2 transition-all duration-200 text-left',
               'hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5',
               isSelected ? 'border-primary shadow-md shadow-primary/15' : 'border-border-color/40',
             )}
@@ -41,7 +41,7 @@ export function TemplateSelector({ selectedTemplate, onSelect }: TemplateSelecto
             {/* Preview area */}
             <div
               className={cn(
-                'p-4 transition-colors',
+                'p-4 overflow-hidden rounded-t-xl transition-colors',
                 isSelected ? 'bg-primary/5' : 'bg-gray-50 group-hover:bg-primary/[0.03]',
               )}
             >

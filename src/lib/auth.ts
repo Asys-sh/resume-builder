@@ -70,15 +70,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers,
 
   callbacks: {
-    async signIn({ user, account }) {
-      if (account?.provider === 'google' && user.email) {
-        await prisma.user.updateMany({
-          where: { email: user.email, emailVerified: null },
-          data: { emailVerified: new Date() },
-        })
-      }
-      return true
-    },
     jwt({ token, user }) {
       if (user?.id) token.sub = user.id
       return token
@@ -95,6 +86,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async createUser({ user }) {
       if (user.email) {
         await sendWelcomeEmail({ email: user.email, name: user.name ?? undefined })
+      }
+    },
+    async linkAccount({ user, account }) {
+      if (account.provider === 'google') {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { emailVerified: new Date() },
+        })
       }
     },
   },

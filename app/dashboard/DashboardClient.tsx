@@ -3,22 +3,21 @@
 import type { User } from '@prisma-generated/client'
 import { handleSignOut } from '@/lib/auth-client'
 import {
-  Award,
   BookUser,
   Briefcase,
-  ChevronDown,
   CreditCard,
   Edit,
   FileText,
-  LayoutDashboard,
+  Home,
   LogOut,
   Menu,
   PenTool,
   Plus,
   Settings,
-  TrendingUp,
+  Sparkles,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
@@ -27,7 +26,6 @@ import { SubscriptionModal } from '@/components/SubscriptionModal'
 import { UsageDisplay } from '@/components/UsageDisplay'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import type { GroupedResumes } from '@/lib/data'
@@ -37,6 +35,7 @@ import ApplicationsView from './applications/page'
 import CoverLettersView from './cover-letters/page'
 import ProfilesClient from './profiles/ProfilesClient'
 import SettingsClient from './settings/SettingsClient'
+import { ChevronDown } from 'lucide-react'
 
 type DashboardView = 'home' | 'cover-letters' | 'profiles' | 'billing' | 'settings' | 'applications'
 
@@ -73,19 +72,9 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
   const firstName = user?.name?.split(' ')[0] ?? 'there'
 
   const navItems: { id: DashboardView; label: string; icon: React.ElementType; href: string }[] = [
-    { id: 'home', label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-    {
-      id: 'cover-letters',
-      label: 'Cover Letters',
-      icon: Edit,
-      href: '/dashboard?view=cover-letters',
-    },
-    {
-      id: 'applications',
-      label: 'Applications',
-      icon: Briefcase,
-      href: '/dashboard?view=applications',
-    },
+    { id: 'home', label: 'Home', icon: Home, href: '/dashboard' },
+    { id: 'cover-letters', label: 'Cover Letters', icon: Edit, href: '/dashboard?view=cover-letters' },
+    { id: 'applications', label: 'Applications', icon: Briefcase, href: '/dashboard?view=applications' },
     { id: 'profiles', label: 'Saved Profiles', icon: BookUser, href: '/dashboard?view=profiles' },
     { id: 'billing', label: 'Billing', icon: CreditCard, href: '/dashboard?view=billing' },
     { id: 'settings', label: 'Settings', icon: Settings, href: '/dashboard?view=settings' },
@@ -94,12 +83,14 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
   const SidebarContent = () => (
     <>
       <div className="p-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">{userInitials}</span>
+        <Link href="/" className="flex items-center gap-2">
+          <div className="size-7 text-primary">
+            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fillRule="evenodd" clipRule="evenodd" d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z M16 24A8 8 0 0 1 32 24A8 8 0 0 1 16 24Z" />
+            </svg>
           </div>
           <span className="text-lg font-semibold text-dark">RoboResume</span>
-        </div>
+        </Link>
       </div>
       <Separator />
 
@@ -117,10 +108,7 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
           </Link>
         ))}
         <Link href="/builder" onClick={() => setIsSidebarOpen(false)}>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 text-dark hover:bg-primary/5"
-          >
+          <Button variant="ghost" className="w-full justify-start gap-2 text-dark hover:bg-primary/5">
             <FileText className="h-4 w-4" />
             Resume Builder
           </Button>
@@ -135,7 +123,19 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
         />
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10">
-            <AvatarFallback>{userInitials}</AvatarFallback>
+            {user.image ? (
+              <Image
+                src={user.image}
+                alt={user.name ?? 'Profile'}
+                width={40}
+                height={40}
+                className="rounded-full object-cover"
+              />
+            ) : (
+              <AvatarFallback className="bg-primary/20 text-dark font-semibold">
+                {userInitials}
+              </AvatarFallback>
+            )}
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-dark truncate">{user.name}</p>
@@ -187,7 +187,7 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
 
           {/* Main Content Area */}
           <main className="flex-1 md:ml-64 p-6 md:p-8">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={view}
@@ -197,164 +197,100 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
                   transition={{ duration: 0.2 }}
                 >
                   {view === 'home' && (
-                    <div className="space-y-8">
-                      {/* Welcome */}
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                        <div className="flex items-center gap-4">
-                          <Avatar className="h-16 w-16">
-                            <AvatarFallback className="bg-primary text-primary-foreground text-xl">
-                              {userInitials}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <h1 className="text-3xl font-bold text-dark">
-                              Welcome back, {firstName}!
-                            </h1>
-                            <p className="text-dark/70">Ready to build your next resume?</p>
-                          </div>
+                    <div className="space-y-10">
+                      {/* Header */}
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h1 className="text-3xl font-bold tracking-tight text-dark">
+                            Hey, {firstName} 👋
+                          </h1>
+                          <p className="mt-1 text-dark/50 text-sm">
+                            {total === 0
+                              ? "Let's build your first resume."
+                              : `You have ${total} resume${total !== 1 ? 's' : ''}.`}
+                          </p>
                         </div>
                         <Link href="/builder">
-                          <Button size="lg" className="animate-pulse-soft">
-                            <Plus className="mr-2 h-5 w-5" />
-                            Create Resume
+                          <Button className="gap-2 shrink-0">
+                            <Plus className="h-4 w-4" />
+                            New Resume
                           </Button>
                         </Link>
                       </div>
 
-                      {/* Stats */}
-                      <div className="grid gap-6 md:grid-cols-3">
-                        <Card className="border border-yellow bg-yellow">
-                          <CardHeader>
-                            <CardTitle className="text-sm font-medium text-dark/70">
-                              Total Resumes
-                            </CardTitle>
-                            <div className="flex items-center gap-2">
-                              <FileText className="h-4 w-4 text-secondary-accent" />
-                              <p className="text-3xl font-bold text-dark">{total}</p>
-                            </div>
-                          </CardHeader>
-                        </Card>
-                        <Card className="border border-yellow bg-yellow">
-                          <CardHeader>
-                            <CardTitle className="text-sm font-medium text-dark/70">
-                              AI Assists Used
-                            </CardTitle>
-                            <div className="flex items-center gap-2">
-                              <TrendingUp className="h-4 w-4 text-secondary-accent" />
-                              <p className="text-3xl font-bold text-dark">
-                                {user.usageCount}/{user.usageLimit}
-                              </p>
-                            </div>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="w-full bg-black rounded-full h-2">
-                              <div
-                                className="bg-primary h-2 rounded-full transition-all duration-300"
-                                style={{ width: `${(user.usageCount / user.usageLimit) * 100}%` }}
-                              />
-                            </div>
-                          </CardContent>
-                        </Card>
-                        <Card className="border border-yellow bg-yellow">
-                          <CardHeader>
-                            <div className="flex items-center gap-2">
-                              <Award className="h-5 w-5 text-secondary-accent" />
-                              <CardTitle>Upgrade to Pro</CardTitle>
-                            </div>
-                            <CardDescription>
-                              Unlock unlimited resumes and AI features
-                            </CardDescription>
-                            <Link href="/dashboard?view=billing">
-                              <Button variant="outline" size="sm" className="mt-4">
-                                Learn More
-                              </Button>
-                            </Link>
-                          </CardHeader>
-                        </Card>
-                      </div>
-
                       {/* Resumes */}
-                      <div className="space-y-6">
-                        <div className="flex items-center justify-between">
-                          <h2 className="text-2xl font-bold text-dark">Your Resumes</h2>
-                          {total > 0 && <span className="text-sm text-dark/50">{total} total</span>}
-                        </div>
-                        {total > 0 ? (
-                          <div className="space-y-8">
-                            {/* Base resumes with their tailored versions */}
-                            <div className="flex flex-wrap gap-5">
-                              {grouped.bases.map((base) => (
-                                <div key={base.id} className="flex flex-col gap-2" style={{ width: '262px' }}>
-                                  <ResumeCard
-                                    resume={base}
-                                    onDeleted={() => router.refresh()}
-                                    onDuplicated={handleDuplicated}
-                                  />
-                                  {base.children.length > 0 && (
-                                    <div className="flex flex-col gap-1">
-                                      <button
-                                        type="button"
-                                        onClick={() => toggleCollapsed(base.id)}
-                                        className="flex items-center justify-between px-1 pt-1 pb-0.5 group/toggle"
-                                      >
-                                        <p className="text-[10px] font-bold text-text-subtle uppercase tracking-widest">
-                                          {base.children.length} tailored version{base.children.length !== 1 ? 's' : ''}
-                                        </p>
-                                        <ChevronDown
-                                          className={`h-3 w-3 text-text-subtle transition-transform duration-200 ${
-                                            collapsedIds.has(base.id) ? '-rotate-90' : ''
-                                          }`}
-                                        />
-                                      </button>
-                                      {!collapsedIds.has(base.id) && base.children.map((child) => (
+                      {total > 0 ? (
+                        <div className="space-y-3">
+                          <h2 className="text-xs font-bold uppercase tracking-widest text-dark/40">
+                            Your Resumes
+                          </h2>
+                          <div className="flex flex-wrap gap-5 justify-center sm:justify-start">
+                            {grouped.bases.map((base) => (
+                              <div key={base.id} className="flex flex-col gap-2" style={{ width: '262px' }}>
+                                <ResumeCard
+                                  resume={base}
+                                  onDeleted={() => router.refresh()}
+                                  onDuplicated={handleDuplicated}
+                                />
+                                {base.children.length > 0 && (
+                                  <div className="flex flex-col gap-1">
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleCollapsed(base.id)}
+                                      className="flex items-center justify-between px-1 pt-1 pb-0.5 group/toggle"
+                                    >
+                                      <p className="text-[10px] font-bold text-dark/40 uppercase tracking-widest">
+                                        {base.children.length} tailored version{base.children.length !== 1 ? 's' : ''}
+                                      </p>
+                                      <ChevronDown
+                                        className={`h-3 w-3 text-dark/40 transition-transform duration-200 ${
+                                          collapsedIds.has(base.id) ? '-rotate-90' : ''
+                                        }`}
+                                      />
+                                    </button>
+                                    {!collapsedIds.has(base.id) &&
+                                      base.children.map((child) => (
                                         <TailoredVersionRow
                                           key={child.id}
                                           resume={child}
                                           onDeleted={() => router.refresh()}
                                         />
                                       ))}
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
 
-                            {/* Orphaned tailored resumes (parent was deleted) */}
-                            {grouped.orphans.length > 0 && (
-                              <div className="flex flex-wrap gap-5">
-                                {grouped.orphans.map((orphan) => (
-                                  <ResumeCard
-                                    key={orphan.id}
-                                    resume={orphan}
-                                    onDeleted={() => router.refresh()}
-                                    onDuplicated={handleDuplicated}
-                                  />
-                                ))}
-                              </div>
-                            )}
+                            {grouped.orphans.map((orphan) => (
+                              <ResumeCard
+                                key={orphan.id}
+                                resume={orphan}
+                                onDeleted={() => router.refresh()}
+                                onDuplicated={handleDuplicated}
+                              />
+                            ))}
                           </div>
-                        ) : (
-                          <Card className="py-12 bg-none border-none shadow-none">
-                            <CardContent className="flex flex-col items-center justify-center text-center space-y-4">
-                              <div className="w-16 h-16 bg-beige rounded-full flex items-center justify-center">
-                                <FileText className="h-8 w-8 text-dark/70" />
-                              </div>
-                              <div>
-                                <h3 className="text-lg font-semibold text-dark">Start building your resume</h3>
-                                <p className="text-sm text-dark/70 mt-1">
-                                  Create your first resume and land your next opportunity.
-                                </p>
-                              </div>
-                              <Link href="/builder">
-                                <Button size="lg" className="mt-4">
-                                  <Plus className="mr-2 h-5 w-5" />
-                                  Create Resume
-                                </Button>
-                              </Link>
-                            </CardContent>
-                          </Card>
-                        )}
-                      </div>
+                        </div>
+                      ) : (
+                        /* Empty state */
+                        <div className="mt-16 flex flex-col items-center justify-center text-center gap-6">
+                          <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center">
+                            <FileText className="h-9 w-9 text-primary" />
+                          </div>
+                          <div className="space-y-1">
+                            <h3 className="text-xl font-semibold text-dark">No resumes yet</h3>
+                            <p className="text-sm text-dark/50 max-w-xs">
+                              Create your first resume and land your next opportunity.
+                            </p>
+                          </div>
+                          <Link href="/builder">
+                            <Button size="lg" className="gap-2">
+                              <Sparkles className="h-4 w-4" />
+                              Build my resume
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -369,11 +305,15 @@ export default function DashboardClient({ user, grouped, total }: DashboardClien
           </main>
         </motion.div>
       </div>
+
       {/* Mobile bottom navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border h-14 flex items-center justify-around md:hidden" aria-label="Mobile navigation">
+      <nav
+        className="fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-border h-14 flex items-center justify-around md:hidden"
+        aria-label="Mobile navigation"
+      >
         {([
-          { id: 'home' as DashboardView, label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-          { id: 'cover-letters' as DashboardView, label: 'Cover Letters', icon: FileText, href: '/dashboard?view=cover-letters' },
+          { id: 'home' as DashboardView, label: 'Home', icon: Home, href: '/dashboard' },
+          { id: 'cover-letters' as DashboardView, label: 'Letters', icon: FileText, href: '/dashboard?view=cover-letters' },
           { id: 'applications' as DashboardView, label: 'Applications', icon: Briefcase, href: '/dashboard?view=applications' },
         ] as const).map(({ id, label, icon: Icon, href }) => (
           <Link
