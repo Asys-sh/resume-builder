@@ -40,18 +40,12 @@ export async function handleSignIn(
   return { ok: false, error: 'CredentialsSignin' }
 }
 
-export function handleGoogleSignIn(callbackUrl = '/dashboard'): void {
-  window.location.href = `/api/auth/signin/google?callbackUrl=${encodeURIComponent(callbackUrl)}`
+export async function handleGoogleSignIn(callbackUrl = '/dashboard'): Promise<void> {
+  const { signIn } = await import('next-auth/react')
+  await signIn('google', { callbackUrl })
 }
 
 export async function handleSignOut(): Promise<void> {
-  const csrfToken = await getCsrfToken()
-
-  await fetch('/api/auth/signout', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ csrfToken }),
-  })
-
-  window.location.replace('/')
+  const { signOut } = await import('next-auth/react')
+  await signOut({ callbackUrl: '/' })
 }

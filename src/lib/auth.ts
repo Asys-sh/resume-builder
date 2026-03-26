@@ -3,6 +3,7 @@ import { verify } from '@node-rs/argon2'
 import NextAuth, { type NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import Google from 'next-auth/providers/google'
+import { sendWelcomeEmail } from './email'
 import { prisma } from './prisma'
 
 const providers: NextAuthConfig['providers'] = [
@@ -47,12 +48,11 @@ if (process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET) {
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   secret: process.env.AUTH_SECRET!,
-  trustHost: true,
   session: { strategy: 'jwt' },
 
   pages: {
     signIn: '/auth',
-    newUser: '/auth',
+    newUser: '/dashboard',
   },
 
   cookies: {
@@ -70,6 +70,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers,
 
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === 'google' && user.email) {
+        await prisma.user.updateMany({
+          where: { email: user.email, emailVerified: null },
+          data: { emailVerified: new Date() },
+        })
+      }
+      return true
+    },
     jwt({ token, user }) {
       if (user?.id) token.sub = user.id
       return token
@@ -79,6 +88,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.sub
       }
       return session
+    },
+  },
+
+  events: {
+    async createUser({ user }) {
+      if (user.email) {
+        await sendWelcomeEmail({ email: user.email, name: user.name ?? undefined })
+      }
     },
   },
 })

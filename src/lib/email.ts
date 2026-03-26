@@ -150,6 +150,64 @@ export async function sendVerificationEmail({ email, token, name }: SendVerifica
   }
 }
 
+interface SendWelcomeEmailParams {
+  email: string
+  name?: string
+}
+
+export async function sendWelcomeEmail({ email, name }: SendWelcomeEmailParams) {
+  const dashboardUrl = `${process.env.APP_URL}/dashboard`
+
+  const content = `
+		<!-- Accent bar -->
+		<tr><td style="height: 4px; background: linear-gradient(90deg, ${colors.primary}, ${colors.beige});"></td></tr>
+
+		<!-- Body -->
+		<tr>
+			<td style="padding: 40px 40px 0 40px;">
+				<h1 style="margin: 0 0 8px 0; color: ${colors.dark}; font-size: 24px; font-weight: 700;">
+					Welcome to RoboResume!
+				</h1>
+				<p style="margin: 0; color: ${colors.subtle}; font-size: 15px; line-height: 24px;">
+					${name ? `Hey ${name}! ` : ''}You're all set. Start building your resume and land your next job.
+				</p>
+			</td>
+		</tr>
+
+		<!-- Button -->
+		<tr>
+			<td align="center" style="padding: 32px 40px 40px 40px;">
+				<table role="presentation" style="border-collapse: collapse;">
+					<tr>
+						<td style="border-radius: 10px; background-color: ${colors.primary};">
+							<a href="${dashboardUrl}" style="display: inline-block; padding: 14px 36px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">
+								Go to Dashboard
+							</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>`
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: fromAddress,
+      to: [email],
+      subject: 'Welcome to RoboResume!',
+      html: emailLayout(content),
+    })
+
+    if (error) {
+      console.error('Error sending welcome email:', error)
+      return { success: false, error }
+    }
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error sending welcome email:', error)
+    return { success: false, error }
+  }
+}
+
 interface SendPasswordResetEmailParams {
   email: string
   token: string

@@ -60,7 +60,13 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
             </Link>
           </div>
         ) : (
-          <div className="hidden flex-1 items-center justify-end gap-4 md:flex">
+          <div className="hidden flex-1 items-center justify-end gap-2 md:flex">
+            <Link
+              href="/dashboard"
+              className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-dark text-sm font-bold hover:bg-yellow"
+            >
+              <span className="truncate">Dashboard</span>
+            </Link>
             <Link
               href="/builder"
               className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-dark text-sm font-bold hover:bg-primary/90"
@@ -80,16 +86,16 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
               />
               <div className="absolute right-0 top-full mt-2 w-48 origin-top-right scale-95 transform-gpu rounded-lg bg-white p-2 opacity-0 shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-150 ease-in-out group-hover:scale-100 group-hover:opacity-100">
                 <Link
-                  href="/dashboard"
-                  className="block w-full rounded px-4 py-2 text-left text-sm text-dark hover:bg-yellow"
-                >
-                  Dashboard
-                </Link>
-                <Link
                   href="/dashboard/settings"
                   className="block w-full rounded px-4 py-2 text-left text-sm text-dark hover:bg-yellow"
                 >
                   Settings
+                </Link>
+                <Link
+                  href="/dashboard/billing"
+                  className="block w-full rounded px-4 py-2 text-left text-sm text-dark hover:bg-yellow"
+                >
+                  Billing
                 </Link>
                 <button
                   type="button"
@@ -158,26 +164,34 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
               </div>
             ) : (
               <div className="flex flex-col gap-2 p-4">
-                <button
-                  type="button"
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-transparent text-dark text-sm font-bold hover:bg-yellow"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/builder"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-primary text-dark text-sm font-bold hover:bg-primary/90"
                 >
                   Create a Resume
-                </button>
+                </Link>
                 <div className="border-t border-yellow pt-2 mt-2">
-                  <Link
-                    href="/dashboard"
-                    className="flex w-full items-center rounded px-4 py-3 text-sm text-dark hover:bg-yellow"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Dashboard
-                  </Link>
                   <Link
                     href="/dashboard/settings"
                     className="flex w-full items-center rounded px-4 py-3 text-sm text-dark hover:bg-yellow"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Settings
+                  </Link>
+                  <Link
+                    href="/dashboard/billing"
+                    className="flex w-full items-center rounded px-4 py-3 text-sm text-dark hover:bg-yellow"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Billing
                   </Link>
                   <button
                     type="button"
