@@ -90,7 +90,7 @@ export default async function PublicResumePage({ params }: Props) {
           href="/"
           className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
         >
-          Created with RoboResume
+          Created with Landed
         </a>
       </div>
     </div>

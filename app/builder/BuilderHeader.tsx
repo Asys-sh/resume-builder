@@ -39,7 +39,7 @@ export function BuilderHeader({
           </svg>
         </div>
         <span className="text-lg font-bold leading-tight tracking-tight">
-          Robo Resume
+          Landed
         </span>
       </Link>
 

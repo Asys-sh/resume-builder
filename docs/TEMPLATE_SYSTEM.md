@@ -1,6 +1,6 @@
 # Resume Builder Template System
 
-Comprehensive documentation for the robo-resume template architecture, including React templates, HTML template importing, and the centralized registry system.
+Comprehensive documentation for the landed template architecture, including React templates, HTML template importing, and the centralized registry system.
 
 ---
 

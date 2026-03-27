@@ -5,9 +5,9 @@ import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 
 export const metadata: Metadata = {
-  title: 'About — RoboResume',
+  title: 'About — Landed',
   description:
-    'Learn about RoboResume — the AI-powered resume builder built to help you land your next job faster.',
+    'Learn about Landed — the AI-powered resume builder built to help you land your next job faster.',
 }
 
 export default function AboutPage() {
@@ -21,7 +21,7 @@ export default function AboutPage() {
             Built to get you hired, faster.
           </h1>
           <p className="text-xl text-dark/70 leading-relaxed">
-            RoboResume is an AI-powered resume builder that helps job seekers create tailored,
+            Landed is an AI-powered resume builder that helps job seekers create tailored,
             ATS-friendly resumes in minutes — not hours.
           </p>
         </section>
@@ -31,7 +31,7 @@ export default function AboutPage() {
           <div className="bg-white border border-yellow/60 rounded-2xl p-8 space-y-4">
             <h2 className="text-2xl font-bold text-dark">Our Story</h2>
             <p className="text-dark/70 leading-relaxed">
-              We built RoboResume because writing a resume is one of the most frustrating parts of
+              We built Landed because writing a resume is one of the most frustrating parts of
               job searching. You spend hours formatting, rewriting, and second-guessing every word —
               and it still might not pass an ATS filter.
             </p>

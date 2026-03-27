@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { getUserData } from '@/lib/auth-helper'
 
 export const metadata: Metadata = {
-  title: 'Resume Builder — RoboResume',
+  title: 'Resume Builder — Landed',
   description: 'Build your professional resume step-by-step with AI-powered suggestions.',
 }
 

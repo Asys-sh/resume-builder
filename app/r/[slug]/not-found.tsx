@@ -10,7 +10,7 @@ export default function ResumeNotFound() {
           href="/"
           className="inline-block mt-2 text-[#d4a373] underline font-semibold hover:text-[#d4a373]/80"
         >
-          Go to RoboResume →
+          Go to Landed →
         </a>
       </div>
     </div>

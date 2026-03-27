@@ -1,4 +1,4 @@
-# RoboResume — AI-Powered Resume Builder
+# Landed — AI-Powered Resume Builder
 
 A full-stack SaaS resume builder with AI-assisted writing, multiple export formats, Stripe subscriptions, and a multi-step guided builder. Built with Next.js 15, Prisma, PostgreSQL, and OpenAI.
 

@@ -33,7 +33,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <p className="text-sm text-dark/70">&copy; 2025 RoboResume. All rights reserved.</p>
+      <p className="text-sm text-dark/70">&copy; 2025 Landed. All rights reserved.</p>
     </footer>
   )
 }

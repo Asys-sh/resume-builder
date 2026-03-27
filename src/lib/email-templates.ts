@@ -34,7 +34,7 @@ function layout(content: string) {
 										<span style="color: #ffffff; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">R</span>
 									</td>
 									<td style="padding-left: 10px;">
-										<span style="color: ${colors.dark}; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">RoboResume</span>
+										<span style="color: ${colors.dark}; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">Landed</span>
 									</td>
 								</tr>
 							</table>
@@ -47,7 +47,7 @@ function layout(content: string) {
 				<table role="presentation" width="560" style="border-collapse: collapse; max-width: 560px;">
 					<tr>
 						<td align="center" style="padding: 24px 0 0 0;">
-							<p style="margin: 0; color: ${colors.subtle}; font-size: 12px;">&copy; 2025 RoboResume. All rights reserved.</p>
+							<p style="margin: 0; color: ${colors.subtle}; font-size: 12px;">&copy; 2025 Landed. All rights reserved.</p>
 							<p style="margin: 6px 0 0 0; color: ${colors.subtle}; font-size: 12px;">
 								Questions? <a href="mailto:alexander@asys.sh" style="color: ${colors.primary}; text-decoration: none;">alexander@asys.sh</a>
 							</p>
@@ -86,7 +86,7 @@ function linkFallback(url: string) {
 
 export function welcomeSubject(ctx: EmailContext): string {
   const name = ctx.user.name?.trim()
-  return name ? `Welcome to RoboResume, ${name}` : 'Welcome to RoboResume'
+  return name ? `Welcome to Landed, ${name}` : 'Welcome to Landed'
 }
 
 export function welcomeHtml(ctx: EmailContext): string {
@@ -99,7 +99,7 @@ export function welcomeHtml(ctx: EmailContext): string {
 			<td style="padding: 40px 40px 0 40px;">
 				<h1 style="margin: 0 0 8px 0; color: ${colors.dark}; font-size: 24px; font-weight: 700;">Verify your email</h1>
 				<p style="margin: 0; color: ${colors.subtle}; font-size: 15px; line-height: 24px;">
-					${name ? `Hey ${name}! ` : ''}Thanks for signing up for RoboResume. Tap the button below to confirm your email and get started.
+					${name ? `Hey ${name}! ` : ''}Thanks for signing up for Landed. Tap the button below to confirm your email and get started.
 				</p>
 			</td>
 		</tr>
@@ -117,13 +117,13 @@ export function welcomeHtml(ctx: EmailContext): string {
 export function welcomeText(ctx: EmailContext): string {
   const name = ctx.user.name?.trim() || 'there'
   const link = ctx.links?.verifyEmail ?? ''
-  return `Hey ${name}, thanks for signing up for RoboResume!\n\nVerify your email: ${link}\n\nThis link expires in 1 hour.`
+  return `Hey ${name}, thanks for signing up for Landed!\n\nVerify your email: ${link}\n\nThis link expires in 1 hour.`
 }
 
 // ── Email Verification (separate from welcome) ─────────────────────────
 
 export function verificationSubject(): string {
-  return 'Verify your email — RoboResume'
+  return 'Verify your email — Landed'
 }
 
 export function verificationHtml(ctx: EmailContext): string {
@@ -136,7 +136,7 @@ export function verificationHtml(ctx: EmailContext): string {
 			<td style="padding: 40px 40px 0 40px;">
 				<h1 style="margin: 0 0 8px 0; color: ${colors.dark}; font-size: 24px; font-weight: 700;">Confirm your email</h1>
 				<p style="margin: 0; color: ${colors.subtle}; font-size: 15px; line-height: 24px;">
-					${name ? `Hey ${name}, ` : ''}please verify your email to continue using RoboResume.
+					${name ? `Hey ${name}, ` : ''}please verify your email to continue using Landed.
 				</p>
 			</td>
 		</tr>
@@ -153,13 +153,13 @@ export function verificationHtml(ctx: EmailContext): string {
 
 export function verificationText(ctx: EmailContext): string {
   const link = ctx.links?.verifyEmail ?? ctx.tokens?.verifyEmail ?? ''
-  return `Verify your email for RoboResume: ${link}`
+  return `Verify your email for Landed: ${link}`
 }
 
 // ── Password Reset ──────────────────────────────────────────────────────
 
 export function resetSubject(): string {
-  return 'Reset your password — RoboResume'
+  return 'Reset your password — Landed'
 }
 
 export function resetHtml(ctx: EmailContext): string {
@@ -189,13 +189,13 @@ export function resetHtml(ctx: EmailContext): string {
 
 export function resetText(ctx: EmailContext): string {
   const link = ctx.links?.resetPassword ?? ctx.tokens?.resetPassword ?? ''
-  return `Reset your RoboResume password: ${link}\n\nThis link expires in 30 minutes. If you didn't request this, ignore this email.`
+  return `Reset your Landed password: ${link}\n\nThis link expires in 30 minutes. If you didn't request this, ignore this email.`
 }
 
 // ── Sign-in Alert ────────────────────────────────────────────────────────
 
 export function signinSubject(): string {
-  return 'New sign-in to your RoboResume account'
+  return 'New sign-in to your Landed account'
 }
 
 export function signinHtml(ctx: EmailContext): string {
@@ -228,7 +228,7 @@ export function signinHtml(ctx: EmailContext): string {
 			<td style="padding: 40px 40px 0 40px;">
 				<h1 style="margin: 0 0 8px 0; color: ${colors.dark}; font-size: 24px; font-weight: 700;">New sign-in detected</h1>
 				<p style="margin: 0; color: ${colors.subtle}; font-size: 15px; line-height: 24px;">
-					${name ? `Hey ${name}, we` : 'We'} noticed a new sign-in to your RoboResume account. If this was you, no action is needed.
+					${name ? `Hey ${name}, we` : 'We'} noticed a new sign-in to your Landed account. If this was you, no action is needed.
 				</p>
 			</td>
 		</tr>
@@ -256,7 +256,7 @@ export function signinText(ctx: EmailContext): string {
   const ip = ctx.session?.ip
   const ua = ctx.session?.userAgent
   const lines = [
-    'New sign-in detected on your RoboResume account.',
+    'New sign-in detected on your Landed account.',
     ip ? `IP: ${ip}` : undefined,
     ua ? `Device: ${ua}` : undefined,
     '',

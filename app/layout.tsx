@@ -24,21 +24,21 @@ const spaceGrotesk = Space_Grotesk({
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://resume.asys.sh'
 
 export const metadata: Metadata = {
-  title: 'RoboResume - AI-Powered Resume Builder',
+  title: 'Landed - AI-Powered Resume Builder',
   description:
     'Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start, no credit card required.',
   metadataBase: new URL(baseUrl),
   openGraph: {
-    title: 'RoboResume - AI-Powered Resume Builder',
+    title: 'Landed - AI-Powered Resume Builder',
     description:
       'Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start.',
     url: baseUrl,
-    siteName: 'RoboResume',
+    siteName: 'Landed',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RoboResume - AI-Powered Resume Builder',
+    title: 'Landed - AI-Powered Resume Builder',
     description:
       'Create ATS-friendly resumes in under 7 minutes with AI assistance. Free to start.',
   },

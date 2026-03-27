@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sign In — RoboResume',
+  title: 'Sign In — Landed',
   description:
-    'Sign in or create a free RoboResume account to start building your AI-powered resume.',
+    'Sign in or create a free Landed account to start building your AI-powered resume.',
 }
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {

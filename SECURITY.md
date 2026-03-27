@@ -1,4 +1,4 @@
-# Security Reference — RoboResume
+# Security Reference — Landed
 
 > This document is the single source of truth for security patterns in this codebase.
 > Every API route, data mutation, and user-facing input **must** follow these patterns.

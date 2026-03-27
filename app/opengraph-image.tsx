@@ -46,7 +46,7 @@ export default function OGImage() {
           letterSpacing: '-2px',
         }}
       >
-        RoboResume
+        Landed
       </div>
 
       <div

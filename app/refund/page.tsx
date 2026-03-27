@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 
 export const metadata: Metadata = {
-  title: 'Refund Request — RoboResume',
+  title: 'Refund Request — Landed',
   description: 'Request a refund or exercise your EU 14-day right of withdrawal.',
 }
 
@@ -25,7 +25,7 @@ export default function RefundPage() {
 
         <h1 className="text-4xl font-black text-dark mb-4">Refund Request</h1>
         <p className="text-dark/70 mb-10 text-lg">
-          We want you to be happy with RoboResume. If you&apos;re not satisfied, we&apos;re here to
+          We want you to be happy with Landed. If you&apos;re not satisfied, we&apos;re here to
           help.
         </p>
 

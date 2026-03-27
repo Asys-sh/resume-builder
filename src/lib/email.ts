@@ -2,7 +2,7 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const fromAddress = `RoboResume <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`
+const fromAddress = `Landed <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`
 
 const colors = {
   primary: '#d4a373',
@@ -35,7 +35,7 @@ function emailLayout(content: string) {
 										<span style="color: #ffffff; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">R</span>
 									</td>
 									<td style="padding-left: 10px;">
-										<span style="color: ${colors.dark}; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">RoboResume</span>
+										<span style="color: ${colors.dark}; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">Landed</span>
 									</td>
 								</tr>
 							</table>
@@ -53,7 +53,7 @@ function emailLayout(content: string) {
 					<tr>
 						<td align="center" style="padding: 24px 0 0 0;">
 							<p style="margin: 0; color: ${colors.subtle}; font-size: 12px; line-height: 18px;">
-								&copy; 2025 RoboResume. All rights reserved.
+								&copy; 2025 Landed. All rights reserved.
 							</p>
 							<p style="margin: 6px 0 0 0; color: ${colors.subtle}; font-size: 12px; line-height: 18px;">
 								Questions? Contact us at <a href="mailto:alexander@asys.sh" style="color: ${colors.primary}; text-decoration: none;">alexander@asys.sh</a>
@@ -126,7 +126,7 @@ export async function sendVerificationEmail({ email, token, name }: SendVerifica
 		<tr>
 			<td style="padding: 0 40px 40px 40px;">
 				<p style="margin: 0; color: ${colors.subtle}; font-size: 13px; line-height: 20px;">
-					This link expires in <strong style="color: ${colors.dark};">24 hours</strong>. If you didn't create an account on RoboResume, you can safely ignore this email.
+					This link expires in <strong style="color: ${colors.dark};">24 hours</strong>. If you didn't create an account on Landed, you can safely ignore this email.
 				</p>
 			</td>
 		</tr>`
@@ -135,7 +135,7 @@ export async function sendVerificationEmail({ email, token, name }: SendVerifica
     const { data, error } = await resend.emails.send({
       from: fromAddress,
       to: [email],
-      subject: 'Verify Your Email — RoboResume',
+      subject: 'Verify Your Email — Landed',
       html: emailLayout(content),
     })
 
@@ -166,7 +166,7 @@ export async function sendWelcomeEmail({ email, name }: SendWelcomeEmailParams) 
 		<tr>
 			<td style="padding: 40px 40px 0 40px;">
 				<h1 style="margin: 0 0 8px 0; color: ${colors.dark}; font-size: 24px; font-weight: 700;">
-					Welcome to RoboResume!
+					Welcome to Landed!
 				</h1>
 				<p style="margin: 0; color: ${colors.subtle}; font-size: 15px; line-height: 24px;">
 					${name ? `Hey ${name}! ` : ''}You're all set. Start building your resume and land your next job.
@@ -193,7 +193,7 @@ export async function sendWelcomeEmail({ email, name }: SendWelcomeEmailParams) 
     const { data, error } = await resend.emails.send({
       from: fromAddress,
       to: [email],
-      subject: 'Welcome to RoboResume!',
+      subject: 'Welcome to Landed!',
       html: emailLayout(content),
     })
 
@@ -275,7 +275,7 @@ export async function sendPasswordResetEmail({ email, token, name }: SendPasswor
     const { data, error } = await resend.emails.send({
       from: fromAddress,
       to: [email],
-      subject: 'Reset Your Password — RoboResume',
+      subject: 'Reset Your Password — Landed',
       html: emailLayout(content),
     })
 

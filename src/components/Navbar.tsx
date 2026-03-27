@@ -39,7 +39,7 @@ export default function Navbar({ isAuthenticated = false, user }: NavbarProps) {
             </svg>
           </div>
           <Link href={isAuthenticated ? '/dashboard' : '/'}>
-            <h2 className="text-xl font-bold tracking-tighter cursor-pointer">Robo Resume</h2>
+            <h2 className="text-xl font-bold tracking-tighter cursor-pointer">Landed</h2>
           </Link>
         </div>
 

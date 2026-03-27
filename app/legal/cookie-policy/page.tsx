@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy — RoboResume',
-  description: 'Learn how RoboResume uses cookies and similar technologies.',
+  title: 'Cookie Policy — Landed',
+  description: 'Learn how Landed uses cookies and similar technologies.',
 }
 
 export default function CookiePolicyPage() {
@@ -14,7 +14,7 @@ export default function CookiePolicyPage() {
       </p>
 
       <p>
-        This Cookie Policy explains how RoboResume (&quot;<strong>RoboResume</strong>,&quot; &quot;
+        This Cookie Policy explains how Landed (&quot;<strong>Landed</strong>,&quot; &quot;
         <strong>we</strong>,&quot; &quot;<strong>our</strong>,&quot; or &quot;<strong>us</strong>
         &quot;) uses cookies and similar tracking technologies when you visit our website at
         resume.dev (the &quot;<strong>Service</strong>&quot;).
@@ -91,7 +91,7 @@ export default function CookiePolicyPage() {
       <h2>5. EU Cookie Law</h2>
       <p>
         Under EU law, we are required to obtain your consent for non-essential cookies. Since
-        RoboResume currently only uses <strong>essential and functional cookies</strong> necessary
+        Landed currently only uses <strong>essential and functional cookies</strong> necessary
         for the service to operate, no consent banner is required. If we introduce optional
         analytics or advertising cookies in the future, we will update this policy and request your
         consent.

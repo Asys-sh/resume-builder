@@ -5,8 +5,8 @@ import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 
 export const metadata: Metadata = {
-  title: 'Contact — RoboResume',
-  description: 'Get in touch with the RoboResume team. We typically respond within 24 hours.',
+  title: 'Contact — Landed',
+  description: 'Get in touch with the Landed team. We typically respond within 24 hours.',
 }
 
 const SUPPORT_EMAIL = 'alexander@asys.sh'

@@ -7,9 +7,9 @@ export default function TOS() {
       </p>
 
       <p>
-        Welcome to RoboResume (“<strong>RoboResume</strong>,” “<strong>we</strong>,” “
+        Welcome to Landed (“<strong>Landed</strong>,” “<strong>we</strong>,” “
         <strong>our</strong>,” or “<strong>us</strong>”). These Terms of Service (“
-        <strong>Terms</strong>”) govern your access to and use of RoboResume’s resume-building
+        <strong>Terms</strong>”) govern your access to and use of Landed’s resume-building
         tools, AI features, templates, and related services (the “<strong>Service</strong>”).
       </p>
 
@@ -18,16 +18,16 @@ export default function TOS() {
         Service.
       </p>
 
-      <h2>1. About RoboResume</h2>
+      <h2>1. About Landed</h2>
       <p>
-        RoboResume is a France-based company offering online tools to generate, edit, export, and
+        Landed is a France-based company offering online tools to generate, edit, export, and
         store résumés, including AI-powered features.
       </p>
 
       <h2>2. Eligibility</h2>
       <p>
         You must be at least <strong>16 years old</strong> to use the Service. By accessing
-        RoboResume, you represent that you meet this requirement and have legal capacity to accept
+        Landed, you represent that you meet this requirement and have legal capacity to accept
         these Terms.
       </p>
 
@@ -46,23 +46,23 @@ export default function TOS() {
       <ul>
         <li>You retain full ownership of your User Content.</li>
         <li>
-          You grant RoboResume a <strong>non-exclusive, worldwide, revocable license</strong> to
+          You grant Landed a <strong>non-exclusive, worldwide, revocable license</strong> to
           store and process your content solely to operate and improve the Service.
         </li>
       </ul>
       <p>You confirm your content does not violate laws or third-party rights.</p>
 
       <h2>5. AI-Generated Output</h2>
-      <p>RoboResume uses artificial intelligence to provide suggestions and generate text.</p>
+      <p>Landed uses artificial intelligence to provide suggestions and generate text.</p>
       <p>
         You acknowledge that AI-generated results may contain inaccuracies and that you must review
-        all content. RoboResume is not responsible for errors, omissions, or consequences of AI
+        all content. Landed is not responsible for errors, omissions, or consequences of AI
         output.
       </p>
 
       <h2>6. Subscription and Payments</h2>
       <p>
-        RoboResume offers optional paid features (AI usage and premium templates) for{' '}
+        Landed offers optional paid features (AI usage and premium templates) for{' '}
         <strong>€9.99/month</strong>.
       </p>
       <ul>
@@ -81,7 +81,7 @@ export default function TOS() {
       </p>
 
       <p>
-        However, by subscribing to RoboResume and activating AI features or accessing premium
+        However, by subscribing to Landed and activating AI features or accessing premium
         templates immediately, you expressly:
       </p>
       <ul>
@@ -94,7 +94,7 @@ export default function TOS() {
 
       <p>
         If you do not access premium content or AI features during the first 14 days, you may
-        request a full refund. If you partially used the Service, RoboResume may reduce the refund
+        request a full refund. If you partially used the Service, Landed may reduce the refund
         proportionally based on the level of usage as permitted by EU law.
       </p>
 
@@ -115,14 +115,14 @@ export default function TOS() {
 
       <h2>8. Intellectual Property</h2>
       <p>
-        All templates, designs, logos, and code belong to RoboResume. You receive a limited,
+        All templates, designs, logos, and code belong to Landed. You receive a limited,
         personal, non-transferable license to use the Service. You may not resell or republish
         templates or platform materials.
       </p>
 
       <h2>9. Termination</h2>
       <p>
-        RoboResume may suspend or terminate accounts that violate these Terms or pose security
+        Landed may suspend or terminate accounts that violate these Terms or pose security
         risks. Upon termination, access ceases immediately and no refunds are provided unless
         required by law.
       </p>
@@ -136,7 +136,7 @@ export default function TOS() {
 
       <h2>11. Limitation of Liability</h2>
       <p>
-        To the fullest extent legally permitted, RoboResume is not liable for indirect damages, loss
+        To the fullest extent legally permitted, Landed is not liable for indirect damages, loss
         of data, or employment decisions based on resume content. Liability is limited to the total
         amount paid by you in the previous 12 months.
       </p>
@@ -155,7 +155,7 @@ export default function TOS() {
 
       <h2>14. Contact</h2>
       <p>
-        RoboResume France Email: <a href="mailto:alexander@asys.sh">alexander@asys.sh</a>
+        Landed France Email: <a href="mailto:alexander@asys.sh">alexander@asys.sh</a>
       </p>
     </div>
   )

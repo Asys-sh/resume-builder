@@ -35,7 +35,7 @@ export default function HomePage() {
         <section className="bg-beige py-16 sm:py-24">
           <div className="mx-auto max-w-5xl px-4">
             <h2 className="text-center text-3xl font-bold leading-tight tracking-tighter text-dark md:text-4xl">
-              Why Choose Robo Resume?
+              Why Choose Landed?
             </h2>
             <motion.div
               initial="hidden"

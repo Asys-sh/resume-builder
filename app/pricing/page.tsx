@@ -7,7 +7,7 @@ import { getServerUser } from '@/lib/auth-helper'
 import PricingCards from './PricingCards'
 
 export const metadata = {
-  title: 'Pricing — Robo Resume',
+  title: 'Pricing — Landed',
   description: 'Simple, transparent pricing. Start free and upgrade when you need more power.',
 }
 
@@ -112,7 +112,7 @@ export default async function PricingPage() {
               Ready to build your perfect resume?
             </h2>
             <p className="mt-3 text-dark/60">
-              Join thousands of job seekers already using Robo Resume.
+              Join thousands of job seekers already using Landed.
             </p>
             <div className="mt-8">
               <Link href="/auth?login=false">

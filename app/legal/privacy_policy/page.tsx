@@ -7,7 +7,7 @@ export default function PrivacyPolicyPage() {
       </p>
 
       <p>
-        This Privacy Policy explains how RoboResume (“<strong>RoboResume</strong>,” “
+        This Privacy Policy explains how Landed (“<strong>Landed</strong>,” “
         <strong>we</strong>,” “<strong>our</strong>”) collects, uses, and protects your information
         under the <strong>EU General Data Protection Regulation (GDPR)</strong>.
       </p>
@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
 
       <h3>C. Payment Information</h3>
       <p>
-        Payments are processed by secure third-party providers. RoboResume does <strong>not</strong>{' '}
+        Payments are processed by secure third-party providers. Landed does <strong>not</strong>{' '}
         store full credit card numbers.
       </p>
 
@@ -90,7 +90,7 @@ export default function PrivacyPolicyPage() {
 
       <h2>7. Cookies & Tracking</h2>
       <p>
-        RoboResume uses essential, analytics, and preference cookies. Under EU law, optional cookies
+        Landed uses essential, analytics, and preference cookies. Under EU law, optional cookies
         require your explicit consent, which can be changed anytime via our cookie banner.
       </p>
 
@@ -135,7 +135,7 @@ export default function PrivacyPolicyPage() {
 
       <h2>13. Contact</h2>
       <p>
-        RoboResume France Email: <a href="mailto:alexander@asys.sh">alexander@asys.sh</a>
+        Landed France Email: <a href="mailto:alexander@asys.sh">alexander@asys.sh</a>
       </p>
     </div>
   )

@@ -4,7 +4,7 @@ import { getUserData } from '@/lib/auth-helper'
 import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
-  title: 'Dashboard — RoboResume',
+  title: 'Dashboard — Landed',
   description: 'Manage your resumes, cover letters, and account settings.',
 }
 
